@@ -1,0 +1,22 @@
+name: 'Publish Graph'
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-graph:
+    name: Publish Graph
+    runs-on: ubuntu-latest
+    env:
+      APOLLO_KEY: ${{secrets.APOLLO_KEY}}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Publish Graph
+        run: yarn apollo:rover

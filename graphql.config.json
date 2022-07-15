@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "programmist-server": {
+      "schema": ["./schema.gql"]
+    }
+  }
+}
