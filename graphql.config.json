@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "shikosai32-server": {
+      "schema": ["./schema.gql"]
+    }
+  }
+}

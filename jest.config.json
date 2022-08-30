@@ -1,0 +1,13 @@
+{
+  "moduleFileExtensions": ["json", "js", "ts"],
+  "rootDir": ".",
+  "testRegex": ".*\\.spec\\.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "collectCoverageFrom": ["./src/**/*.ts"],
+  "coveragePathIgnorePatterns": ["dist", "node_modules", "./src/libs/prisma/generated"],
+  "coverageDirectory": "./coverage",
+  "testEnvironment": "node",
+  "setupFiles": ["dotenv/config"]
+}

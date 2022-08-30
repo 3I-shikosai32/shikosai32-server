@@ -1,0 +1,56 @@
+name: Test
+on: [push, pull_request]
+
+jobs:
+  lint-build:
+    name: Lint and Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint --max-warnings=0
+
+      - name: Build
+        run: yarn build
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    env:
+      FIREBASE_API_KEY: ${{secrets.FIREBASE_API_KEY}}
+      FIREBASE_AUTH_DOMAIN: ${{secrets.FIREBASE_AUTH_DOMAIN}}
+      FIREBASE_PROJECT_ID: ${{secrets.FIREBASE_PROJECT_ID}}
+      FIREBASE_STORAGE_BUCKET: ${{secrets.FIREBASE_STORAGE_BUCKET}}
+      FIREBASE_MESSAGING_SENDER_ID: ${{secrets.FIREBASE_MESSAGING_SENDER_ID}}
+      FIREBASE_APP_ID: ${{secrets.FIREBASE_APP_ID}}
+      FIREBASE_MEASUREMENT_ID: ${{secrets.FIREBASE_MEASUREMENT_ID}}
+      FIREBASE_ADMIN_PROJECT_ID: ${{secrets.FIREBASE_ADMIN_PROJECT_ID}}
+      FIREBASE_ADMIN_PRIVATE_KEY: ${{secrets.FIREBASE_ADMIN_PRIVATE_KEY}}
+      FIREBASE_ADMIN_CLIENT_EMAIL: ${{secrets.FIREBASE_ADMIN_CLIENT_EMAIL}}
+    strategy:
+      matrix:
+        mongodb-version: [3.6, 4.0, 4.2]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Start MongoDB v${{ matrix.mongodb-version }}
+        uses: supercharge/mongodb-github-action@1.2.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+
+      - name: Unit Test
+        run: yarn test
+
+      - name: E2E Test
+        run: yarn test:e2e
