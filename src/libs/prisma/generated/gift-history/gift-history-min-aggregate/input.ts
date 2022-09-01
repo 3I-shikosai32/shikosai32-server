@@ -8,6 +8,9 @@ export class GiftHistoryMinAggregateInput {
     id?: true;
 
     @Field(() => Boolean, {nullable:true})
+    isDelivered?: true;
+
+    @Field(() => Boolean, {nullable:true})
     userId?: true;
 
     @Field(() => Boolean, {nullable:true})

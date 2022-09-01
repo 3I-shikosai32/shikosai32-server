@@ -10,6 +10,9 @@ export class GiftHistoryOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     id?: keyof typeof SortOrder;
 
+    @Field(() => SortOrder, {nullable:true})
+    isDelivered?: keyof typeof SortOrder;
+
     @Field(() => UserOrderByWithRelationInput, {nullable:true})
     user?: UserOrderByWithRelationInput;
 

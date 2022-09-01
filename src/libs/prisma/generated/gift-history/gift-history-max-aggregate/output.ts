@@ -7,6 +7,9 @@ export class GiftHistoryMaxAggregate {
     @Field(() => String, {nullable:true})
     id?: string;
 
+    @Field(() => Boolean, {nullable:true})
+    isDelivered?: boolean;
+
     @Field(() => String, {nullable:true})
     userId?: string;
 

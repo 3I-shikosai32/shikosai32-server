@@ -4,6 +4,9 @@ import { InputType } from '@nestjs/graphql';
 @InputType()
 export class GiftHistoryUncheckedUpdateWithoutExchangedGiftInput {
 
+    @Field(() => Boolean, {nullable:true})
+    isDelivered?: boolean;
+
     @Field(() => String, {nullable:true})
     userId?: string;
 

@@ -9,6 +9,9 @@ export class GiftHistoryCountOrderByAggregateInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    isDelivered?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     userId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
