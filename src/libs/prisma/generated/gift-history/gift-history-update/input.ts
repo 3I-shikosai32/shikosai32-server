@@ -6,6 +6,9 @@ import { GiftUpdateOneRequiredWithoutGiftHistoriesNestedInput } from '../../gift
 @InputType()
 export class GiftHistoryUpdateInput {
 
+    @Field(() => Boolean, {nullable:true})
+    isDelivered?: boolean;
+
     @Field(() => UserUpdateOneRequiredWithoutGiftHistoriesNestedInput, {nullable:true})
     user?: UserUpdateOneRequiredWithoutGiftHistoriesNestedInput;
 

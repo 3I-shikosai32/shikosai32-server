@@ -9,6 +9,9 @@ export class GiftHistoryCountAggregate {
     id!: number;
 
     @Field(() => Int, {nullable:false})
+    isDelivered!: number;
+
+    @Field(() => Int, {nullable:false})
     userId!: number;
 
     @Field(() => Int, {nullable:false})
