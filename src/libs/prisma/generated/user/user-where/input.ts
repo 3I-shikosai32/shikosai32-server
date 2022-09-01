@@ -1,6 +1,12 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../../prisma/string-filter/input';
+import { EnumRoleFilter } from '../../prisma/enum-role-filter/input';
+import { IntFilter } from '../../prisma/int-filter/input';
+import { EnumCharacterFilter } from '../../prisma/enum-character-filter/input';
+import { CaharacterItemObjectEqualityInput } from '../../prisma/caharacter-item-object-equality/input';
+import { EnumGameFilter } from '../../prisma/enum-game-filter/input';
+import { GiftHistoryListRelationFilter } from '../../gift-history/gift-history-list-relation-filter/input';
 import { DateTimeFilter } from '../../prisma/date-time-filter/input';
 
 @InputType()
@@ -22,7 +28,40 @@ export class UserWhereInput {
     name?: StringFilter;
 
     @Field(() => StringFilter, {nullable:true})
+    email?: StringFilter;
+
+    @Field(() => EnumRoleFilter, {nullable:true})
+    role?: EnumRoleFilter;
+
+    @Field(() => IntFilter, {nullable:true})
+    totalPointDay1?: IntFilter;
+
+    @Field(() => IntFilter, {nullable:true})
+    totalPointDay2?: IntFilter;
+
+    @Field(() => IntFilter, {nullable:true})
+    consumablePoint?: IntFilter;
+
+    @Field(() => EnumCharacterFilter, {nullable:true})
+    character?: EnumCharacterFilter;
+
+    @Field(() => StringFilter, {nullable:true})
+    iconUrl?: StringFilter;
+
+    @Field(() => StringFilter, {nullable:true})
     avatarUrl?: StringFilter;
+
+    @Field(() => [CaharacterItemObjectEqualityInput], {nullable:true})
+    items?: Array<CaharacterItemObjectEqualityInput>;
+
+    @Field(() => EnumGameFilter, {nullable:true})
+    participateGame?: EnumGameFilter;
+
+    @Field(() => IntFilter, {nullable:true})
+    pullableGachaTimes?: IntFilter;
+
+    @Field(() => GiftHistoryListRelationFilter, {nullable:true})
+    giftHistories?: GiftHistoryListRelationFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: DateTimeFilter;
