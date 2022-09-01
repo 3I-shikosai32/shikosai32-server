@@ -1,5 +1,3 @@
-import HelloModule from './hello/hello.module';
-
-const Components = [HelloModule];
+const Components = [];
 
 export default Components;
