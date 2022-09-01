@@ -107,7 +107,8 @@ model Gift {
 }
 
 model GiftHistory {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  isDelivered Boolean @default(false)
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @map("user_id")
