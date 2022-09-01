@@ -12,7 +12,34 @@ export class UserCountAggregate {
     name!: number;
 
     @Field(() => Int, {nullable:false})
+    email!: number;
+
+    @Field(() => Int, {nullable:false})
+    role!: number;
+
+    @Field(() => Int, {nullable:false})
+    totalPointDay1!: number;
+
+    @Field(() => Int, {nullable:false})
+    totalPointDay2!: number;
+
+    @Field(() => Int, {nullable:false})
+    consumablePoint!: number;
+
+    @Field(() => Int, {nullable:false})
+    character!: number;
+
+    @Field(() => Int, {nullable:false})
+    iconUrl!: number;
+
+    @Field(() => Int, {nullable:false})
     avatarUrl!: number;
+
+    @Field(() => Int, {nullable:false})
+    participateGame!: number;
+
+    @Field(() => Int, {nullable:false})
+    pullableGachaTimes!: number;
 
     @Field(() => Int, {nullable:false})
     createdAt!: number;
