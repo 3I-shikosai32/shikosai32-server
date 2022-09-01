@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../../prisma/string-filter/input';
+import { BoolFilter } from '../../prisma/bool-filter/input';
 import { UserRelationFilter } from '../../user/user-relation-filter/input';
 import { GiftRelationFilter } from '../../gift/gift-relation-filter/input';
 import { DateTimeFilter } from '../../prisma/date-time-filter/input';
@@ -19,6 +20,9 @@ export class GiftHistoryWhereInput {
 
     @Field(() => StringFilter, {nullable:true})
     id?: StringFilter;
+
+    @Field(() => BoolFilter, {nullable:true})
+    isDelivered?: BoolFilter;
 
     @Field(() => UserRelationFilter, {nullable:true})
     user?: UserRelationFilter;

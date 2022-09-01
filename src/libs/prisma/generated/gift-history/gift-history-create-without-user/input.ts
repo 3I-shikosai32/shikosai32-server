@@ -8,6 +8,9 @@ export class GiftHistoryCreateWithoutUserInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
+    @Field(() => Boolean, {nullable:true})
+    isDelivered?: boolean;
+
     @Field(() => GiftCreateNestedOneWithoutGiftHistoriesInput, {nullable:false})
     exchangedGift!: GiftCreateNestedOneWithoutGiftHistoriesInput;
 
