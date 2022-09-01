@@ -10,6 +10,9 @@ export class GiftHistoryGroupBy {
     @Field(() => String, {nullable:false})
     id!: string;
 
+    @Field(() => Boolean, {nullable:false})
+    isDelivered!: boolean;
+
     @Field(() => String, {nullable:false})
     userId!: string;
 

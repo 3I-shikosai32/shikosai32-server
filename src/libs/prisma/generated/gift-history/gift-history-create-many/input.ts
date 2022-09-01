@@ -7,6 +7,9 @@ export class GiftHistoryCreateManyInput {
     @Field(() => String, {nullable:true})
     id?: string;
 
+    @Field(() => Boolean, {nullable:true})
+    isDelivered?: boolean;
+
     @Field(() => String, {nullable:false})
     userId!: string;
 
