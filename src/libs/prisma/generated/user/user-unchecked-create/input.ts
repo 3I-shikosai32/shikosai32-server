@@ -43,8 +43,8 @@ export class UserUncheckedCreateInput {
     @Field(() => [CaharacterItemCreateInput], {nullable:true})
     items?: Array<CaharacterItemCreateInput>;
 
-    @Field(() => Game, {nullable:false})
-    participateGame!: keyof typeof Game;
+    @Field(() => Game, {nullable:true})
+    participateGame?: keyof typeof Game;
 
     @Field(() => Int, {nullable:true})
     pullableGachaTimes?: number;
