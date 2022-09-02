@@ -12,7 +12,6 @@ export default class UserService {
       include: {
         giftHistories: {
           include: {
-            user: true,
             exchangedGift: true,
           },
         },
@@ -33,7 +32,6 @@ export default class UserService {
       include: {
         giftHistories: {
           include: {
-            user: true,
             exchangedGift: true,
           },
         },
@@ -47,7 +45,6 @@ export default class UserService {
       include: {
         giftHistories: {
           include: {
-            user: true,
             exchangedGift: true,
           },
         },
@@ -61,7 +58,6 @@ export default class UserService {
       include: {
         giftHistories: {
           include: {
-            user: true,
             exchangedGift: true,
           },
         },
@@ -76,7 +72,6 @@ export default class UserService {
       include: {
         giftHistories: {
           include: {
-            user: true,
             exchangedGift: true,
           },
         },
