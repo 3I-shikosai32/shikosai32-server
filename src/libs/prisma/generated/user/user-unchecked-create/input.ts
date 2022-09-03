@@ -10,8 +10,8 @@ import { GiftHistoryUncheckedCreateNestedManyWithoutUserInput } from '../../gift
 @InputType()
 export class UserUncheckedCreateInput {
 
-    @Field(() => String, {nullable:true})
-    id?: string;
+    @Field(() => String, {nullable:false})
+    id!: string;
 
     @Field(() => String, {nullable:false})
     name!: string;
@@ -19,8 +19,8 @@ export class UserUncheckedCreateInput {
     @Field(() => String, {nullable:false})
     email!: string;
 
-    @Field(() => Role, {nullable:false})
-    role!: keyof typeof Role;
+    @Field(() => Role, {nullable:true})
+    role?: keyof typeof Role;
 
     @Field(() => Int, {nullable:true})
     totalPointDay1?: number;

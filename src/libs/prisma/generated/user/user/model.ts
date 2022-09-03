@@ -20,7 +20,7 @@ export class User {
     @Field(() => String, {nullable:false})
     email!: string;
 
-    @Field(() => Role, {nullable:false})
+    @Field(() => Role, {nullable:false,defaultValue:'USER'})
     role!: keyof typeof Role;
 
     @Field(() => Int, {nullable:false,defaultValue:0})
