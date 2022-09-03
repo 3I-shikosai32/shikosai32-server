@@ -61,7 +61,7 @@ model User {
   avatarUrl String           @map("avatar_url")
   items     CaharacterItem[]
 
-  participateGame Game @map("participate_game")
+  participateGame Game @default(NONE) @map("participate_game")
 
   pullableGachaTimes Int @default(0) @map("pullable_gacha_times")
 
