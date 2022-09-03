@@ -19,8 +19,8 @@ export class GiftUncheckedCreateInput {
     @Field(() => Int, {nullable:false})
     price!: number;
 
-    @Field(() => Int, {nullable:true})
-    remaining?: number;
+    @Field(() => Int, {nullable:false})
+    remaining!: number;
 
     @Field(() => GiftHistoryUncheckedCreateNestedManyWithoutExchangedGiftInput, {nullable:true})
     giftHistories?: GiftHistoryUncheckedCreateNestedManyWithoutExchangedGiftInput;
