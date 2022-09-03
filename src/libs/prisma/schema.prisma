@@ -97,7 +97,7 @@ model Gift {
   iconUrl String   @map("icon_url")
 
   price     Int
-  remaining Int @default(30)
+  remaining Int
 
   giftHistories GiftHistory[]
 

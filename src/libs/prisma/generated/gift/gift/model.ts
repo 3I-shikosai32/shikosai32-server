@@ -20,7 +20,7 @@ export class Gift {
     @Field(() => Int, {nullable:false})
     price!: number;
 
-    @Field(() => Int, {nullable:false,defaultValue:30})
+    @Field(() => Int, {nullable:false})
     remaining!: number;
 
     @Field(() => [GiftHistory], {nullable:true})
