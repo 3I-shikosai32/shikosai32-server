@@ -18,8 +18,8 @@ export class UserCreateWithoutGiftHistoriesInput {
     @Field(() => String, {nullable:false})
     email!: string;
 
-    @Field(() => Role, {nullable:false})
-    role!: keyof typeof Role;
+    @Field(() => Role, {nullable:true})
+    role?: keyof typeof Role;
 
     @Field(() => Int, {nullable:true})
     totalPointDay1?: number;
