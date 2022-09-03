@@ -10,8 +10,8 @@ import { GiftHistoryCreateNestedManyWithoutUserInput } from '../../gift-history/
 @InputType()
 export class UserCreateInput {
 
-    @Field(() => String, {nullable:true})
-    id?: string;
+    @Field(() => String, {nullable:false})
+    id!: string;
 
     @Field(() => String, {nullable:false})
     name!: string;
