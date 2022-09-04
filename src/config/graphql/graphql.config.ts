@@ -8,7 +8,7 @@ import Env from '../environment/getter/getter.service';
 
 const env = new Env(new ConfigService());
 
-const GraphQLConfigDevelop = () =>
+const GraphQLConfigDevelopment = () =>
   GraphQLModule.forRoot<ApolloDriverConfig>({
     driver: ApolloDriver,
     subscriptions: {
@@ -53,9 +53,9 @@ const GraphQLConfigTest = () =>
   });
 
 const GraphQLConfig = match(env.NodeEnv)
-  .with('develop', () => GraphQLConfigDevelop())
+  .with('development', () => GraphQLConfigDevelopment())
   .with('production', () => GraphQLConfigProduction())
   .with('test', () => GraphQLConfigTest())
-  .otherwise(() => GraphQLConfigDevelop());
+  .otherwise(() => GraphQLConfigDevelopment());
 
 export default GraphQLConfig;
