@@ -45,7 +45,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Prisma Generate
-        run: yarn prisma:gen
+        run: yarn prisma:gen:test
 
       - name: Start MongoDB v${{ matrix.mongodb-version }}
         uses: supercharge/mongodb-github-action@1.2.0
