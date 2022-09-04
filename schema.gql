@@ -2,6 +2,71 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CaharacterItem {
+  itemUrl: String!
+  obtained: Boolean!
+}
+
+enum Character {
+  CAT
+  FOX
+  GOKU
+  PUDDING
+  REAPER
+  TREE
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum Game {
+  COIN_DROPPING
+  ICE_RAZE
+  NONE
+  POKER
+  PRESIDENT
+  WE_DIDNT_PLAYTEST
+  XENO
+}
+
+type NestedGiftHistory {
+  createdAt: DateTime!
+  giftId: String!
+  id: String!
+  isDelivered: Boolean!
+  userId: String!
+}
+
 type Query {
+  findUserById(where: UserWhereUniqueInput!): User
   tmp: String!
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+type User {
+  avatarUrl: String!
+  character: Character!
+  characterItems: [CaharacterItem!]!
+  consumablePoint: Int!
+  createdAt: DateTime!
+  email: String!
+  giftHistories: [NestedGiftHistory!]!
+  iconUrl: String!
+  id: String!
+  name: String!
+  participateGame: Game!
+  pullableGachaTimes: Int!
+  role: Role!
+  totalPointDay1: Int!
+  totalPointDay2: Int!
+}
+
+input UserWhereUniqueInput {
+  id: String!
 }

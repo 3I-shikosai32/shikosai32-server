@@ -20,7 +20,7 @@ export class User {
     @Field(() => String, {nullable:false})
     email!: string;
 
-    @Field(() => Role, {nullable:false})
+    @Field(() => Role, {nullable:false,defaultValue:'USER'})
     role!: keyof typeof Role;
 
     @Field(() => Int, {nullable:false,defaultValue:0})
@@ -44,7 +44,7 @@ export class User {
     @Field(() => [CaharacterItem], {nullable:true})
     items?: Array<CaharacterItem>;
 
-    @Field(() => Game, {nullable:false})
+    @Field(() => Game, {nullable:false,defaultValue:'NONE'})
     participateGame!: keyof typeof Game;
 
     @Field(() => Int, {nullable:false,defaultValue:0})

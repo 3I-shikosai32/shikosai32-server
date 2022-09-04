@@ -47,10 +47,10 @@ type CaharacterItem {
 }
 
 model User {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  id    String @id @map("_id") @db.ObjectId
   name  String
   email String
-  role  Role
+  role  Role   @default(USER)
 
   totalPointDay1  Int @default(0) @map("total_point_day1")
   totalPointDay2  Int @default(0) @map("total_point_day2")
@@ -61,7 +61,7 @@ model User {
   avatarUrl String           @map("avatar_url")
   items     CaharacterItem[]
 
-  participateGame Game @map("participate_game")
+  participateGame Game @default(NONE) @map("participate_game")
 
   pullableGachaTimes Int @default(0) @map("pullable_gacha_times")
 
@@ -97,7 +97,7 @@ model Gift {
   iconUrl String   @map("icon_url")
 
   price     Int
-  remaining Int @default(30)
+  remaining Int
 
   giftHistories GiftHistory[]
 

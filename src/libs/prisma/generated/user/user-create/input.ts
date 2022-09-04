@@ -10,8 +10,8 @@ import { GiftHistoryCreateNestedManyWithoutUserInput } from '../../gift-history/
 @InputType()
 export class UserCreateInput {
 
-    @Field(() => String, {nullable:true})
-    id?: string;
+    @Field(() => String, {nullable:false})
+    id!: string;
 
     @Field(() => String, {nullable:false})
     name!: string;
@@ -19,8 +19,8 @@ export class UserCreateInput {
     @Field(() => String, {nullable:false})
     email!: string;
 
-    @Field(() => Role, {nullable:false})
-    role!: keyof typeof Role;
+    @Field(() => Role, {nullable:true})
+    role?: keyof typeof Role;
 
     @Field(() => Int, {nullable:true})
     totalPointDay1?: number;
@@ -43,8 +43,8 @@ export class UserCreateInput {
     @Field(() => [CaharacterItemCreateInput], {nullable:true})
     items?: Array<CaharacterItemCreateInput>;
 
-    @Field(() => Game, {nullable:false})
-    participateGame!: keyof typeof Game;
+    @Field(() => Game, {nullable:true})
+    participateGame?: keyof typeof Game;
 
     @Field(() => Int, {nullable:true})
     pullableGachaTimes?: number;
