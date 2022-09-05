@@ -23,6 +23,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     env:
+      DATABASE_URL: ${{secrets.DATABASE_URL}}
       FIREBASE_API_KEY: ${{secrets.FIREBASE_API_KEY}}
       FIREBASE_AUTH_DOMAIN: ${{secrets.FIREBASE_AUTH_DOMAIN}}
       FIREBASE_PROJECT_ID: ${{secrets.FIREBASE_PROJECT_ID}}
@@ -33,9 +34,6 @@ jobs:
       FIREBASE_ADMIN_PROJECT_ID: ${{secrets.FIREBASE_ADMIN_PROJECT_ID}}
       FIREBASE_ADMIN_PRIVATE_KEY: ${{secrets.FIREBASE_ADMIN_PRIVATE_KEY}}
       FIREBASE_ADMIN_CLIENT_EMAIL: ${{secrets.FIREBASE_ADMIN_CLIENT_EMAIL}}
-    strategy:
-      matrix:
-        mongodb-version: [3.6, 4.0, 4.2]
 
     steps:
       - name: Checkout
@@ -46,11 +44,6 @@ jobs:
 
       - name: Prisma Generate
         run: yarn prisma:gen:test
-
-      - name: Start MongoDB v${{ matrix.mongodb-version }}
-        uses: supercharge/mongodb-github-action@1.2.0
-        with:
-          mongodb-version: ${{ matrix.mongodb-version }}
 
       - name: Unit Test
         run: yarn test
