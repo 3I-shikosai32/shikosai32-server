@@ -6,6 +6,8 @@ import PrismaService from '@/libs/prisma/prisma.service';
 dotenv.config();
 dotenv.config({ path: '.env.test' });
 
+jest.setTimeout(15000);
+
 const createFakeUser = async (prismaService: PrismaService) => {
   const fakeUser = {
     name: 'test user',

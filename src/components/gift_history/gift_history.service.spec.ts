@@ -7,6 +7,8 @@ import PrismaService from '@/libs/prisma/prisma.service';
 dotenv.config();
 dotenv.config({ path: '.env.test' });
 
+jest.setTimeout(15000);
+
 const createFakeGiftHistory = async (prismaService: PrismaService) => {
   const createdUser = await createFakeUser(prismaService);
   const createdGift = await createFakeGift(prismaService);
