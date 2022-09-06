@@ -50,8 +50,8 @@ export default class UserWhereInput {
   @Field(() => StringFilter, { nullable: true })
   avatarUrl?: StringFilter;
 
-  @Field(() => [CaharacterItemCompositeListFilter], { nullable: true })
-  characterItems?: CaharacterItemCompositeListFilter[];
+  @Field(() => CaharacterItemCompositeListFilter, { nullable: true })
+  items?: CaharacterItemCompositeListFilter;
 
   @Field(() => EnumGameFilter, { nullable: true })
   participateGame?: EnumGameFilter;
@@ -59,8 +59,8 @@ export default class UserWhereInput {
   @Field(() => IntFilter, { nullable: true })
   pullableGachaTimes?: IntFilter;
 
-  @Field(() => [GiftHistoryListRelationFilter], { nullable: true })
-  giftHistories?: GiftHistoryListRelationFilter[];
+  @Field(() => GiftHistoryListRelationFilter, { nullable: true })
+  giftHistories?: GiftHistoryListRelationFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
   createdAt?: DateTimeFilter;

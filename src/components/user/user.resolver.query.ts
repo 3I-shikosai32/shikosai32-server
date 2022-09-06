@@ -1,5 +1,6 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
 import FindUserArgs from './dto/args/findUser';
+import FindUsersArgs from './dto/args/findUsers';
 import User from './dto/object';
 import UserService from './user.service';
 
@@ -8,9 +9,16 @@ export default class UserQuery {
   constructor(private service: UserService) {}
 
   @Query(() => User, { nullable: true })
-  async findUserById(@Args() args: FindUserArgs) {
+  async findUser(@Args() args: FindUserArgs) {
     const user = await this.service.findUnique(args);
 
     return user;
+  }
+
+  @Query(() => [User])
+  async findUsers(@Args() args: FindUsersArgs) {
+    const users = await this.service.findMany(args);
+
+    return users;
   }
 }
