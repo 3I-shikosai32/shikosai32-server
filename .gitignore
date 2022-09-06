@@ -40,3 +40,6 @@ lerna-debug.log*
 
 # firebase admin secret keys
 *-firebase-adminsdk-*.json
+
+## GraphQL Schema
+schema.gql
