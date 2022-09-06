@@ -4,6 +4,6 @@ import ItemModule from './item/item.module'
 import UserModule from './user/user.module';
 
 
-const Components = [UserModule, GiftModule, GiftHistoryModule, ItemModule];
+const Components = [UserModule, ItemModule, GiftModule, GiftHistoryModule];
 
 export default Components;
