@@ -6,6 +6,8 @@ import PrismaService from '@/libs/prisma/prisma.service';
 dotenv.config();
 dotenv.config({ path: '.env.test' });
 
+jest.setTimeout(15000);
+
 const createFakeGift = async (prismaService: PrismaService) => {
   const fakeGift = {
     name: GiftName.BABY_STAR,
