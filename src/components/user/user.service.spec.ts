@@ -6,6 +6,30 @@ import PrismaService from '@/libs/prisma/prisma.service';
 dotenv.config();
 dotenv.config({ path: '.env.test' });
 
+const createFakeUser = async (prismaService: PrismaService) => {
+  const fakeUser = {
+    name: 'test user',
+    email: 'test@example.com',
+    character: Character.CAT,
+    iconUrl: 'https://example.com',
+    avatarUrl: 'https://example.com',
+  };
+  const createdUser = await prismaService.user.create({
+    data: fakeUser,
+    include: {
+      giftHistories: {
+        include: {
+          exchangedGift: true,
+        },
+      },
+    },
+  });
+
+  return createdUser;
+};
+
+export default createFakeUser;
+
 describe('User Service Test', () => {
   let prismaService: PrismaService;
   let userService: UserService;
@@ -16,23 +40,7 @@ describe('User Service Test', () => {
   });
 
   test('findUnique', async () => {
-    const fakeUser = {
-      name: 'test user',
-      email: 'test@example.com',
-      character: Character.CAT,
-      iconUrl: 'https://example.com',
-      avatarUrl: 'https://example.com',
-    };
-    const expectUser = await prismaService.user.create({
-      data: fakeUser,
-      include: {
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
-      },
-    });
+    const expectUser = await createFakeUser(prismaService);
 
     const result = userService.findUnique({ where: { id: expectUser.id } });
 
@@ -42,23 +50,7 @@ describe('User Service Test', () => {
   });
 
   test('findMany', async () => {
-    const fakeUser = {
-      name: 'test user',
-      email: 'test@example.com',
-      character: Character.CAT,
-      iconUrl: 'https://example.com',
-      avatarUrl: 'https://example.com',
-    };
-    const expectUser = await prismaService.user.create({
-      data: fakeUser,
-      include: {
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
-      },
-    });
+    const expectUser = await createFakeUser(prismaService);
 
     const result = userService.findMany({ where: { name: expectUser.name } });
 
@@ -97,23 +89,7 @@ describe('User Service Test', () => {
   });
 
   test('update', async () => {
-    const fakeUser = {
-      name: 'test user',
-      email: 'test@example.com',
-      character: Character.CAT,
-      iconUrl: 'https://example.com',
-      avatarUrl: 'https://example.com',
-    };
-    const expectUser = await prismaService.user.create({
-      data: fakeUser,
-      include: {
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
-      },
-    });
+    const expectUser = await createFakeUser(prismaService);
 
     const result = userService.update({
       where: { id: expectUser.id },
@@ -126,23 +102,7 @@ describe('User Service Test', () => {
   });
 
   test('delete', async () => {
-    const fakeUser = {
-      name: 'test user',
-      email: 'test@example.com',
-      character: Character.CAT,
-      iconUrl: 'https://example.com',
-      avatarUrl: 'https://example.com',
-    };
-    const expectUser = await prismaService.user.create({
-      data: fakeUser,
-      include: {
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
-      },
-    });
+    const expectUser = await createFakeUser(prismaService);
 
     const result = userService.delete({ where: { id: expectUser.id } });
 
