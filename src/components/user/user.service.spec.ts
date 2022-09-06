@@ -95,4 +95,33 @@ describe('User Service Test', () => {
 
     await prismaService.user.delete({ where: { id: expectUser?.id } });
   });
+
+  test('update', async () => {
+    const fakeUser = {
+      name: 'test user',
+      email: 'test@example.com',
+      character: Character.CAT,
+      iconUrl: 'https://example.com',
+      avatarUrl: 'https://example.com',
+    };
+    const expectUser = await prismaService.user.create({
+      data: fakeUser,
+      include: {
+        giftHistories: {
+          include: {
+            exchangedGift: true,
+          },
+        },
+      },
+    });
+
+    const result = userService.update({
+      where: { id: expectUser.id },
+      data: { name: 'updated test user' },
+    });
+
+    await expect(result).resolves.toEqual({ ...expectUser, name: 'updated test user' });
+
+    await prismaService.user.delete({ where: { id: expectUser.id } });
+  });
 });
