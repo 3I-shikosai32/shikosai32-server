@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { InputType, Field } from '@nestjs/graphql';
-import NestedGift from '@/components/gift/dto/object/nested';
+import GiftRelationFilter from '@/components/gift/dto/input/relationFilter';
 import UserRelationFilter from '@/components/user/dto/input/relationFilter';
 import { BoolFilter } from '@/libs/prisma/generated/prisma/bool-filter/input';
 import { DateTimeFilter } from '@/libs/prisma/generated/prisma/date-time-filter/input';
@@ -29,8 +29,8 @@ export default class GiftHistoryWhereInput {
   @Field(() => StringFilter, { nullable: false })
   userId?: StringFilter;
 
-  @Field(() => NestedGift, { nullable: false })
-  exchangedGift?: NestedGift;
+  @Field(() => GiftRelationFilter, { nullable: false })
+  exchangedGift?: GiftRelationFilter;
 
   @Field(() => StringFilter, { nullable: false })
   giftId?: StringFilter;
