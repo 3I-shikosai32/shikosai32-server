@@ -12,7 +12,7 @@ export default class GiftService {
       include: {
         giftHistories: {
           include: {
-            exchangedGift: true,
+            user: true,
           },
         },
       },
@@ -32,7 +32,7 @@ export default class GiftService {
       include: {
         giftHistories: {
           include: {
-            exchangedGift: true,
+            user: true,
           },
         },
       },
@@ -45,7 +45,7 @@ export default class GiftService {
       include: {
         giftHistories: {
           include: {
-            exchangedGift: true,
+            user: true,
           },
         },
       },
@@ -58,7 +58,7 @@ export default class GiftService {
       include: {
         giftHistories: {
           include: {
-            exchangedGift: true,
+            user: true,
           },
         },
       },
@@ -72,7 +72,7 @@ export default class GiftService {
       include: {
         giftHistories: {
           include: {
-            exchangedGift: true,
+            user: true,
           },
         },
       },
