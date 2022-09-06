@@ -12,8 +12,10 @@ export default class ItemService {
     });
   }
 
-  async findAll() {
-    return this.prismaService.item.findMany({});
+  async findMany(args?:{
+    where?: Prisma.ItemWhereInput;
+  }) {
+    return this.prismaService.item.findMany(args);
   }
 
   async create(args: { data: Prisma.ItemCreateInput }) {
