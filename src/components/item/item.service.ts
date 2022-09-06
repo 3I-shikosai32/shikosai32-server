@@ -10,7 +10,14 @@ export default class ItemService {
     return this.prismaService.item.findUnique(args);
   }
 
-  async findMany(args?: { where?: Prisma.ItemWhereInput }) {
+  async findMany(args?: {
+    where?: Prisma.ItemWhereInput;
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.ItemWhereUniqueInput;
+    orderBy?: Prisma.ItemOrderByWithAggregationInput[];
+    distinct?: Prisma.ItemScalarFieldEnum[];
+  }) {
     return this.prismaService.item.findMany(args);
   }
 
