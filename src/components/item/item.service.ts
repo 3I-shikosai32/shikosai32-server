@@ -10,9 +10,7 @@ export default class ItemService {
     return this.prismaService.item.findUnique(args);
   }
 
-  async findMany(args?:{
-    where?: Prisma.ItemWhereInput;
-  }) {
+  async findMany(args?: { where?: Prisma.ItemWhereInput }) {
     return this.prismaService.item.findMany(args);
   }
 
@@ -21,7 +19,7 @@ export default class ItemService {
   }
 
   async update(args: { where: Prisma.ItemWhereUniqueInput; data: Prisma.ItemUpdateInput }) {
-    return this.prismaService.item.update(args)
+    return this.prismaService.item.update(args);
   }
 
   async delete(args: { where: Prisma.ItemWhereUniqueInput }) {
