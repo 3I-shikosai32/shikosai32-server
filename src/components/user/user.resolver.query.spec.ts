@@ -1,4 +1,4 @@
-import { Character, Game, Gift, GiftHistory, Role, User } from '@prisma/client';
+import { Character, Game, Gift, GiftHistory, Item, Role, User } from '@prisma/client';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import UserQuery from './user.resolver.query';
 import UserService from './user.service';
@@ -7,8 +7,8 @@ describe('User Query Resolver Test', () => {
   let mockedUserService: DeepMockProxy<UserService>;
   let userQuery: UserQuery;
 
-  type FindUniqueReturn = User & { giftHistories: (GiftHistory & { exchangedGift: Gift })[] };
-  type FindManyReturn = (User & { giftHistories: (GiftHistory & { exchangedGift: Gift })[] })[];
+  type FindUniqueReturn = User & { items: (Item & { users: User[] })[]; giftHistories: (GiftHistory & { exchangedGift: Gift })[] };
+  type FindManyReturn = (User & { items: (Item & { users: User[] })[]; giftHistories: (GiftHistory & { exchangedGift: Gift })[] })[];
 
   beforeEach(() => {
     mockedUserService = mockDeep<UserService>();
@@ -27,7 +27,17 @@ describe('User Query Resolver Test', () => {
       character: Character.CAT,
       iconUrl: 'https://example.com',
       avatarUrl: 'https://example.com',
-      items: [],
+      items: [
+        {
+          id: 'abc-123',
+          url: 'https://example.com',
+          character: Character.CAT,
+          layer: 1,
+          users: [],
+          userIds: [],
+        },
+      ],
+      itemIds: [],
       participateGame: Game.NONE,
       pullableGachaTimes: 0,
       giftHistories: [],
@@ -54,7 +64,17 @@ describe('User Query Resolver Test', () => {
         character: Character.CAT,
         iconUrl: 'https://example.com',
         avatarUrl: 'https://example.com',
-        items: [],
+        items: [
+          {
+            id: 'abc-123',
+            url: 'https://example.com',
+            character: Character.CAT,
+            layer: 1,
+            users: [],
+            userIds: [],
+          },
+        ],
+        itemIds: [],
         participateGame: Game.NONE,
         pullableGachaTimes: 0,
         giftHistories: [],
@@ -71,7 +91,17 @@ describe('User Query Resolver Test', () => {
         character: Character.CAT,
         iconUrl: 'https://example.com',
         avatarUrl: 'https://example.com',
-        items: [],
+        items: [
+          {
+            id: 'abc-123',
+            url: 'https://example.com',
+            character: Character.CAT,
+            layer: 1,
+            users: [],
+            userIds: [],
+          },
+        ],
+        itemIds: [],
         participateGame: Game.NONE,
         pullableGachaTimes: 0,
         giftHistories: [],
