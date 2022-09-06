@@ -17,7 +17,6 @@ describe('User Service Test', () => {
 
   test('findUnique', async () => {
     const fakeUser = {
-      id: `${Date.now().toString().repeat(2).slice(2)}`,
       name: 'test user',
       email: 'test@example.com',
       character: Character.CAT,
@@ -40,5 +39,31 @@ describe('User Service Test', () => {
     await expect(result).resolves.toEqual(expectUser);
 
     await prismaService.user.delete({ where: { id: expectUser.id } });
+  });
+
+  test('findMany', async () => {
+    const fakeUser = {
+      name: 'test user',
+      email: 'test@example.com',
+      character: Character.CAT,
+      iconUrl: 'https://example.com',
+      avatarUrl: 'https://example.com',
+    };
+    const expectUser = await prismaService.user.create({
+      data: fakeUser,
+      include: {
+        giftHistories: {
+          include: {
+            exchangedGift: true,
+          },
+        },
+      },
+    });
+
+    const result = userService.findMany({ where: { name: expectUser.name } });
+
+    await expect(result).resolves.toEqual(expect.any(Array<typeof expectUser>));
+
+    await prismaService.user.deleteMany({ where: { name: expectUser.name } });
   });
 });
