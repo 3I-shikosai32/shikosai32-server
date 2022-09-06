@@ -8,13 +8,14 @@ describe('User Query Resolver Test', () => {
   let userQuery: UserQuery;
 
   type FindUniqueReturn = User & { giftHistories: (GiftHistory & { exchangedGift: Gift })[] };
+  type FindManyReturn = (User & { giftHistories: (GiftHistory & { exchangedGift: Gift })[] })[];
 
   beforeEach(() => {
     mockedUserService = mockDeep<UserService>();
     userQuery = new UserQuery(mockedUserService);
   });
 
-  test('findUserById', async () => {
+  test('findUser', async () => {
     const fakeUser: FindUniqueReturn = {
       id: 'abc-123',
       name: 'fake user',
@@ -35,8 +36,53 @@ describe('User Query Resolver Test', () => {
     mockedUserService.findUnique.mockResolvedValue(fakeUser);
 
     const expectUser = fakeUser;
-    const result = userQuery.findUserById({ where: { id: expectUser.id } });
+    const result = userQuery.findUser({ where: { id: expectUser.id } });
 
     await expect(result).resolves.toEqual(expectUser);
+  });
+
+  test('findUsers', async () => {
+    const fakeUser: FindManyReturn = [
+      {
+        id: 'abc-123',
+        name: 'fake user',
+        email: 'test@example.com',
+        role: Role.USER,
+        totalPointDay1: 0,
+        totalPointDay2: 0,
+        consumablePoint: 0,
+        character: Character.CAT,
+        iconUrl: 'https://example.com',
+        avatarUrl: 'https://example.com',
+        items: [],
+        participateGame: Game.NONE,
+        pullableGachaTimes: 0,
+        giftHistories: [],
+        createdAt: new Date(),
+      },
+      {
+        id: 'abc-456',
+        name: '_fake user',
+        email: 'test@example.com',
+        role: Role.USER,
+        totalPointDay1: 0,
+        totalPointDay2: 0,
+        consumablePoint: 0,
+        character: Character.CAT,
+        iconUrl: 'https://example.com',
+        avatarUrl: 'https://example.com',
+        items: [],
+        participateGame: Game.NONE,
+        pullableGachaTimes: 0,
+        giftHistories: [],
+        createdAt: new Date(),
+      },
+    ];
+    mockedUserService.findMany.mockResolvedValue(fakeUser);
+
+    const expectUser = fakeUser;
+    const result = userQuery.findUsers({ where: { name: { equals: expectUser[0].name } } });
+
+    await expect(result).resolves.toEqual(expect.any(Array<typeof expectUser>));
   });
 });
