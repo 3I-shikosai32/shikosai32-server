@@ -7,9 +7,7 @@ export default class ItemService {
   constructor(private prismaService: PrismaService) {}
 
   async findUnique(args: { where: Prisma.ItemWhereUniqueInput }) {
-    return this.prismaService.item.findUnique({
-      ...args,
-    });
+    return this.prismaService.item.findUnique(args);
   }
 
   async findMany(args?:{
@@ -19,20 +17,14 @@ export default class ItemService {
   }
 
   async create(args: { data: Prisma.ItemCreateInput }) {
-    return this.prismaService.item.create({
-      ...args,
-    });
+    return this.prismaService.item.create(args);
   }
 
   async update(args: { where: Prisma.ItemWhereUniqueInput; data: Prisma.ItemUpdateInput }) {
-    return this.prismaService.item.update({
-      ...args,
-    })
+    return this.prismaService.item.update(args)
   }
 
   async delete(args: { where: Prisma.ItemWhereUniqueInput }) {
-    return this.prismaService.item.delete({
-      ...args,
-    });
+    return this.prismaService.item.delete(args);
   }
 }
