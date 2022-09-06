@@ -9,7 +9,7 @@ export default class UserQuery {
   constructor(private service: UserService) {}
 
   @Query(() => User, { nullable: true })
-  async findUserById(@Args() args: FindUserArgs) {
+  async findUser(@Args() args: FindUserArgs) {
     const user = await this.service.findUnique(args);
 
     return user;

@@ -14,7 +14,7 @@ describe('User Query Resolver Test', () => {
     userQuery = new UserQuery(mockedUserService);
   });
 
-  test('findUserById', async () => {
+  test('findUser', async () => {
     const fakeUser: FindUniqueReturn = {
       id: 'abc-123',
       name: 'fake user',
@@ -35,7 +35,7 @@ describe('User Query Resolver Test', () => {
     mockedUserService.findUnique.mockResolvedValue(fakeUser);
 
     const expectUser = fakeUser;
-    const result = userQuery.findUserById({ where: { id: expectUser.id } });
+    const result = userQuery.findUser({ where: { id: expectUser.id } });
 
     await expect(result).resolves.toEqual(expectUser);
   });
