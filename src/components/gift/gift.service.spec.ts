@@ -6,6 +6,29 @@ import PrismaService from '@/libs/prisma/prisma.service';
 dotenv.config();
 dotenv.config({ path: '.env.test' });
 
+const createFakeGift = async (prismaService: PrismaService) => {
+  const fakeGift = {
+    name: GiftName.BABY_STAR,
+    iconUrl: 'https://example.com',
+    price: 0,
+    remaining: 0,
+  };
+  const createdGift = await prismaService.gift.create({
+    data: fakeGift,
+    include: {
+      giftHistories: {
+        include: {
+          exchangedGift: true,
+        },
+      },
+    },
+  });
+
+  return createdGift;
+};
+
+export default createFakeGift;
+
 describe('Gift Service Test', () => {
   let prismaService: PrismaService;
   let giftService: GiftService;
@@ -16,22 +39,7 @@ describe('Gift Service Test', () => {
   });
 
   test('findUnique', async () => {
-    const fakeGift = {
-      name: GiftName.BABY_STAR,
-      iconUrl: 'https://example.com',
-      price: 0,
-      remaining: 0,
-    };
-    const expectGift = await prismaService.gift.create({
-      data: fakeGift,
-      include: {
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
-      },
-    });
+    const expectGift = await createFakeGift(prismaService);
 
     const result = giftService.findUnique({ where: { id: expectGift.id } });
 
@@ -41,22 +49,7 @@ describe('Gift Service Test', () => {
   });
 
   test('findMany', async () => {
-    const fakeGift = {
-      name: GiftName.BABY_STAR,
-      iconUrl: 'https://example.com',
-      price: 0,
-      remaining: 0,
-    };
-    const expectGift = await prismaService.gift.create({
-      data: fakeGift,
-      include: {
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
-      },
-    });
+    const expectGift = await createFakeGift(prismaService);
 
     const result = giftService.findMany({ where: { name: expectGift.name } });
 
@@ -94,22 +87,7 @@ describe('Gift Service Test', () => {
   });
 
   test('update', async () => {
-    const fakeGift = {
-      name: GiftName.BABY_STAR,
-      iconUrl: 'https://example.com',
-      price: 0,
-      remaining: 0,
-    };
-    const expectGift = await prismaService.gift.create({
-      data: fakeGift,
-      include: {
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
-      },
-    });
+    const expectGift = await createFakeGift(prismaService);
 
     const result = giftService.update({
       where: { id: expectGift.id },
@@ -122,22 +100,7 @@ describe('Gift Service Test', () => {
   });
 
   test('delete', async () => {
-    const fakeGift = {
-      name: GiftName.BABY_STAR,
-      iconUrl: 'https://example.com',
-      price: 0,
-      remaining: 0,
-    };
-    const expectGift = await prismaService.gift.create({
-      data: fakeGift,
-      include: {
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
-      },
-    });
+    const expectGift = await createFakeGift(prismaService);
 
     const result = giftService.delete({ where: { id: expectGift.id } });
 
