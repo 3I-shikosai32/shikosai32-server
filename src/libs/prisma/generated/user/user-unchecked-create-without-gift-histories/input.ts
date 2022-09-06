@@ -9,8 +9,8 @@ import { Game } from '../../prisma/game/enum';
 @InputType()
 export class UserUncheckedCreateWithoutGiftHistoriesInput {
 
-    @Field(() => String, {nullable:false})
-    id!: string;
+    @Field(() => String, {nullable:true})
+    id?: string;
 
     @Field(() => String, {nullable:false})
     name!: string;
