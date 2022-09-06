@@ -4,7 +4,8 @@ import { StringFilter } from '../../prisma/string-filter/input';
 import { EnumRoleFilter } from '../../prisma/enum-role-filter/input';
 import { IntFilter } from '../../prisma/int-filter/input';
 import { EnumCharacterFilter } from '../../prisma/enum-character-filter/input';
-import { CaharacterItemObjectEqualityInput } from '../../prisma/caharacter-item-object-equality/input';
+import { ItemListRelationFilter } from '../../item/item-list-relation-filter/input';
+import { StringNullableListFilter } from '../../prisma/string-nullable-list-filter/input';
 import { EnumGameFilter } from '../../prisma/enum-game-filter/input';
 import { GiftHistoryListRelationFilter } from '../../gift-history/gift-history-list-relation-filter/input';
 import { DateTimeFilter } from '../../prisma/date-time-filter/input';
@@ -51,8 +52,11 @@ export class UserWhereInput {
     @Field(() => StringFilter, {nullable:true})
     avatarUrl?: StringFilter;
 
-    @Field(() => [CaharacterItemObjectEqualityInput], {nullable:true})
-    items?: Array<CaharacterItemObjectEqualityInput>;
+    @Field(() => ItemListRelationFilter, {nullable:true})
+    items?: ItemListRelationFilter;
+
+    @Field(() => StringNullableListFilter, {nullable:true})
+    itemIds?: StringNullableListFilter;
 
     @Field(() => EnumGameFilter, {nullable:true})
     participateGame?: EnumGameFilter;

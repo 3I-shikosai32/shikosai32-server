@@ -17,4 +17,7 @@ export class ItemCreateManyInput {
 
     @Field(() => Int, {nullable:false})
     layer!: number;
+
+    @Field(() => [String], {nullable:true})
+    userIds?: Array<string>;
 }

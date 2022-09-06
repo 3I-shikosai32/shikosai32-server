@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../../prisma/sort-order/enum';
-import { CaharacterItemOrderByCompositeAggregateInput } from '../../caharacter-item/caharacter-item-order-by-composite-aggregate/input';
+import { ItemOrderByRelationAggregateInput } from '../../item/item-order-by-relation-aggregate/input';
 import { GiftHistoryOrderByRelationAggregateInput } from '../../gift-history/gift-history-order-by-relation-aggregate/input';
 
 @InputType()
@@ -37,8 +37,11 @@ export class UserOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     avatarUrl?: keyof typeof SortOrder;
 
-    @Field(() => CaharacterItemOrderByCompositeAggregateInput, {nullable:true})
-    items?: CaharacterItemOrderByCompositeAggregateInput;
+    @Field(() => ItemOrderByRelationAggregateInput, {nullable:true})
+    items?: ItemOrderByRelationAggregateInput;
+
+    @Field(() => SortOrder, {nullable:true})
+    itemIds?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     participateGame?: keyof typeof SortOrder;

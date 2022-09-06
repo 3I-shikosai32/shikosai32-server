@@ -36,6 +36,9 @@ export class UserCountOrderByAggregateInput {
     avatarUrl?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    itemIds?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     participateGame?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

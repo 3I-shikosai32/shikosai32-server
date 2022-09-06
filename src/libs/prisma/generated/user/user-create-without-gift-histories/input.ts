@@ -3,7 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { Role } from '../../prisma/role/enum';
 import { Int } from '@nestjs/graphql';
 import { Character } from '../../prisma/character/enum';
-import { CaharacterItemCreateInput } from '../../caharacter-item/caharacter-item-create/input';
+import { ItemCreateNestedManyWithoutUsersInput } from '../../item/item-create-nested-many-without-users/input';
 import { Game } from '../../prisma/game/enum';
 
 @InputType()
@@ -39,8 +39,11 @@ export class UserCreateWithoutGiftHistoriesInput {
     @Field(() => String, {nullable:false})
     avatarUrl!: string;
 
-    @Field(() => [CaharacterItemCreateInput], {nullable:true})
-    items?: Array<CaharacterItemCreateInput>;
+    @Field(() => ItemCreateNestedManyWithoutUsersInput, {nullable:true})
+    items?: ItemCreateNestedManyWithoutUsersInput;
+
+    @Field(() => [String], {nullable:true})
+    itemIds?: Array<string>;
 
     @Field(() => Game, {nullable:true})
     participateGame?: keyof typeof Game;
