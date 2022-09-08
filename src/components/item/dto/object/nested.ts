@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Character } from '@prisma/client';
+import { Character } from '@/libs/prisma/generated/prisma/character/enum';
 
 @ObjectType()
 export default class NestedItem {
