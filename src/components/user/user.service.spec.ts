@@ -63,7 +63,7 @@ describe('User Service Test', () => {
 
     await expect(result).resolves.toEqual(expect.any(Array<typeof expectUser>));
 
-    await prismaService.user.deleteMany({ where: { name: expectUser.name } });
+    await prismaService.user.delete({ where: { id: expectUser.id } });
   });
 
   test('create', async () => {

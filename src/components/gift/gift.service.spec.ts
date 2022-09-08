@@ -57,7 +57,7 @@ describe('Gift Service Test', () => {
 
     await expect(result).resolves.toEqual(expect.any(Array<typeof expectGift>));
 
-    await prismaService.gift.deleteMany({ where: { name: expectGift.name } });
+    await prismaService.gift.delete({ where: { id: expectGift.id } });
   });
 
   test('create', async () => {
