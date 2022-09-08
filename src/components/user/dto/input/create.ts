@@ -17,7 +17,7 @@ export default class UserCreateInput {
   email: string;
 
   @Field(() => Role, { nullable: true, defaultValue: Role.USER })
-  role: Role;
+  role: keyof typeof Role;
 
   @Field(() => Int, { nullable: true, defaultValue: 0 })
   totalPointDay1: number;
@@ -29,7 +29,7 @@ export default class UserCreateInput {
   consumablePoint: number;
 
   @Field(() => Character, { nullable: false })
-  character: Character;
+  character: keyof typeof Character;
 
   @Field(() => String, { nullable: false })
   iconUrl: string;
@@ -44,7 +44,7 @@ export default class UserCreateInput {
   itemIds: string[];
 
   @Field(() => Game, { nullable: true, defaultValue: Game.NONE })
-  participateGame: Game;
+  participateGame: keyof typeof Game;
 
   @Field(() => Int, { nullable: true, defaultValue: 0 })
   pullableGachaTimes: number;

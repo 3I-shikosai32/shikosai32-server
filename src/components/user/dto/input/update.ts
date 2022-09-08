@@ -5,7 +5,7 @@ import { Role } from '@/libs/prisma/generated/prisma/role/enum';
 @InputType()
 export default class UserUpdateInput {
   @Field(() => Role, { nullable: true })
-  role?: Role;
+  role?: keyof typeof Role;
 
   @Field(() => Int, { nullable: true })
   totalPointDay1?: number;
@@ -20,7 +20,7 @@ export default class UserUpdateInput {
   itemIds?: string[];
 
   @Field(() => Game, { nullable: true })
-  participateGame?: Game;
+  participateGame?: keyof typeof Game;
 
   @Field(() => Int, { nullable: true })
   pullableGachaTimes?: number;
