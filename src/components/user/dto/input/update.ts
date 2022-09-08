@@ -1,5 +1,4 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { CaharacterItem } from '@/libs/prisma/generated/caharacter-item/caharacter-item/model';
 import { Game } from '@/libs/prisma/generated/prisma/game/enum';
 import { Role } from '@/libs/prisma/generated/prisma/role/enum';
 
@@ -17,8 +16,8 @@ export default class UserUpdateInput {
   @Field(() => Int, { nullable: true })
   consumablePoint?: number;
 
-  @Field(() => [CaharacterItem], { nullable: true })
-  characterItems?: CaharacterItem[];
+  @Field(() => [String], { nullable: true })
+  itemIds?: string[];
 
   @Field(() => Game, { nullable: true })
   participateGame?: Game;

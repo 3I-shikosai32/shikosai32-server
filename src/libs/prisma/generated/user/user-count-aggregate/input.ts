@@ -35,6 +35,9 @@ export class UserCountAggregateInput {
     avatarUrl?: true;
 
     @Field(() => Boolean, {nullable:true})
+    itemIds?: true;
+
+    @Field(() => Boolean, {nullable:true})
     participateGame?: true;
 
     @Field(() => Boolean, {nullable:true})

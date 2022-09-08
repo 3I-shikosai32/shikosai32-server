@@ -4,7 +4,8 @@ export enum ItemScalarFieldEnum {
     id = "id",
     url = "url",
     character = "character",
-    layer = "layer"
+    layer = "layer",
+    userIds = "userIds"
 }
 
 

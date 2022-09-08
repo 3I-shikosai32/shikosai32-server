@@ -35,6 +35,9 @@ export default class NestedUser {
   @Field(() => String, { nullable: false })
   avatarUrl: string;
 
+  @Field(() => [String], { nullable: false })
+  itemIds: string[];
+
   @Field(() => Game, { nullable: false })
   participateGame: Game;
 
