@@ -1,6 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import NestedItem from '@/components/item/dto/object/nested';
-import { GiftHistory } from '@/libs/prisma/generated/gift-history/gift-history/model';
+import NestedGiftHistory from '@/components/gift_history/dto/object/nested';
 import { Character } from '@/libs/prisma/generated/prisma/character/enum';
 import { Game } from '@/libs/prisma/generated/prisma/game/enum';
 import { Role } from '@/libs/prisma/generated/prisma/role/enum';
@@ -37,18 +36,12 @@ export default class UserCreateInput {
   @Field(() => String, { nullable: false })
   avatarUrl: string;
 
-  @Field(() => [NestedItem], { nullable: true, defaultValue: [] })
-  items: NestedItem[];
-
-  @Field(() => [String], { nullable: true, defaultValue: [] })
-  itemIds: string[];
-
   @Field(() => Game, { nullable: true, defaultValue: Game.NONE })
   participateGame: keyof typeof Game;
 
   @Field(() => Int, { nullable: true, defaultValue: 0 })
   pullableGachaTimes: number;
 
-  @Field(() => [GiftHistory], { nullable: true, defaultValue: [] })
-  giftHistories: GiftHistory[];
+  @Field(() => [NestedGiftHistory], { nullable: true })
+  giftHistories?: NestedGiftHistory[];
 }
