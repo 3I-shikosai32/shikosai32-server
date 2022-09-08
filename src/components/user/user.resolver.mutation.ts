@@ -13,7 +13,7 @@ export default class UserMutation {
   constructor(private service: UserService, private itemService: ItemService, private firebaseService: FirebaseService) {}
 
   @Mutation(() => Item)
-  async pullGacha(@Args() args: PullGachaArgs) {
+  async pullGacha(@Args() args: PullGachaArgs): Promise<Item> {
     const user = await this.service.findUnique(args);
     if (!user) {
       throw new Error('User not found');
@@ -35,7 +35,7 @@ export default class UserMutation {
     await this.service.update({
       ...args,
       data: {
-        pullableGachaTimes: user.pullableGachaTimes - 1,
+        pullableGachaTimes: decrementedPullableGachaTimes,
       },
     });
 
