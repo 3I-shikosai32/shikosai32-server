@@ -71,9 +71,16 @@ describe('User Mutation Resolver Test', () => {
     ];
     mockedItemService.findMany.mockResolvedValue(fakeItems);
 
-    const expectItems = fakeItems;
     const result = userMutation.pullGacha({ where: { id: fakeUser.id } });
 
-    await expect(result).resolves.toMatchObject(expectItems[0]);
+    const expectItem = {
+      id: expect.any(String),
+      url: expect.any(String),
+      character: Character.CAT,
+      layer: expect.any(Number),
+      users: expect.any(Array<User>),
+      userIds: expect.any(Array<string>),
+    };
+    await expect(result).resolves.toEqual(expectItem);
   });
 });
