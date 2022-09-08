@@ -19,6 +19,11 @@ const createFakeUser = async (prismaService: PrismaService) => {
   const createdUser = await prismaService.user.create({
     data: fakeUser,
     include: {
+      items: {
+        include: {
+          users: true,
+        },
+      },
       giftHistories: {
         include: {
           exchangedGift: true,
@@ -77,6 +82,11 @@ describe('User Service Test', () => {
         id: fakeUser.id,
       },
       include: {
+        items: {
+          include: {
+            users: true,
+          },
+        },
         giftHistories: {
           include: {
             exchangedGift: true,

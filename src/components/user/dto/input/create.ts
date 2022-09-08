@@ -1,5 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { CaharacterItem } from '@/libs/prisma/generated/caharacter-item/caharacter-item/model';
+import NestedItem from '@/components/item/dto/object/nested';
 import { GiftHistory } from '@/libs/prisma/generated/gift-history/gift-history/model';
 import { Character } from '@/libs/prisma/generated/prisma/character/enum';
 import { Game } from '@/libs/prisma/generated/prisma/game/enum';
@@ -17,7 +17,7 @@ export default class UserCreateInput {
   email: string;
 
   @Field(() => Role, { nullable: true, defaultValue: Role.USER })
-  role: Role;
+  role: keyof typeof Role;
 
   @Field(() => Int, { nullable: true, defaultValue: 0 })
   totalPointDay1: number;
@@ -29,7 +29,7 @@ export default class UserCreateInput {
   consumablePoint: number;
 
   @Field(() => Character, { nullable: false })
-  character: Character;
+  character: keyof typeof Character;
 
   @Field(() => String, { nullable: false })
   iconUrl: string;
@@ -37,11 +37,14 @@ export default class UserCreateInput {
   @Field(() => String, { nullable: false })
   avatarUrl: string;
 
-  @Field(() => [CaharacterItem], { nullable: true, defaultValue: [] })
-  characterItems: CaharacterItem[];
+  @Field(() => [NestedItem], { nullable: true, defaultValue: [] })
+  items: NestedItem[];
+
+  @Field(() => [String], { nullable: true, defaultValue: [] })
+  itemIds: string[];
 
   @Field(() => Game, { nullable: true, defaultValue: Game.NONE })
-  participateGame: Game;
+  participateGame: keyof typeof Game;
 
   @Field(() => Int, { nullable: true, defaultValue: 0 })
   pullableGachaTimes: number;

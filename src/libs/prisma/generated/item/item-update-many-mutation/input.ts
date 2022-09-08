@@ -14,4 +14,7 @@ export class ItemUpdateManyMutationInput {
 
     @Field(() => Int, {nullable:true})
     layer?: number;
+
+    @Field(() => [String], {nullable:true})
+    userIds?: Array<string>;
 }

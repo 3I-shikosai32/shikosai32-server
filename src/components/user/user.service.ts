@@ -10,6 +10,11 @@ export default class UserService {
     return this.prismaService.user.findUnique({
       ...args,
       include: {
+        items: {
+          include: {
+            users: true,
+          },
+        },
         giftHistories: {
           include: {
             exchangedGift: true,
@@ -30,6 +35,11 @@ export default class UserService {
     return this.prismaService.user.findMany({
       ...args,
       include: {
+        items: {
+          include: {
+            users: true,
+          },
+        },
         giftHistories: {
           include: {
             exchangedGift: true,
@@ -43,6 +53,11 @@ export default class UserService {
     return this.prismaService.user.create({
       ...args,
       include: {
+        items: {
+          include: {
+            users: true,
+          },
+        },
         giftHistories: {
           include: {
             exchangedGift: true,
@@ -56,6 +71,11 @@ export default class UserService {
     return this.prismaService.user.update({
       ...args,
       include: {
+        items: {
+          include: {
+            users: true,
+          },
+        },
         giftHistories: {
           include: {
             exchangedGift: true,
@@ -70,6 +90,11 @@ export default class UserService {
     const deleteUser = this.prismaService.user.delete({
       ...args,
       include: {
+        items: {
+          include: {
+            users: true,
+          },
+        },
         giftHistories: {
           include: {
             exchangedGift: true,

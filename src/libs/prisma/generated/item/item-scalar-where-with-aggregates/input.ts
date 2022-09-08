@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { StringWithAggregatesFilter } from '../../prisma/string-with-aggregates-filter/input';
 import { EnumCharacterWithAggregatesFilter } from '../../prisma/enum-character-with-aggregates-filter/input';
 import { IntWithAggregatesFilter } from '../../prisma/int-with-aggregates-filter/input';
+import { StringNullableListFilter } from '../../prisma/string-nullable-list-filter/input';
 
 @InputType()
 export class ItemScalarWhereWithAggregatesInput {
@@ -27,4 +28,7 @@ export class ItemScalarWhereWithAggregatesInput {
 
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     layer?: IntWithAggregatesFilter;
+
+    @Field(() => StringNullableListFilter, {nullable:true})
+    userIds?: StringNullableListFilter;
 }

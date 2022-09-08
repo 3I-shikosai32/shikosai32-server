@@ -43,6 +43,9 @@ export class UserGroupBy {
     @Field(() => String, {nullable:false})
     avatarUrl!: string;
 
+    @Field(() => [String], {nullable:true})
+    itemIds?: Array<string>;
+
     @Field(() => Game, {nullable:false})
     participateGame!: keyof typeof Game;
 

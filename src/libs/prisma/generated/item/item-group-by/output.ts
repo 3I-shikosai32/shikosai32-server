@@ -23,6 +23,9 @@ export class ItemGroupBy {
     @Field(() => Int, {nullable:false})
     layer!: number;
 
+    @Field(() => [String], {nullable:true})
+    userIds?: Array<string>;
+
     @Field(() => ItemCountAggregate, {nullable:true})
     _count?: ItemCountAggregate;
 
