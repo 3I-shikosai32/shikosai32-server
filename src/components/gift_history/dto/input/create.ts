@@ -2,8 +2,8 @@ import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export default class GiftHistoryCreateInput {
-  @Field(() => String, { nullable: false })
-  id: string;
+  @Field(() => String, { nullable: true })
+  id?: string;
 
   @Field(() => Boolean, { nullable: true, defaultValue: false })
   isDelivered: boolean;
