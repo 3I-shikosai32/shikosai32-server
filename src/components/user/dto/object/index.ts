@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import NestedGiftHistory from '@/components/gift_history/dto/object/nested';
-import { CaharacterItem } from '@/libs/prisma/generated/caharacter-item/caharacter-item/model';
+import NestedItem from '@/components/item/dto/object/nested';
 import { Character } from '@/libs/prisma/generated/prisma/character/enum';
 import { Game } from '@/libs/prisma/generated/prisma/game/enum';
 import { Role } from '@/libs/prisma/generated/prisma/role/enum';
@@ -37,8 +37,11 @@ export default class User {
   @Field(() => String, { nullable: false })
   avatarUrl: string;
 
-  @Field(() => [CaharacterItem], { nullable: false })
-  characterItems: CaharacterItem[];
+  @Field(() => [NestedItem], { nullable: false })
+  items: NestedItem[];
+
+  @Field(() => [String], { nullable: false })
+  itemIds: string[];
 
   @Field(() => Game, { nullable: false })
   participateGame: Game;
