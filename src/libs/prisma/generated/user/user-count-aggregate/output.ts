@@ -36,6 +36,9 @@ export class UserCountAggregate {
     avatarUrl!: number;
 
     @Field(() => Int, {nullable:false})
+    itemIds!: number;
+
+    @Field(() => Int, {nullable:false})
     participateGame!: number;
 
     @Field(() => Int, {nullable:false})

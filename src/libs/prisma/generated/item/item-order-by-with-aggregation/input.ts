@@ -22,6 +22,9 @@ export class ItemOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     layer?: keyof typeof SortOrder;
 
+    @Field(() => SortOrder, {nullable:true})
+    userIds?: keyof typeof SortOrder;
+
     @Field(() => ItemCountOrderByAggregateInput, {nullable:true})
     _count?: ItemCountOrderByAggregateInput;
 
