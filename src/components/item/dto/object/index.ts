@@ -20,5 +20,5 @@ export default class Item {
   users: NestedUser[];
 
   @Field(() => [String], { nullable: false })
-  userIds: string;
+  userIds: string[];
 }
