@@ -33,7 +33,13 @@ const createFakeGiftHistory = async (prismaService: PrismaService) => {
     },
   });
 
-  return createdGiftHistory;
+  return { createdUser, createdGift, createdGiftHistory };
+};
+
+const deleteFakeGiftHistory = async (prismaService: PrismaService, userId: string, giftId: string, giftHistoryId: string) => {
+  await prismaService.giftHistory.delete({ where: { id: giftHistoryId } });
+  await prismaService.user.delete({ where: { id: userId } });
+  await prismaService.gift.delete({ where: { id: giftId } });
 };
 
 describe('GiftHistory Service Test', () => {
@@ -46,23 +52,25 @@ describe('GiftHistory Service Test', () => {
   });
 
   test('findUnique', async () => {
-    const expectGiftHistory = await createFakeGiftHistory(prismaService);
+    const { createdUser, createdGift, createdGiftHistory } = await createFakeGiftHistory(prismaService);
+    const expectGiftHistory = createdGiftHistory;
 
     const result = giftHistoryService.findUnique({ where: { id: expectGiftHistory.id } });
 
     await expect(result).resolves.toEqual(expectGiftHistory);
 
-    await prismaService.giftHistory.delete({ where: { id: expectGiftHistory.id } });
+    await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, createdGiftHistory.id);
   });
 
   test('findMany', async () => {
-    const expectGiftHistory = await createFakeGiftHistory(prismaService);
+    const { createdUser, createdGift, createdGiftHistory } = await createFakeGiftHistory(prismaService);
+    const expectGiftHistory = createdGiftHistory;
 
     const result = giftHistoryService.findMany({ where: { isDelivered: expectGiftHistory.isDelivered } });
 
     await expect(result).resolves.toEqual(expect.any(Array<typeof expectGiftHistory>));
 
-    await prismaService.giftHistory.deleteMany({ where: { isDelivered: expectGiftHistory.isDelivered } });
+    await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, createdGiftHistory.id);
   });
 
   test('create', async () => {
@@ -92,14 +100,18 @@ describe('GiftHistory Service Test', () => {
         },
       },
     });
+    if (!expectGiftHistory) {
+      throw new Error('expectGiftHistory is null');
+    }
 
     await expect(result).toEqual(expectGiftHistory);
 
-    await prismaService.giftHistory.delete({ where: { id: expectGiftHistory?.id } });
+    await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, expectGiftHistory.id);
   });
 
   test('update', async () => {
-    const expectGiftHistory = await createFakeGiftHistory(prismaService);
+    const { createdUser, createdGift, createdGiftHistory } = await createFakeGiftHistory(prismaService);
+    const expectGiftHistory = createdGiftHistory;
 
     const result = giftHistoryService.update({
       where: { id: expectGiftHistory.id },
@@ -125,14 +137,18 @@ describe('GiftHistory Service Test', () => {
       },
     });
 
-    await prismaService.giftHistory.delete({ where: { id: expectGiftHistory.id } });
+    await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, createdGiftHistory.id);
   });
 
   test('delete', async () => {
-    const expectGiftHistory = await createFakeGiftHistory(prismaService);
+    const { createdUser, createdGift, createdGiftHistory } = await createFakeGiftHistory(prismaService);
+    const expectGiftHistory = createdGiftHistory;
 
     const result = giftHistoryService.delete({ where: { id: expectGiftHistory.id } });
 
     await expect(result).resolves.toEqual(expectGiftHistory);
+
+    await prismaService.user.delete({ where: { id: createdUser.id } });
+    await prismaService.gift.delete({ where: { id: createdGift.id } });
   });
 });
