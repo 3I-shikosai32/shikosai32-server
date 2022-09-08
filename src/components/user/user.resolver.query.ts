@@ -9,14 +9,14 @@ export default class UserQuery {
   constructor(private service: UserService) {}
 
   @Query(() => User, { nullable: true })
-  async findUser(@Args() args: FindUserArgs) {
+  async findUser(@Args() args: FindUserArgs): Promise<User | null> {
     const user = await this.service.findUnique(args);
 
     return user;
   }
 
   @Query(() => [User])
-  async findUsers(@Args() args: FindUsersArgs) {
+  async findUsers(@Args() args: FindUsersArgs): Promise<User[]> {
     const users = await this.service.findMany(args);
 
     return users;
