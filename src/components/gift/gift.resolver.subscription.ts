@@ -2,6 +2,6 @@ import { Resolver } from '@nestjs/graphql';
 import PubSubService from '@/libs/pubsub/pubsub.service';
 
 @Resolver()
-export default class UserSubscription {
+export default class GiftSubscription {
   constructor(private pubSubService: PubSubService) {}
 }
