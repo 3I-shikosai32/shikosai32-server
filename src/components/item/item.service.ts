@@ -7,7 +7,16 @@ export default class ItemService {
   constructor(private prismaService: PrismaService) {}
 
   async findUnique(args: { where: Prisma.ItemWhereUniqueInput }) {
-    return this.prismaService.item.findUnique(args);
+    return this.prismaService.item.findUnique({
+      ...args,
+      include: {
+        users: {
+          include: {
+            items: true,
+          },
+        },
+      },
+    });
   }
 
   async findMany(args?: {
@@ -18,18 +27,54 @@ export default class ItemService {
     orderBy?: Prisma.ItemOrderByWithAggregationInput[];
     distinct?: Prisma.ItemScalarFieldEnum[];
   }) {
-    return this.prismaService.item.findMany(args);
+    return this.prismaService.item.findMany({
+      ...args,
+      include: {
+        users: {
+          include: {
+            items: true,
+          },
+        },
+      },
+    });
   }
 
   async create(args: { data: Prisma.ItemCreateInput }) {
-    return this.prismaService.item.create(args);
+    return this.prismaService.item.create({
+      ...args,
+      include: {
+        users: {
+          include: {
+            items: true,
+          },
+        },
+      },
+    });
   }
 
   async update(args: { where: Prisma.ItemWhereUniqueInput; data: Prisma.ItemUpdateInput }) {
-    return this.prismaService.item.update(args);
+    return this.prismaService.item.update({
+      ...args,
+      include: {
+        users: {
+          include: {
+            items: true,
+          },
+        },
+      },
+    });
   }
 
   async delete(args: { where: Prisma.ItemWhereUniqueInput }) {
-    return this.prismaService.item.delete(args);
+    return this.prismaService.item.delete({
+      ...args,
+      include: {
+        users: {
+          include: {
+            items: true,
+          },
+        },
+      },
+    });
   }
 }
