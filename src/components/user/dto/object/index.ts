@@ -17,7 +17,7 @@ export default class User {
   email: string;
 
   @Field(() => Role, { nullable: false })
-  role: Role;
+  role: keyof typeof Role;
 
   @Field(() => Int, { nullable: false })
   totalPointDay1: number;
@@ -29,7 +29,7 @@ export default class User {
   consumablePoint: number;
 
   @Field(() => Character, { nullable: false })
-  character: Character;
+  character: keyof typeof Character;
 
   @Field(() => String, { nullable: false })
   iconUrl: string;
@@ -44,7 +44,7 @@ export default class User {
   itemIds: string[];
 
   @Field(() => Game, { nullable: false })
-  participateGame: Game;
+  participateGame: keyof typeof Game;
 
   @Field(() => Int, { nullable: false })
   pullableGachaTimes: number;

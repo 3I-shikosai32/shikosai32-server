@@ -11,7 +11,7 @@ export default class Item {
   url: string;
 
   @Field(() => Character, { nullable: false })
-  character: Character;
+  character: keyof typeof Character;
 
   @Field(() => Int, { nullable: false })
   layer: number;

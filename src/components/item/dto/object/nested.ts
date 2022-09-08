@@ -10,11 +10,11 @@ export default class NestedItem {
   url: string;
 
   @Field(() => Character, { nullable: false })
-  character: Character;
+  character: keyof typeof Character;
 
   @Field(() => Int, { nullable: false })
   layer: number;
 
   @Field(() => [String], { nullable: false })
-  userIds: string;
+  userIds: string[];
 }
