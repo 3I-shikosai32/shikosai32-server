@@ -8,16 +8,15 @@ dotenv.config({ path: '.env.test' });
 
 jest.setTimeout(15000);
 
-const createFakeUser = async (prismaService: PrismaService) => {
-  const fakeUser = {
-    name: 'test user',
-    email: 'test@example.com',
-    character: Character.CAT,
-    iconUrl: 'https://example.com',
-    avatarUrl: 'https://example.com',
-  };
+const createUser = async (prismaService: PrismaService) => {
   const createdUser = await prismaService.user.create({
-    data: fakeUser,
+    data: {
+      name: 'test user',
+      email: 'test@example.com',
+      character: Character.CAT,
+      iconUrl: 'https://example.com',
+      avatarUrl: 'https://example.com',
+    },
     include: {
       items: {
         include: {
@@ -35,7 +34,7 @@ const createFakeUser = async (prismaService: PrismaService) => {
   return createdUser;
 };
 
-export default createFakeUser;
+export default createUser;
 
 describe('User Service Test', () => {
   let prismaService: PrismaService;
@@ -47,39 +46,39 @@ describe('User Service Test', () => {
   });
 
   test('findUnique', async () => {
-    const expectUser = await createFakeUser(prismaService);
+    const createdUser = await createUser(prismaService);
 
-    const result = userService.findUnique({ where: { id: expectUser.id } });
+    const foundUser = await userService.findUnique({ where: { id: createdUser.id } });
 
-    await expect(result).resolves.toEqual(expectUser);
+    await expect(foundUser).toEqual(createdUser);
 
-    await prismaService.user.delete({ where: { id: expectUser.id } });
+    await prismaService.user.delete({ where: { id: createdUser.id } });
   });
 
   test('findMany', async () => {
-    const expectUser = await createFakeUser(prismaService);
+    const createdUser = await createUser(prismaService);
 
-    const result = userService.findMany({ where: { name: expectUser.name } });
+    const foundUsers = await userService.findMany({ where: { name: createdUser.name } });
 
-    await expect(result).resolves.toEqual(expect.any(Array<typeof expectUser>));
+    await expect(foundUsers).toEqual(expect.any(Array<typeof createdUser>));
 
-    await prismaService.user.delete({ where: { id: expectUser.id } });
+    await prismaService.user.delete({ where: { id: createdUser.id } });
   });
 
   test('create', async () => {
-    const fakeUser = {
-      id: '123456789012345678901234',
-      name: 'test user',
-      email: 'test@example.com',
-      character: Character.CAT,
-      iconUrl: 'https://example.com',
-      avatarUrl: 'https://example.com',
-    };
-    const result = await userService.create({ data: fakeUser });
+    const createdUser = await userService.create({
+      data: {
+        name: 'test user',
+        email: 'test@example.com',
+        character: Character.CAT,
+        iconUrl: 'https://example.com',
+        avatarUrl: 'https://example.com',
+      },
+    });
 
-    const expectUser = await prismaService.user.findUnique({
+    const foundUser = await prismaService.user.findUnique({
       where: {
-        id: fakeUser.id,
+        id: createdUser.id,
       },
       include: {
         items: {
@@ -95,29 +94,29 @@ describe('User Service Test', () => {
       },
     });
 
-    await expect(result).toEqual(expectUser);
+    await expect(createdUser).toEqual(foundUser);
 
-    await prismaService.user.delete({ where: { id: expectUser?.id } });
+    await prismaService.user.delete({ where: { id: createdUser.id } });
   });
 
   test('update', async () => {
-    const expectUser = await createFakeUser(prismaService);
+    const createdUser = await createUser(prismaService);
 
-    const result = userService.update({
-      where: { id: expectUser.id },
+    const updatedUser = await userService.update({
+      where: { id: createdUser.id },
       data: { name: 'updated test user' },
     });
 
-    await expect(result).resolves.toEqual({ ...expectUser, name: 'updated test user' });
+    await expect(updatedUser).toEqual({ ...createdUser, name: 'updated test user' });
 
-    await prismaService.user.delete({ where: { id: expectUser.id } });
+    await prismaService.user.delete({ where: { id: createdUser.id } });
   });
 
   test('delete', async () => {
-    const expectUser = await createFakeUser(prismaService);
+    const createdUser = await createUser(prismaService);
 
-    const result = userService.delete({ where: { id: expectUser.id } });
+    const deletedUser = await userService.delete({ where: { id: createdUser.id } });
 
-    await expect(result).resolves.toEqual(expectUser);
+    await expect(deletedUser).toEqual(createdUser);
   });
 });

@@ -8,15 +8,14 @@ dotenv.config({ path: '.env.test' });
 
 jest.setTimeout(15000);
 
-const createFakeGift = async (prismaService: PrismaService) => {
-  const fakeGift = {
-    name: GiftName.BABY_STAR,
-    iconUrl: 'https://example.com',
-    price: 0,
-    remaining: 0,
-  };
+const createGift = async (prismaService: PrismaService) => {
   const createdGift = await prismaService.gift.create({
-    data: fakeGift,
+    data: {
+      name: GiftName.BABY_STAR,
+      iconUrl: 'https://example.com',
+      price: 0,
+      remaining: 0,
+    },
     include: {
       giftHistories: {
         include: {
@@ -29,7 +28,7 @@ const createFakeGift = async (prismaService: PrismaService) => {
   return createdGift;
 };
 
-export default createFakeGift;
+export default createGift;
 
 describe('Gift Service Test', () => {
   let prismaService: PrismaService;
@@ -41,38 +40,38 @@ describe('Gift Service Test', () => {
   });
 
   test('findUnique', async () => {
-    const expectGift = await createFakeGift(prismaService);
+    const createdGift = await createGift(prismaService);
 
-    const result = giftService.findUnique({ where: { id: expectGift.id } });
+    const foundGift = await giftService.findUnique({ where: { id: createdGift.id } });
 
-    await expect(result).resolves.toEqual(expectGift);
+    await expect(foundGift).toEqual(createdGift);
 
-    await prismaService.gift.delete({ where: { id: expectGift.id } });
+    await prismaService.gift.delete({ where: { id: createdGift.id } });
   });
 
   test('findMany', async () => {
-    const expectGift = await createFakeGift(prismaService);
+    const createdGift = await createGift(prismaService);
 
-    const result = giftService.findMany({ where: { name: expectGift.name } });
+    const foundGifts = await giftService.findMany({ where: { name: createdGift.name } });
 
-    await expect(result).resolves.toEqual(expect.any(Array<typeof expectGift>));
+    await expect(foundGifts).toEqual(expect.any(Array<typeof createdGift>));
 
-    await prismaService.gift.delete({ where: { id: expectGift.id } });
+    await prismaService.gift.delete({ where: { id: createdGift.id } });
   });
 
   test('create', async () => {
-    const fakeGift = {
-      id: '123456789012345678901234',
-      name: GiftName.BABY_STAR,
-      iconUrl: 'https://example.com',
-      price: 0,
-      remaining: 0,
-    };
-    const result = await giftService.create({ data: fakeGift });
+    const createdGift = await giftService.create({
+      data: {
+        name: GiftName.BABY_STAR,
+        iconUrl: 'https://example.com',
+        price: 0,
+        remaining: 0,
+      },
+    });
 
-    const expectGift = await prismaService.gift.findUnique({
+    const foundGift = await prismaService.gift.findUnique({
       where: {
-        id: fakeGift.id,
+        id: createdGift.id,
       },
       include: {
         giftHistories: {
@@ -83,29 +82,29 @@ describe('Gift Service Test', () => {
       },
     });
 
-    await expect(result).toEqual(expectGift);
+    await expect(createdGift).toEqual(foundGift);
 
-    await prismaService.gift.delete({ where: { id: expectGift?.id } });
+    await prismaService.gift.delete({ where: { id: createdGift.id } });
   });
 
   test('update', async () => {
-    const expectGift = await createFakeGift(prismaService);
+    const createdGift = await createGift(prismaService);
 
-    const result = giftService.update({
-      where: { id: expectGift.id },
+    const updatedGift = await giftService.update({
+      where: { id: createdGift.id },
       data: { name: GiftName.CABAGGE },
     });
 
-    await expect(result).resolves.toEqual({ ...expectGift, name: GiftName.CABAGGE });
+    await expect(updatedGift).toEqual({ ...createdGift, name: GiftName.CABAGGE });
 
-    await prismaService.gift.delete({ where: { id: expectGift.id } });
+    await prismaService.gift.delete({ where: { id: createdGift.id } });
   });
 
   test('delete', async () => {
-    const expectGift = await createFakeGift(prismaService);
+    const createdGift = await createGift(prismaService);
 
-    const result = giftService.delete({ where: { id: expectGift.id } });
+    const deletedGift = await giftService.delete({ where: { id: createdGift.id } });
 
-    await expect(result).resolves.toEqual(expectGift);
+    await expect(deletedGift).toEqual(createdGift);
   });
 });

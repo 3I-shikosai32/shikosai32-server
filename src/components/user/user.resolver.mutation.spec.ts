@@ -11,9 +11,8 @@ describe('User Mutation Resolver Test', () => {
   let mockedFirebaseService: DeepMockProxy<FirebaseService>;
   let userMutation: UserMutation;
 
-  type UserFindUniqueReturn = User & { items: (Item & { users: User[] })[]; giftHistories: (GiftHistory & { exchangedGift: Gift })[] };
-  type UserCreateReturn = User & { items: (Item & { users: User[] })[]; giftHistories: (GiftHistory & { exchangedGift: Gift })[] };
-  type ItemFindManyReturn = (Item & { users: (User & { items: Item[] })[] })[];
+  type UserModel = User & { items: (Item & { users: User[] })[]; giftHistories: (GiftHistory & { exchangedGift: Gift })[] };
+  type ItemModel = Item & { users: (User & { items: Item[] })[] };
 
   beforeEach(() => {
     mockedUserService = mockDeep<UserService>();
@@ -23,10 +22,10 @@ describe('User Mutation Resolver Test', () => {
   });
 
   test('createUser', async () => {
-    const fakeItems: ItemFindManyReturn = [];
-    mockedItemService.findMany.mockResolvedValue(fakeItems);
+    const itemFindManyRes: ItemModel[] = [];
+    mockedItemService.findMany.mockResolvedValue(itemFindManyRes);
 
-    const fakeUser: UserCreateReturn = {
+    const userCreateRes: UserModel = {
       id: 'abc-123',
       name: 'fake user',
       email: 'test@example.com',
@@ -44,16 +43,15 @@ describe('User Mutation Resolver Test', () => {
       giftHistories: [],
       createdAt: new Date(),
     };
-    mockedUserService.create.mockResolvedValue(fakeUser);
+    mockedUserService.create.mockResolvedValue(userCreateRes);
 
-    const expectUser = fakeUser;
-    const result = userMutation.createUser({ data: expectUser });
+    const createdUser = await userMutation.createUser({ data: userCreateRes });
 
-    await expect(result).resolves.toEqual(expectUser);
+    await expect(createdUser).toEqual(userCreateRes);
   });
 
   test('updateUser', async () => {
-    const fakeUser: UserCreateReturn = {
+    const updateRes: UserModel = {
       id: 'abc-123',
       name: 'fake user',
       email: 'test@example.com',
@@ -71,16 +69,15 @@ describe('User Mutation Resolver Test', () => {
       giftHistories: [],
       createdAt: new Date(),
     };
-    mockedUserService.update.mockResolvedValue(fakeUser);
+    mockedUserService.update.mockResolvedValue(updateRes);
 
-    const expectUser = fakeUser;
-    const result = userMutation.updateUser({ where: { id: expectUser.id }, data: expectUser });
+    const updatedUser = await userMutation.updateUser({ where: { id: updateRes.id }, data: updateRes });
 
-    await expect(result).resolves.toEqual(expectUser);
+    await expect(updatedUser).toEqual(updateRes);
   });
 
   test('pullGacha', async () => {
-    const fakeUser: UserFindUniqueReturn = {
+    const userFindUniqueRes: UserModel = {
       id: 'abc-123',
       name: 'fake user',
       email: 'test@example.com',
@@ -107,9 +104,9 @@ describe('User Mutation Resolver Test', () => {
       giftHistories: [],
       createdAt: new Date(),
     };
-    mockedUserService.findUnique.mockResolvedValue(fakeUser);
+    mockedUserService.findUnique.mockResolvedValue(userFindUniqueRes);
 
-    const fakeItems: ItemFindManyReturn = [
+    const itemFindManyRes: ItemModel[] = [
       {
         id: 'def-123',
         url: 'https://example.com',
@@ -127,9 +124,9 @@ describe('User Mutation Resolver Test', () => {
         userIds: [],
       },
     ];
-    mockedItemService.findMany.mockResolvedValue(fakeItems);
+    mockedItemService.findMany.mockResolvedValue(itemFindManyRes);
 
-    const result = userMutation.pullGacha({ where: { id: fakeUser.id } });
+    const pulledItem = await userMutation.pullGacha({ where: { id: userFindUniqueRes.id } });
 
     const expectItem = {
       id: expect.any(String),
@@ -139,6 +136,6 @@ describe('User Mutation Resolver Test', () => {
       users: expect.any(Array<User>),
       userIds: expect.any(Array<string>),
     };
-    await expect(result).resolves.toEqual(expectItem);
+    await expect(pulledItem).toEqual(expectItem);
   });
 });
