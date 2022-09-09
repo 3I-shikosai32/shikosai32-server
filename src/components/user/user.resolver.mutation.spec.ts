@@ -52,6 +52,33 @@ describe('User Mutation Resolver Test', () => {
     await expect(result).resolves.toEqual(expectUser);
   });
 
+  test('updateUser', async () => {
+    const fakeUser: UserCreateReturn = {
+      id: 'abc-123',
+      name: 'fake user',
+      email: 'test@example.com',
+      role: Role.USER,
+      totalPointDay1: 0,
+      totalPointDay2: 0,
+      consumablePoint: 0,
+      character: Character.CAT,
+      iconUrl: 'https://example.com',
+      avatarUrl: 'https://example.com',
+      items: [],
+      itemIds: [],
+      participateGame: Game.NONE,
+      pullableGachaTimes: 0,
+      giftHistories: [],
+      createdAt: new Date(),
+    };
+    mockedUserService.update.mockResolvedValue(fakeUser);
+
+    const expectUser = fakeUser;
+    const result = userMutation.updateUser({ where: { id: expectUser.id }, data: expectUser });
+
+    await expect(result).resolves.toEqual(expectUser);
+  });
+
   test('pullGacha', async () => {
     const fakeUser: UserFindUniqueReturn = {
       id: 'abc-123',

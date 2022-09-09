@@ -4,6 +4,7 @@ import Item from '../item/dto/object';
 import ItemService from '../item/item.service';
 import CreateUserArgs from './dto/args/createUser';
 import PullGachaArgs from './dto/args/pullGacha';
+import UpdateUserArgs from './dto/args/updateUser';
 import User from './dto/object';
 import UserService from './user.service';
 import AuthGuard from '@/guards/auth.guard';
@@ -34,6 +35,13 @@ export default class UserMutation {
         },
       },
     });
+
+    return user;
+  }
+
+  @Mutation(() => User)
+  async updateUser(@Args() args: UpdateUserArgs): Promise<User> {
+    const user = await this.service.update(args);
 
     return user;
   }
