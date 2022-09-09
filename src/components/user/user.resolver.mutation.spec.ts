@@ -77,7 +77,7 @@ describe('User Mutation Resolver Test', () => {
   });
 
   test('incrementTotalPoint', async () => {
-    const findUniqueRes: UserFindUniqueReturn = {
+    const findUniqueRes: UserModel = {
       id: 'abc-123',
       name: 'fake user',
       email: 'test@example.com',
@@ -97,7 +97,7 @@ describe('User Mutation Resolver Test', () => {
     };
     mockedUserService.findUnique.mockResolvedValue(findUniqueRes);
 
-    const updateRes: UserCreateReturn = {
+    const updateRes: UserModel = {
       id: 'abc-123',
       name: 'fake user',
       email: 'test@example.com',
@@ -117,10 +117,9 @@ describe('User Mutation Resolver Test', () => {
     };
     mockedUserService.update.mockResolvedValue(updateRes);
 
-    const expectUser = updateRes;
-    const result = userMutation.incrementTotalPoint({ where: { id: expectUser.id }, increment: 10 });
+    const incrementedUser = await userMutation.incrementTotalPoint({ where: { id: updateRes.id }, increment: 10 });
 
-    await expect(result).resolves.toEqual(expectUser);
+    await expect(incrementedUser).toEqual(updateRes);
   });
 
   test('pullGacha', async () => {
