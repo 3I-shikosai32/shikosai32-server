@@ -3,6 +3,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import Item from '../item/dto/object';
 import ItemService from '../item/item.service';
 import CreateUserArgs from './dto/args/createUser';
+import IncrementTotalPointArgs from './dto/args/incrementTotalPoint';
 import PullGachaArgs from './dto/args/pullGacha';
 import UpdateUserArgs from './dto/args/updateUser';
 import User from './dto/object';
@@ -42,6 +43,35 @@ export default class UserMutation {
   @Mutation(() => User)
   async updateUser(@Args() args: UpdateUserArgs): Promise<User> {
     const user = await this.service.update(args);
+
+    return user;
+  }
+
+  @Mutation(() => User)
+  async incrementTotalPoint(@Args() args: IncrementTotalPointArgs): Promise<User> {
+    let user = await this.service.findUnique(args);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const now = new Date(Date.now() + (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000);
+    if (now <= new Date('2022-10-22')) {
+      user = await this.service.update({
+        ...args,
+        data: {
+          totalPointDay1: user.totalPointDay1 + args.increment,
+          consumablePoint: user.consumablePoint + args.increment,
+        },
+      });
+    } else {
+      user = await this.service.update({
+        ...args,
+        data: {
+          totalPointDay2: user.totalPointDay2 + args.increment,
+          consumablePoint: user.consumablePoint + args.increment,
+        },
+      });
+    }
 
     return user;
   }
