@@ -8,18 +8,17 @@ dotenv.config({ path: '.env.test' });
 
 jest.setTimeout(15000);
 
-const createFakeItem = async (prismaService: PrismaService) => {
-  const fakeItem = {
-    url: 'https://example.com',
-    character: Character.CAT,
-    layer: 1,
-    users: {
-      connect: [],
-    },
-    userIds: [],
-  };
+const createItem = async (prismaService: PrismaService) => {
   const createdItem = await prismaService.item.create({
-    data: fakeItem,
+    data: {
+      url: 'https://example.com',
+      character: Character.CAT,
+      layer: 1,
+      users: {
+        connect: [],
+      },
+      userIds: [],
+    },
     include: {
       users: {
         include: {
@@ -32,7 +31,7 @@ const createFakeItem = async (prismaService: PrismaService) => {
   return createdItem;
 };
 
-export default createFakeItem;
+export default createItem;
 
 describe('Item Service Test', () => {
   let prismaService: PrismaService;
@@ -44,41 +43,41 @@ describe('Item Service Test', () => {
   });
 
   test('findUnique', async () => {
-    const expectItem = await createFakeItem(prismaService);
+    const createdItem = await createItem(prismaService);
 
-    const result = itemService.findUnique({ where: { id: expectItem.id } });
+    const foundItem = await itemService.findUnique({ where: { id: createdItem.id } });
 
-    await expect(result).resolves.toEqual(expectItem);
+    await expect(foundItem).toEqual(createdItem);
 
-    await prismaService.item.delete({ where: { id: expectItem.id } });
+    await prismaService.item.delete({ where: { id: createdItem.id } });
   });
 
   test('findMany', async () => {
-    const expectItem = await createFakeItem(prismaService);
+    const createdItem = await createItem(prismaService);
 
-    const result = itemService.findMany({ where: { character: expectItem.character } });
+    const foundItems = await itemService.findMany({ where: { character: createdItem.character } });
 
-    await expect(result).resolves.toEqual(expect.any(Array<typeof expectItem>));
+    await expect(foundItems).toEqual(expect.any(Array<typeof createdItem>));
 
-    await prismaService.item.delete({ where: { id: expectItem.id } });
+    await prismaService.item.delete({ where: { id: createdItem.id } });
   });
 
   test('create', async () => {
-    const fakeItem = {
-      id: '123456789012345678901234',
-      url: 'https://example.com',
-      character: Character.CAT,
-      layer: 1,
-      users: {
-        connect: [],
+    const createdItem = await itemService.create({
+      data: {
+        url: 'https://example.com',
+        character: Character.CAT,
+        layer: 1,
+        users: {
+          connect: [],
+        },
+        userIds: [],
       },
-      userIds: [],
-    };
-    const result = await itemService.create({ data: fakeItem });
+    });
 
-    const expectItem = await prismaService.item.findUnique({
+    const foundItem = await prismaService.item.findUnique({
       where: {
-        id: fakeItem.id,
+        id: createdItem.id,
       },
       include: {
         users: {
@@ -89,29 +88,29 @@ describe('Item Service Test', () => {
       },
     });
 
-    await expect(result).toEqual(expectItem);
+    await expect(createdItem).toEqual(foundItem);
 
-    await prismaService.item.delete({ where: { id: expectItem?.id } });
+    await prismaService.item.delete({ where: { id: createdItem.id } });
   });
 
   test('update', async () => {
-    const expectItem = await createFakeItem(prismaService);
+    const createdItem = await createItem(prismaService);
 
-    const result = itemService.update({
-      where: { id: expectItem.id },
+    const updatedItem = await itemService.update({
+      where: { id: createdItem.id },
       data: { character: Character.FOX },
     });
 
-    await expect(result).resolves.toEqual({ ...expectItem, character: Character.FOX });
+    await expect(updatedItem).toEqual({ ...createdItem, character: Character.FOX });
 
-    await prismaService.item.delete({ where: { id: expectItem.id } });
+    await prismaService.item.delete({ where: { id: createdItem.id } });
   });
 
   test('delete', async () => {
-    const expectItem = await createFakeItem(prismaService);
+    const createdItem = await createItem(prismaService);
 
-    const result = itemService.delete({ where: { id: expectItem.id } });
+    const deletedItem = await itemService.delete({ where: { id: createdItem.id } });
 
-    await expect(result).resolves.toEqual(expectItem);
+    await expect(deletedItem).toEqual(createdItem);
   });
 });

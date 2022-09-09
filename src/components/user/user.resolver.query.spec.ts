@@ -7,8 +7,7 @@ describe('User Query Resolver Test', () => {
   let mockedUserService: DeepMockProxy<UserService>;
   let userQuery: UserQuery;
 
-  type FindUniqueReturn = User & { items: (Item & { users: User[] })[]; giftHistories: (GiftHistory & { exchangedGift: Gift })[] };
-  type FindManyReturn = (User & { items: (Item & { users: User[] })[]; giftHistories: (GiftHistory & { exchangedGift: Gift })[] })[];
+  type UserModel = User & { items: (Item & { users: User[] })[]; giftHistories: (GiftHistory & { exchangedGift: Gift })[] };
 
   beforeEach(() => {
     mockedUserService = mockDeep<UserService>();
@@ -16,7 +15,7 @@ describe('User Query Resolver Test', () => {
   });
 
   test('findUser', async () => {
-    const fakeUser: FindUniqueReturn = {
+    const findUniqueRes: UserModel = {
       id: 'abc-123',
       name: 'fake user',
       email: 'test@example.com',
@@ -43,16 +42,15 @@ describe('User Query Resolver Test', () => {
       giftHistories: [],
       createdAt: new Date(),
     };
-    mockedUserService.findUnique.mockResolvedValue(fakeUser);
+    mockedUserService.findUnique.mockResolvedValue(findUniqueRes);
 
-    const expectUser = fakeUser;
-    const result = userQuery.findUser({ where: { id: expectUser.id } });
+    const foundUser = await userQuery.findUser({ where: { id: findUniqueRes.id } });
 
-    await expect(result).resolves.toEqual(expectUser);
+    await expect(foundUser).toEqual(findUniqueRes);
   });
 
   test('findUsers', async () => {
-    const fakeUser: FindManyReturn = [
+    const findManyRes: UserModel[] = [
       {
         id: 'abc-123',
         name: 'fake user',
@@ -108,11 +106,10 @@ describe('User Query Resolver Test', () => {
         createdAt: new Date(),
       },
     ];
-    mockedUserService.findMany.mockResolvedValue(fakeUser);
+    mockedUserService.findMany.mockResolvedValue(findManyRes);
 
-    const expectUser = fakeUser;
-    const result = userQuery.findUsers({ where: { name: { equals: expectUser[0].name } } });
+    const foundUsers = await userQuery.findUsers({ where: { name: { equals: findManyRes[0].name } } });
 
-    await expect(result).resolves.toEqual(expect.any(Array<typeof expectUser>));
+    await expect(foundUsers).toEqual(expect.any(Array<typeof findManyRes[0]>));
   });
 });
