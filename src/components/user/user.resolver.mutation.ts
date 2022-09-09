@@ -14,7 +14,7 @@ import FirebaseService from '@/libs/firebase/firebase.service';
 export default class UserMutation {
   constructor(private service: UserService, private itemService: ItemService, private firebaseService: FirebaseService) {}
 
-  @Mutation(() => Item)
+  @Mutation(() => User)
   async createUser(@Args() args: CreateUserArgs): Promise<User> {
     const items = await this.itemService.findMany({
       where: {
