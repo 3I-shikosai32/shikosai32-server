@@ -4,6 +4,7 @@ import Item from '../item/dto/object';
 import ItemService from '../item/item.service';
 import CreateUserArgs from './dto/args/createUser';
 import IncrementTotalPointArgs from './dto/args/incrementTotalPoint';
+import JoinGameArgs from './dto/args/joinGame';
 import PullGachaArgs from './dto/args/pullGacha';
 import UpdateUserArgs from './dto/args/updateUser';
 import User from './dto/object';
@@ -72,6 +73,18 @@ export default class UserMutation {
         },
       });
     }
+
+    return user;
+  }
+
+  @Mutation(() => User)
+  async joinGame(@Args() args: JoinGameArgs): Promise<User> {
+    const user = await this.service.update({
+      ...args,
+      data: {
+        participateGame: args.game,
+      },
+    });
 
     return user;
   }
