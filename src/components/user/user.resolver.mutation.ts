@@ -1,8 +1,10 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Game } from '@prisma/client';
 import Item from '../item/dto/object';
 import ItemService from '../item/item.service';
 import CreateUserArgs from './dto/args/createUser';
+import ExitGameArgs from './dto/args/exitGame';
 import IncrementTotalPointArgs from './dto/args/incrementTotalPoint';
 import JoinGameArgs from './dto/args/joinGame';
 import PullGachaArgs from './dto/args/pullGacha';
@@ -83,6 +85,18 @@ export default class UserMutation {
       ...args,
       data: {
         participateGame: args.game,
+      },
+    });
+
+    return user;
+  }
+
+  @Mutation(() => User)
+  async exitGame(@Args() args: ExitGameArgs): Promise<User> {
+    const user = await this.service.update({
+      where: args.where,
+      data: {
+        participateGame: Game.NONE,
       },
     });
 
