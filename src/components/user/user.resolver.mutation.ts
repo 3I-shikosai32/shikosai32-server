@@ -50,7 +50,9 @@ export default class UserMutation {
 
   @Mutation(() => User)
   async incrementTotalPoint(@Args() args: IncrementTotalPointArgs): Promise<User> {
-    let user = await this.service.findUnique(args);
+    let user = await this.service.findUnique({
+      where: args.where,
+    });
     if (!user) {
       throw new Error('User not found');
     }
@@ -58,7 +60,7 @@ export default class UserMutation {
     const now = new Date(Date.now() + (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000);
     if (now <= new Date('2022-10-22')) {
       user = await this.service.update({
-        ...args,
+        where: args.where,
         data: {
           totalPointDay1: user.totalPointDay1 + args.increment,
           consumablePoint: user.consumablePoint + args.increment,
@@ -66,7 +68,7 @@ export default class UserMutation {
       });
     } else {
       user = await this.service.update({
-        ...args,
+        where: args.where,
         data: {
           totalPointDay2: user.totalPointDay2 + args.increment,
           consumablePoint: user.consumablePoint + args.increment,
@@ -80,7 +82,7 @@ export default class UserMutation {
   @Mutation(() => User)
   async joinGame(@Args() args: JoinGameArgs): Promise<User> {
     const user = await this.service.update({
-      ...args,
+      where: args.where,
       data: {
         participateGame: args.game,
       },
