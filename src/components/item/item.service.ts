@@ -1,12 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import PrismaService from '@/libs/prisma/prisma.service';
+import StrictPropertyCheck from '@/types/strictPropertyCheck';
+
+type FindUnique = {
+  where: Prisma.ItemWhereUniqueInput;
+};
+type FindMany = {
+  where?: Prisma.ItemWhereInput;
+  skip?: number;
+  take?: number;
+  cursor?: Prisma.ItemWhereUniqueInput;
+  orderBy?: Prisma.ItemOrderByWithAggregationInput[];
+  distinct?: Prisma.ItemScalarFieldEnum[];
+};
+type Create = {
+  data: Prisma.ItemCreateInput;
+};
+type Update = {
+  where: Prisma.ItemWhereUniqueInput;
+  data: Prisma.ItemUpdateInput;
+};
+type Delete = {
+  where: Prisma.ItemWhereUniqueInput;
+};
 
 @Injectable()
 export default class ItemService {
   constructor(private prismaService: PrismaService) {}
 
-  async findUnique(args: { where: Prisma.ItemWhereUniqueInput }) {
+  async findUnique<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>) {
     return this.prismaService.item.findUnique({
       ...args,
       include: {
@@ -19,14 +42,7 @@ export default class ItemService {
     });
   }
 
-  async findMany(args?: {
-    where?: Prisma.ItemWhereInput;
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.ItemWhereUniqueInput;
-    orderBy?: Prisma.ItemOrderByWithAggregationInput[];
-    distinct?: Prisma.ItemScalarFieldEnum[];
-  }) {
+  async findMany<T extends FindMany>(args?: StrictPropertyCheck<T, FindMany>) {
     return this.prismaService.item.findMany({
       ...args,
       include: {
@@ -39,7 +55,7 @@ export default class ItemService {
     });
   }
 
-  async create(args: { data: Prisma.ItemCreateInput }) {
+  async create<T extends Create>(args: StrictPropertyCheck<T, Create>) {
     return this.prismaService.item.create({
       ...args,
       include: {
@@ -52,7 +68,7 @@ export default class ItemService {
     });
   }
 
-  async update(args: { where: Prisma.ItemWhereUniqueInput; data: Prisma.ItemUpdateInput }) {
+  async update<T extends Update>(args: StrictPropertyCheck<T, Update>) {
     return this.prismaService.item.update({
       ...args,
       include: {
@@ -65,7 +81,7 @@ export default class ItemService {
     });
   }
 
-  async delete(args: { where: Prisma.ItemWhereUniqueInput }) {
+  async delete<T extends Delete>(args: StrictPropertyCheck<T, Delete>) {
     return this.prismaService.item.delete({
       ...args,
       include: {
