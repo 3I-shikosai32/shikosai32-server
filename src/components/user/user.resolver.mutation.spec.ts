@@ -122,6 +122,32 @@ describe('User Mutation Resolver Test', () => {
     await expect(incrementedUser).toEqual(updateRes);
   });
 
+  test('joinGame', async () => {
+    const updateRes: UserModel = {
+      id: 'abc-123',
+      name: 'fake user',
+      email: 'test@example.com',
+      role: Role.USER,
+      totalPointDay1: 0,
+      totalPointDay2: 0,
+      consumablePoint: 0,
+      character: Character.CAT,
+      iconUrl: 'https://example.com',
+      avatarUrl: 'https://example.com',
+      items: [],
+      itemIds: [],
+      participateGame: Game.COIN_DROPPING,
+      pullableGachaTimes: 0,
+      giftHistories: [],
+      createdAt: new Date(),
+    };
+    mockedUserService.update.mockResolvedValue(updateRes);
+
+    const updatedUser = await userMutation.joinGame({ where: { id: updateRes.id }, game: Game.COIN_DROPPING });
+
+    await expect(updatedUser).toEqual(updateRes);
+  });
+
   test('pullGacha', async () => {
     const userFindUniqueRes: UserModel = {
       id: 'abc-123',
