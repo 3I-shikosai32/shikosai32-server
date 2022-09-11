@@ -5,7 +5,7 @@ import Item from '../item/dto/object';
 import ItemService from '../item/item.service';
 import CreateUserArgs from './dto/args/createUser';
 import ExitGameArgs from './dto/args/exitGame';
-import IncrementTotalPointArgs from './dto/args/incrementTotalPoint';
+import IncrementPointArgs from './dto/args/incrementPoint';
 import JoinGameArgs from './dto/args/joinGame';
 import PullGachaArgs from './dto/args/pullGacha';
 import UpdateUserArgs from './dto/args/updateUser';
@@ -51,7 +51,7 @@ export default class UserMutation {
   }
 
   @Mutation(() => User)
-  async incrementTotalPoint(@Args() args: IncrementTotalPointArgs): Promise<User> {
+  async incrementPoint(@Args() args: IncrementPointArgs): Promise<User> {
     let user = await this.service.findUnique({
       where: args.where,
     });
