@@ -18,4 +18,7 @@ export class GiftHistoryMinAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     createdAt?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    deliveredAt?: true;
 }

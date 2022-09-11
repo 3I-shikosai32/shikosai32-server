@@ -26,4 +26,7 @@ export class GiftHistory {
 
     @Field(() => Date, {nullable:false})
     createdAt!: Date;
+
+    @Field(() => Date, {nullable:true})
+    deliveredAt!: Date | null;
 }

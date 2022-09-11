@@ -107,7 +107,8 @@ model GiftHistory {
   exchangedGift Gift   @relation(fields: [giftId], references: [id])
   giftId        String @map("gift_id") @db.ObjectId
 
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  deliveredAt DateTime? @map("delivered_at")
 
   @@map("gift_histories")
 }
