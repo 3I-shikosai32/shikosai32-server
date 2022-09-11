@@ -1,7 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringWithAggregatesFilter } from '../../prisma/string-with-aggregates-filter/input';
-import { EnumGiftNameWithAggregatesFilter } from '../../prisma/enum-gift-name-with-aggregates-filter/input';
 import { IntWithAggregatesFilter } from '../../prisma/int-with-aggregates-filter/input';
 import { DateTimeWithAggregatesFilter } from '../../prisma/date-time-with-aggregates-filter/input';
 
@@ -20,8 +19,8 @@ export class GiftScalarWhereWithAggregatesInput {
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     id?: StringWithAggregatesFilter;
 
-    @Field(() => EnumGiftNameWithAggregatesFilter, {nullable:true})
-    name?: EnumGiftNameWithAggregatesFilter;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    name?: StringWithAggregatesFilter;
 
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     iconUrl?: StringWithAggregatesFilter;

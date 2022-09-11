@@ -82,19 +82,10 @@ model Item {
   @@map("items")
 }
 
-enum GiftName {
-  BABY_STAR
-  MOROKOSHI
-  CABAGGE
-  UMAIBO_CHEESE
-  UMAIBO_CORN_POTAGE
-  UMAIBO_MENTAIKO
-}
-
 model Gift {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  name    GiftName
-  iconUrl String   @map("icon_url")
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  iconUrl String @map("icon_url")
 
   price     Int
   remaining Int
