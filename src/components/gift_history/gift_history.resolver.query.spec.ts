@@ -1,4 +1,4 @@
-import { Character, Game, Gift, GiftHistory, GiftName, Role, User } from '@prisma/client';
+import { Character, Game, Gift, GiftHistory, Role, User } from '@prisma/client';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import GiftHistoryQuery from './gift_history.resolver.query';
 import GiftHistoryService from './gift_history.service';
@@ -38,7 +38,7 @@ describe('GiftHistory Query Resolver Test', () => {
       userId: 'def-123',
       exchangedGift: {
         id: 'ghi-123',
-        name: GiftName.BABY_STAR,
+        name: 'うまい棒',
         iconUrl: 'https://example.com',
         price: 10,
         remaining: 1,
@@ -80,7 +80,7 @@ describe('GiftHistory Query Resolver Test', () => {
         userId: 'def-123',
         exchangedGift: {
           id: 'ghi-123',
-          name: GiftName.BABY_STAR,
+          name: 'うまい棒',
           iconUrl: 'https://example.com',
           price: 10,
           remaining: 1,
@@ -113,7 +113,7 @@ describe('GiftHistory Query Resolver Test', () => {
         userId: 'def-456',
         exchangedGift: {
           id: 'ghi-456',
-          name: GiftName.BABY_STAR,
+          name: 'うまい棒',
           iconUrl: 'https://example.com',
           price: 10,
           remaining: 1,

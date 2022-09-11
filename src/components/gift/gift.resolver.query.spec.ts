@@ -1,4 +1,4 @@
-import { Gift, GiftHistory, GiftName, User } from '@prisma/client';
+import { Gift, GiftHistory, User } from '@prisma/client';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import GiftQuery from './gift.resolver.query';
 import GiftService from './gift.service';
@@ -17,7 +17,7 @@ describe('Gift Query Resolver Test', () => {
   test('findGift', async () => {
     const findUniqueRes: GiftModel = {
       id: 'abc-123',
-      name: GiftName.BABY_STAR,
+      name: 'うまい棒',
       iconUrl: 'https://example.com',
       price: 10,
       remaining: 1,
@@ -35,7 +35,7 @@ describe('Gift Query Resolver Test', () => {
     const findManyRes: GiftModel[] = [
       {
         id: 'abc-123',
-        name: GiftName.BABY_STAR,
+        name: 'うまい棒',
         iconUrl: 'https://example.com',
         price: 10,
         remaining: 1,
@@ -44,7 +44,7 @@ describe('Gift Query Resolver Test', () => {
       },
       {
         id: 'abc-456',
-        name: GiftName.BABY_STAR,
+        name: 'うまい棒',
         iconUrl: 'https://example.com',
         price: 10,
         remaining: 1,

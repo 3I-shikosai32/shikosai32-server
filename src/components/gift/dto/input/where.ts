@@ -2,7 +2,6 @@
 import { InputType, Field } from '@nestjs/graphql';
 import GiftHistoryListRelationFilter from '@/components/gift_history/dto/input/listRelationFilter';
 import { DateTimeFilter } from '@/libs/prisma/generated/prisma/date-time-filter/input';
-import { EnumGiftNameFilter } from '@/libs/prisma/generated/prisma/enum-gift-name-filter/input';
 import { IntFilter } from '@/libs/prisma/generated/prisma/int-filter/input';
 import { StringFilter } from '@/libs/prisma/generated/prisma/string-filter/input';
 
@@ -20,8 +19,8 @@ export default class GiftWhereInput {
   @Field(() => StringFilter, { nullable: true })
   id?: StringFilter;
 
-  @Field(() => EnumGiftNameFilter, { nullable: true })
-  name?: EnumGiftNameFilter;
+  @Field(() => StringFilter, { nullable: true })
+  name?: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
   iconUrl?: StringFilter;
