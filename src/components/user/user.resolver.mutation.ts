@@ -122,7 +122,7 @@ export default class UserMutation {
 
     const decrementedPullableGachaTimes = user.pullableGachaTimes - 1;
     if (decrementedPullableGachaTimes < 0) {
-      throw new Error('Internel Server Error: Pullable Gacha Times is less than 0');
+      throw new Error('Pullable gacha times is less than 0');
     }
 
     await this.service.update({
