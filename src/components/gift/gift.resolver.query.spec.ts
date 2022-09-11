@@ -15,6 +15,23 @@ describe('Gift Query Resolver Test', () => {
   });
 
   test('findGift', async () => {
+    const findUniqueRes: GiftModel = {
+      id: 'abc-123',
+      name: GiftName.BABY_STAR,
+      iconUrl: 'https://example.com',
+      price: 10,
+      remaining: 1,
+      giftHistories: [],
+      createdAt: new Date(),
+    };
+    mockedGiftService.findUnique.mockResolvedValue(findUniqueRes);
+
+    const foundGift = await giftQuery.findGift({ where: { id: findUniqueRes.id } });
+
+    await expect(foundGift).toEqual(findUniqueRes);
+  });
+
+  test('findGifts', async () => {
     const findManyRes: GiftModel[] = [
       {
         id: 'abc-123',
