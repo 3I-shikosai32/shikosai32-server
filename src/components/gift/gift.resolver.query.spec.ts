@@ -30,4 +30,32 @@ describe('Gift Query Resolver Test', () => {
 
     await expect(foundGift).toEqual(findUniqueRes);
   });
+
+  test('findGifts', async () => {
+    const findManyRes: GiftModel[] = [
+      {
+        id: 'abc-123',
+        name: GiftName.BABY_STAR,
+        iconUrl: 'https://example.com',
+        price: 10,
+        remaining: 1,
+        giftHistories: [],
+        createdAt: new Date(),
+      },
+      {
+        id: 'abc-456',
+        name: GiftName.BABY_STAR,
+        iconUrl: 'https://example.com',
+        price: 10,
+        remaining: 1,
+        giftHistories: [],
+        createdAt: new Date(),
+      },
+    ];
+    mockedGiftService.findMany.mockResolvedValue(findManyRes);
+
+    const foundGifts = await giftQuery.findGifts({ where: { name: { equals: findManyRes[0].name } } });
+
+    await expect(foundGifts).toEqual(expect.any(Array<typeof findManyRes[0]>));
+  });
 });

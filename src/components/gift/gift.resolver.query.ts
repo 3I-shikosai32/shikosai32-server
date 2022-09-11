@@ -1,5 +1,6 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import FindGiftArgs from './dto/args/findGift';
+import FindGiftsArgs from './dto/args/findGifts';
 import Gift from './dto/object';
 import GiftService from './gift.service';
 
@@ -12,5 +13,12 @@ export default class GiftQuery {
     const gift = await this.service.findUnique(args);
 
     return gift;
+  }
+
+  @Query(() => [Gift])
+  async findGifts(@Args() args: FindGiftsArgs): Promise<Gift[]> {
+    const gifts = await this.service.findMany(args);
+
+    return gifts;
   }
 }
