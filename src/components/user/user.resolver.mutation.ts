@@ -50,35 +50,44 @@ export default class UserMutation {
     return user;
   }
 
-  @Mutation(() => User)
-  async incrementPoint(@Args() args: IncrementPointArgs): Promise<User> {
-    let user = await this.service.findUnique({
-      where: args.where,
-    });
-    if (!user) {
-      throw new Error('User not found');
-    }
-
+  @Mutation(() => [User])
+  async incrementPoint(@Args() args: IncrementPointArgs): Promise<User[]> {
     const now = new Date(Date.now() + (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000);
-    if (now <= new Date('2022-10-22')) {
-      user = await this.service.update({
-        where: args.where,
-        data: {
-          totalPointDay1: user.totalPointDay1 + args.increment,
-          consumablePoint: user.consumablePoint + args.increment,
-        },
-      });
-    } else {
-      user = await this.service.update({
-        where: args.where,
-        data: {
-          totalPointDay2: user.totalPointDay2 + args.increment,
-          consumablePoint: user.consumablePoint + args.increment,
-        },
-      });
-    }
+    const isBeforeDay2 = now <= new Date('2022-10-22');
 
-    return user;
+    const users = await Promise.all(
+      args.users.map(async (arg) => {
+        const foundUser = await this.service.findUnique({
+          where: { id: arg.id },
+        });
+        if (!foundUser) {
+          throw new Error('User not found');
+        }
+
+        let updatedUser: User;
+        if (isBeforeDay2) {
+          updatedUser = await this.service.update({
+            where: { id: arg.id },
+            data: {
+              totalPointDay1: foundUser.totalPointDay1 + arg.increment,
+              consumablePoint: foundUser.consumablePoint + arg.increment,
+            },
+          });
+        } else {
+          updatedUser = await this.service.update({
+            where: { id: arg.id },
+            data: {
+              totalPointDay2: foundUser.totalPointDay2 + arg.increment,
+              consumablePoint: foundUser.consumablePoint + arg.increment,
+            },
+          });
+        }
+
+        return updatedUser;
+      }),
+    );
+
+    return users;
   }
 
   @Mutation(() => User)
