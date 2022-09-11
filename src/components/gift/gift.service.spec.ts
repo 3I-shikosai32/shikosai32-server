@@ -1,4 +1,3 @@
-import { GiftName } from '@prisma/client';
 import dotenv from 'dotenv';
 import GiftService from './gift.service';
 import PrismaService from '@/libs/prisma/prisma.service';
@@ -11,7 +10,7 @@ jest.setTimeout(15000);
 const createGift = async (prismaService: PrismaService) => {
   const createdGift = await prismaService.gift.create({
     data: {
-      name: GiftName.BABY_STAR,
+      name: 'うまい棒',
       iconUrl: 'https://example.com',
       price: 0,
       remaining: 0,
@@ -62,7 +61,7 @@ describe('Gift Service Test', () => {
   test('create', async () => {
     const createdGift = await giftService.create({
       data: {
-        name: GiftName.BABY_STAR,
+        name: 'うまい棒',
         iconUrl: 'https://example.com',
         price: 0,
         remaining: 0,
@@ -92,10 +91,10 @@ describe('Gift Service Test', () => {
 
     const updatedGift = await giftService.update({
       where: { id: createdGift.id },
-      data: { name: GiftName.CABAGGE },
+      data: { name: 'もろこし輪太郎' },
     });
 
-    await expect(updatedGift).toEqual({ ...createdGift, name: GiftName.CABAGGE });
+    await expect(updatedGift).toEqual({ ...createdGift, name: 'もろこし輪太郎' });
 
     await prismaService.gift.delete({ where: { id: createdGift.id } });
   });

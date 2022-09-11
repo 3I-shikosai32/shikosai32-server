@@ -1,4 +1,4 @@
-import { Character, Game, Gift, GiftHistory, GiftName, Item, Role, User } from '@prisma/client';
+import { Character, Game, Gift, GiftHistory, Item, Role, User } from '@prisma/client';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import GiftService from '../gift/gift.service';
 import UserService from '../user/user.service';
@@ -25,7 +25,7 @@ describe('GiftHistory Mutation Resolver Test', () => {
   test('exchangeGift', async () => {
     const giftFindUniqueRes: GiftModel = {
       id: 'abc-123',
-      name: GiftName.BABY_STAR,
+      name: 'うまい棒',
       iconUrl: 'https://example.com',
       price: 10,
       remaining: 1,

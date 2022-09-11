@@ -1,6 +1,5 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
-import { GiftName } from '../../prisma/gift-name/enum';
 import { Int } from '@nestjs/graphql';
 import { GiftCountAggregate } from '../gift-count-aggregate/output';
 import { GiftAvgAggregate } from '../gift-avg-aggregate/output';
@@ -14,8 +13,8 @@ export class GiftGroupBy {
     @Field(() => String, {nullable:false})
     id!: string;
 
-    @Field(() => GiftName, {nullable:false})
-    name!: keyof typeof GiftName;
+    @Field(() => String, {nullable:false})
+    name!: string;
 
     @Field(() => String, {nullable:false})
     iconUrl!: string;
