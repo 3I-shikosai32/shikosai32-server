@@ -76,7 +76,7 @@ describe('User Mutation Resolver Test', () => {
     await expect(updatedUser).toEqual(updateRes);
   });
 
-  test('incrementTotalPoint', async () => {
+  test('incrementPoint', async () => {
     const findUniqueRes: UserModel = {
       id: 'abc-123',
       name: 'fake user',
@@ -117,9 +117,9 @@ describe('User Mutation Resolver Test', () => {
     };
     mockedUserService.update.mockResolvedValue(updateRes);
 
-    const incrementedUser = await userMutation.incrementTotalPoint({ where: { id: updateRes.id }, increment: 10 });
+    const incrementedUser = await userMutation.incrementPoint({ users: [{ id: updateRes.id, increment: 10 }] });
 
-    await expect(incrementedUser).toEqual(updateRes);
+    await expect(incrementedUser).toEqual(expect.arrayContaining([updateRes]));
   });
 
   test('joinGame', async () => {
