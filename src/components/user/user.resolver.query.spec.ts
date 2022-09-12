@@ -1,17 +1,22 @@
 import { Character, Game, Gift, GiftHistory, Item, Role, User } from '@prisma/client';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
+import ItemService from '../item/item.service';
+import ObtainedStatus from './dto/object/obtainmentStatus';
 import UserQuery from './user.resolver.query';
 import UserService from './user.service';
 
 describe('User Query Resolver Test', () => {
   let mockedUserService: DeepMockProxy<UserService>;
+  let mockedItemService: DeepMockProxy<ItemService>;
   let userQuery: UserQuery;
 
   type UserModel = User & { items: (Item & { users: User[] })[]; giftHistories: (GiftHistory & { exchangedGift: Gift })[] };
+  type ItemModel = Item & { users: (User & { items: Item[] })[] };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     mockedUserService = mockDeep<UserService>();
-    userQuery = new UserQuery(mockedUserService);
+    mockedItemService = mockDeep<ItemService>();
+    userQuery = new UserQuery(mockedUserService, mockedItemService);
   });
 
   test('findUser', async () => {
@@ -111,5 +116,85 @@ describe('User Query Resolver Test', () => {
     const foundUsers = await userQuery.findUsers({ where: { name: { equals: findManyRes[0].name } } });
 
     await expect(foundUsers).toEqual(expect.any(Array<typeof findManyRes[0]>));
+  });
+
+  test('getObtainmentStatuses', async () => {
+    const findUniqueRes: UserModel = {
+      id: 'abc-123',
+      name: 'fake user',
+      email: 'test@example.com',
+      role: Role.USER,
+      totalPointDay1: 0,
+      totalPointDay2: 0,
+      consumablePoint: 0,
+      character: Character.CAT,
+      iconUrl: 'https://example.com',
+      avatarUrl: 'https://example.com',
+      items: [
+        {
+          id: 'def-456',
+          url: 'https://example.com',
+          character: Character.CAT,
+          layer: 1,
+          users: [],
+          userIds: [],
+        },
+      ],
+      itemIds: ['def-456'],
+      participateGame: Game.NONE,
+      pullableGachaTimes: 0,
+      giftHistories: [],
+      createdAt: new Date(),
+    };
+    mockedUserService.findUnique.mockResolvedValue(findUniqueRes);
+
+    const itemFindManyRes: ItemModel[] = [
+      {
+        id: 'def-123',
+        url: 'https://example.com',
+        character: Character.CAT,
+        layer: 1,
+        users: [],
+        userIds: [],
+      },
+      {
+        id: 'def-456',
+        url: 'https://example.com',
+        character: Character.CAT,
+        layer: 1,
+        users: [],
+        userIds: [],
+      },
+    ];
+    mockedItemService.findMany.mockResolvedValue(itemFindManyRes);
+
+    const gotObtainmentStatuses = await userQuery.getObtainmentStatuses({ where: { id: findUniqueRes.id } });
+
+    const expectObtainedStatuses: ObtainedStatus[] = [
+      {
+        item: {
+          id: 'def-123',
+          url: 'https://example.com',
+          character: Character.CAT,
+          layer: 1,
+          users: [],
+          userIds: [],
+        },
+        obtained: false,
+      },
+      {
+        item: {
+          id: 'def-456',
+          url: 'https://example.com',
+          character: Character.CAT,
+          layer: 1,
+          users: [],
+          userIds: [],
+        },
+        obtained: true,
+      },
+    ];
+
+    await expect(gotObtainmentStatuses).toEqual(expectObtainedStatuses);
   });
 });
