@@ -22,6 +22,48 @@ describe('GiftHistory Mutation Resolver Test', () => {
     giftHistoryMutation = new GiftHistoryMutation(mockedGiftHistoryService, mockedUserService, mockedGiftService);
   });
 
+  test('updateGiftHistory', async () => {
+    const updateRes: GiftHistoryModel = {
+      id: 'abc-123',
+      isDelivered: false,
+      user: {
+        id: 'def-123',
+        name: 'fake user',
+        email: 'test@example.com',
+        role: Role.USER,
+        totalPointDay1: 10,
+        totalPointDay2: 0,
+        consumablePoint: 0,
+        character: Character.CAT,
+        iconUrl: 'https://example.com',
+        avatarUrl: 'https://example.com',
+        itemIds: [],
+        participateGame: Game.NONE,
+        pullableGachaTimes: 0,
+        giftHistories: [],
+        createdAt: new Date(),
+      },
+      userId: 'def-123',
+      exchangedGift: {
+        id: 'ghi-123',
+        name: 'うまい棒',
+        iconUrl: 'https://example.com',
+        price: 10,
+        remaining: 1,
+        giftHistories: [],
+        createdAt: new Date(),
+      },
+      giftId: 'ghi-123',
+      createdAt: new Date(),
+      deliveredAt: null,
+    };
+    mockedGiftHistoryService.update.mockResolvedValue(updateRes);
+
+    const updatedGiftHistory = await giftHistoryMutation.updateGiftHistory({ where: { id: updateRes.id }, data: updateRes });
+
+    await expect(updatedGiftHistory).toEqual(updateRes);
+  });
+
   test('exchangeGift', async () => {
     const giftFindUniqueRes: GiftModel = {
       id: 'abc-123',
