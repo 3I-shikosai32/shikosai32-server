@@ -1,6 +1,6 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 
-@ArgsType()
+@InputType()
 export default class UserIncrementPointInput {
   @Field(() => String, { nullable: false })
   id: string;
