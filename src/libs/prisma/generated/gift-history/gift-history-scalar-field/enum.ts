@@ -5,7 +5,8 @@ export enum GiftHistoryScalarFieldEnum {
     isDelivered = "isDelivered",
     userId = "userId",
     giftId = "giftId",
-    createdAt = "createdAt"
+    createdAt = "createdAt",
+    deliveredAt = "deliveredAt"
 }
 
 

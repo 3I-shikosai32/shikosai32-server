@@ -12,4 +12,7 @@ export class GiftHistoryUncheckedUpdateWithoutUserInput {
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
+
+    @Field(() => Date, {nullable:true})
+    deliveredAt?: Date | string;
 }

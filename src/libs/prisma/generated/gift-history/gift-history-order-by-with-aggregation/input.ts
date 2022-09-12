@@ -23,6 +23,9 @@ export class GiftHistoryOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
 
+    @Field(() => SortOrder, {nullable:true})
+    deliveredAt?: keyof typeof SortOrder;
+
     @Field(() => GiftHistoryCountOrderByAggregateInput, {nullable:true})
     _count?: GiftHistoryCountOrderByAggregateInput;
 
