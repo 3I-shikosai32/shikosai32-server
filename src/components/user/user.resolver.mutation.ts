@@ -12,6 +12,7 @@ import UpdateUserArgs from './dto/args/updateUser';
 import User from './dto/object';
 import UserService from './user.service';
 import AuthGuard from '@/guards/auth.guard';
+import RoleGuard from '@/guards/role.guard';
 import FirebaseService from '@/libs/firebase/firebase.service';
 
 @Resolver()
@@ -51,6 +52,7 @@ export default class UserMutation {
   }
 
   @Mutation(() => [User])
+  @UseGuards(RoleGuard)
   async incrementPoint(@Args() args: IncrementPointArgs): Promise<User[]> {
     const now = new Date(Date.now() + (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000);
     const isBeforeDay2 = now <= new Date('2022-10-22');
