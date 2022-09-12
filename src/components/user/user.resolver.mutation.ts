@@ -22,24 +22,7 @@ export default class UserMutation {
 
   @Mutation(() => User)
   async createUser(@Args() args: CreateUserArgs): Promise<User> {
-    const items = await this.itemService.findMany({
-      where: {
-        character: args.data.character,
-      },
-    });
-
-    const user = await this.service.create({
-      data: {
-        ...args.data,
-        itemIds: items.map((item) => item.id),
-        items: {
-          connect: items.map((item) => ({ id: item.id })),
-        },
-        giftHistories: {
-          create: args.data.giftHistories,
-        },
-      },
-    });
+    const user = await this.service.create(args);
 
     return user;
   }
