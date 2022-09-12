@@ -3,12 +3,12 @@ import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import ItemService from '../item/item.service';
 import UserMutation from './user.resolver.mutation';
 import UserService from './user.service';
-import FirebaseService from '@/libs/firebase/firebase.service';
+import PubSubService from '@/libs/pubsub/pubsub.service';
 
 describe('User Mutation Resolver Test', () => {
   let mockedUserService: DeepMockProxy<UserService>;
   let mockedItemService: DeepMockProxy<ItemService>;
-  let mockedFirebaseService: DeepMockProxy<FirebaseService>;
+  let mockedPubSubService: DeepMockProxy<PubSubService>;
   let userMutation: UserMutation;
 
   type UserModel = User & { items: (Item & { users: User[] })[]; giftHistories: (GiftHistory & { exchangedGift: Gift })[] };
@@ -17,8 +17,8 @@ describe('User Mutation Resolver Test', () => {
   beforeEach(() => {
     mockedUserService = mockDeep<UserService>();
     mockedItemService = mockDeep<ItemService>();
-    mockedFirebaseService = mockDeep<FirebaseService>();
-    userMutation = new UserMutation(mockedUserService, mockedItemService, mockedFirebaseService);
+    mockedPubSubService = mockDeep<PubSubService>();
+    userMutation = new UserMutation(mockedUserService, mockedItemService, mockedPubSubService);
   });
 
   test('createUser', async () => {
