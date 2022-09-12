@@ -10,15 +10,16 @@ import JoinGameArgs from './dto/args/joinGame';
 import PullGachaArgs from './dto/args/pullGacha';
 import UpdateUserArgs from './dto/args/updateUser';
 import User from './dto/object';
+import { publishUpdatedGameAttenders } from './user.resolver.subscription';
 import UserService from './user.service';
 import AuthGuard from '@/guards/auth.guard';
 import RoleGuard from '@/guards/role.guard';
-import FirebaseService from '@/libs/firebase/firebase.service';
+import PubSubService from '@/libs/pubsub/pubsub.service';
 
 @Resolver()
 @UseGuards(AuthGuard)
 export default class UserMutation {
-  constructor(private service: UserService, private itemService: ItemService, private firebaseService: FirebaseService) {}
+  constructor(private service: UserService, private itemService: ItemService, private pubSubService: PubSubService) {}
 
   @Mutation(() => User)
   async createUser(@Args() args: CreateUserArgs): Promise<User> {
@@ -101,6 +102,8 @@ export default class UserMutation {
       },
     });
 
+    await publishUpdatedGameAttenders(this.pubSubService, this.service);
+
     return user;
   }
 
@@ -112,6 +115,8 @@ export default class UserMutation {
         participateGame: Game.NONE,
       },
     });
+
+    await publishUpdatedGameAttenders(this.pubSubService, this.service);
 
     return user;
   }
