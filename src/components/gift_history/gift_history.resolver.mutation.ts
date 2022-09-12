@@ -3,14 +3,30 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import GiftService from '../gift/gift.service';
 import UserService from '../user/user.service';
 import ExchangeGiftArgs from './dto/args/exchangeGift';
+import UpdateGiftHistoryArgs from './dto/args/updateGiftHistory';
 import GiftHistory from './dto/object';
 import GiftHistoryService from './gift_history.service';
 import AuthGuard from '@/guards/auth.guard';
+import RoleGuard from '@/guards/role.guard';
 
 @Resolver()
 @UseGuards(AuthGuard)
 export default class GiftHistoryMutation {
   constructor(private service: GiftHistoryService, private userService: UserService, private giftService: GiftService) {}
+
+  @Mutation(() => GiftHistory)
+  @UseGuards(RoleGuard)
+  async updateGiftHistory(@Args() args: UpdateGiftHistoryArgs): Promise<GiftHistory> {
+    const giftHistory = await this.service.update({
+      ...args,
+      data: {
+        ...args.data,
+        deliveredAt: args.data.isDelivered ? new Date() : null,
+      },
+    });
+
+    return giftHistory;
+  }
 
   @Mutation(() => [GiftHistory])
   async exchangeGift(@Args() args: ExchangeGiftArgs): Promise<GiftHistory[]> {
