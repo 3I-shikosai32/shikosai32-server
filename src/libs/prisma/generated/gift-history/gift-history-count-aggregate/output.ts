@@ -21,5 +21,8 @@ export class GiftHistoryCountAggregate {
     createdAt!: number;
 
     @Field(() => Int, {nullable:false})
+    deliveredAt!: number;
+
+    @Field(() => Int, {nullable:false})
     _all!: number;
 }

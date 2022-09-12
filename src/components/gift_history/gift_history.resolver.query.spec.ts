@@ -47,6 +47,7 @@ describe('GiftHistory Query Resolver Test', () => {
       },
       giftId: 'ghi-123',
       createdAt: new Date(),
+      deliveredAt: null,
     };
     mockedGiftHistoryService.findUnique.mockResolvedValue(findUniqueRes);
 
@@ -89,6 +90,7 @@ describe('GiftHistory Query Resolver Test', () => {
         },
         giftId: 'ghi-123',
         createdAt: new Date(),
+        deliveredAt: null,
       },
       {
         id: 'abc-456',
@@ -122,6 +124,7 @@ describe('GiftHistory Query Resolver Test', () => {
         },
         giftId: 'ghi-456',
         createdAt: new Date(),
+        deliveredAt: null,
       },
     ];
     mockedGiftHistoryService.findMany.mockResolvedValue(findManyRes);

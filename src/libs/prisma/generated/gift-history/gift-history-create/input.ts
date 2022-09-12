@@ -20,4 +20,7 @@ export class GiftHistoryCreateInput {
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
+
+    @Field(() => Date, {nullable:true})
+    deliveredAt?: Date | string;
 }

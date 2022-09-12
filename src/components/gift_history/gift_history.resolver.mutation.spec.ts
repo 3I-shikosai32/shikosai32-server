@@ -82,6 +82,7 @@ describe('GiftHistory Mutation Resolver Test', () => {
       exchangedGift: giftFindUniqueRes,
       giftId: 'abc-123',
       createdAt: new Date(),
+      deliveredAt: null,
     };
     mockedGiftHistoryService.create.mockResolvedValue(giftHistoryCreateRes);
 

@@ -22,6 +22,9 @@ export class GiftHistoryGroupBy {
     @Field(() => Date, {nullable:false})
     createdAt!: Date | string;
 
+    @Field(() => Date, {nullable:true})
+    deliveredAt?: Date | string;
+
     @Field(() => GiftHistoryCountAggregate, {nullable:true})
     _count?: GiftHistoryCountAggregate;
 
