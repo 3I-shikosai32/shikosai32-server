@@ -5,6 +5,7 @@ import { BoolFilter } from '../../prisma/bool-filter/input';
 import { UserRelationFilter } from '../../user/user-relation-filter/input';
 import { GiftRelationFilter } from '../../gift/gift-relation-filter/input';
 import { DateTimeFilter } from '../../prisma/date-time-filter/input';
+import { DateTimeNullableFilter } from '../../prisma/date-time-nullable-filter/input';
 
 @InputType()
 export class GiftHistoryWhereInput {
@@ -38,4 +39,7 @@ export class GiftHistoryWhereInput {
 
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: DateTimeFilter;
+
+    @Field(() => DateTimeNullableFilter, {nullable:true})
+    deliveredAt?: DateTimeNullableFilter;
 }

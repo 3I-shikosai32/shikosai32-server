@@ -20,5 +20,8 @@ export class GiftHistoryCountAggregateInput {
     createdAt?: true;
 
     @Field(() => Boolean, {nullable:true})
+    deliveredAt?: true;
+
+    @Field(() => Boolean, {nullable:true})
     _all?: true;
 }

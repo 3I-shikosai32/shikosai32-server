@@ -19,4 +19,7 @@ export class GiftHistoryMinOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    deliveredAt?: keyof typeof SortOrder;
 }

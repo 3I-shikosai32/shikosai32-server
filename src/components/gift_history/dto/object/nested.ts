@@ -16,4 +16,7 @@ export default class NestedGiftHistory {
 
   @Field(() => Date, { nullable: false })
   createdAt: Date;
+
+  @Field(() => Date, { nullable: true })
+  deliveredAt: Date | null;
 }
