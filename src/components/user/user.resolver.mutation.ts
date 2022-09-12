@@ -124,6 +124,8 @@ export default class UserMutation {
     await this.service.update({
       ...args,
       data: {
+        items: user.items.includes(pulledItem) ? undefined : { connect: [...user.items.map((item) => ({ id: item.id })), { id: pulledItem.id }] },
+        itemIds: user.itemIds.includes(pulledItem.id) ? undefined : [...user.itemIds, pulledItem.id],
         pullableGachaTimes: decrementedPullableGachaTimes,
       },
     });
