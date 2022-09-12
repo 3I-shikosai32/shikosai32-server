@@ -73,6 +73,7 @@ export default class UserMutation {
             data: {
               totalPointDay1: foundUser.totalPointDay1 + arg.increment,
               consumablePoint: foundUser.consumablePoint + arg.increment,
+              pullableGachaTimes: foundUser.pullableGachaTimes + 1,
             },
           });
         } else {
@@ -81,6 +82,7 @@ export default class UserMutation {
             data: {
               totalPointDay2: foundUser.totalPointDay2 + arg.increment,
               consumablePoint: foundUser.consumablePoint + arg.increment,
+              pullableGachaTimes: foundUser.pullableGachaTimes + 1,
             },
           });
         }
