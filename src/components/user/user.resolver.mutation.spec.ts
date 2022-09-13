@@ -3,12 +3,12 @@ import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import ItemService from '../item/item.service';
 import UserMutation from './user.resolver.mutation';
 import UserService from './user.service';
-import FirebaseService from '@/libs/firebase/firebase.service';
+import PubSubService from '@/libs/pubsub/pubsub.service';
 
 describe('User Mutation Resolver Test', () => {
   let mockedUserService: DeepMockProxy<UserService>;
   let mockedItemService: DeepMockProxy<ItemService>;
-  let mockedFirebaseService: DeepMockProxy<FirebaseService>;
+  let mockedPubSubService: DeepMockProxy<PubSubService>;
   let userMutation: UserMutation;
 
   type UserModel = User & { items: (Item & { users: User[] })[]; giftHistories: (GiftHistory & { exchangedGift: Gift })[] };
@@ -17,8 +17,8 @@ describe('User Mutation Resolver Test', () => {
   beforeEach(() => {
     mockedUserService = mockDeep<UserService>();
     mockedItemService = mockDeep<ItemService>();
-    mockedFirebaseService = mockDeep<FirebaseService>();
-    userMutation = new UserMutation(mockedUserService, mockedItemService, mockedFirebaseService);
+    mockedPubSubService = mockDeep<PubSubService>();
+    userMutation = new UserMutation(mockedUserService, mockedItemService, mockedPubSubService);
   });
 
   test('createUser', async () => {
@@ -143,6 +143,64 @@ describe('User Mutation Resolver Test', () => {
     };
     mockedUserService.update.mockResolvedValue(updateRes);
 
+    const findManyRes: UserModel[] = [
+      {
+        id: 'abc-123',
+        name: 'fake user',
+        email: 'test@example.com',
+        role: Role.USER,
+        totalPointDay1: 0,
+        totalPointDay2: 0,
+        consumablePoint: 0,
+        character: Character.CAT,
+        iconUrl: 'https://example.com',
+        avatarUrl: 'https://example.com',
+        items: [
+          {
+            id: 'abc-123',
+            url: 'https://example.com',
+            character: Character.CAT,
+            layer: 1,
+            users: [],
+            userIds: [],
+          },
+        ],
+        itemIds: [],
+        participateGame: Game.NONE,
+        pullableGachaTimes: 0,
+        giftHistories: [],
+        createdAt: new Date(),
+      },
+      {
+        id: 'abc-456',
+        name: '_fake user',
+        email: 'test@example.com',
+        role: Role.USER,
+        totalPointDay1: 0,
+        totalPointDay2: 0,
+        consumablePoint: 0,
+        character: Character.CAT,
+        iconUrl: 'https://example.com',
+        avatarUrl: 'https://example.com',
+        items: [
+          {
+            id: 'abc-123',
+            url: 'https://example.com',
+            character: Character.CAT,
+            layer: 1,
+            users: [],
+            userIds: [],
+          },
+        ],
+        itemIds: [],
+        participateGame: Game.NONE,
+        pullableGachaTimes: 0,
+        giftHistories: [],
+        createdAt: new Date(),
+      },
+    ];
+    mockedUserService.findMany.mockResolvedValue(findManyRes);
+
     const updatedUser = await userMutation.joinGame({ where: { id: updateRes.id }, game: Game.COIN_DROPPING });
 
     await expect(updatedUser).toEqual(updateRes);
@@ -168,6 +226,64 @@ describe('User Mutation Resolver Test', () => {
       createdAt: new Date(),
     };
     mockedUserService.update.mockResolvedValue(updateRes);
+
+    const findManyRes: UserModel[] = [
+      {
+        id: 'abc-123',
+        name: 'fake user',
+        email: 'test@example.com',
+        role: Role.USER,
+        totalPointDay1: 0,
+        totalPointDay2: 0,
+        consumablePoint: 0,
+        character: Character.CAT,
+        iconUrl: 'https://example.com',
+        avatarUrl: 'https://example.com',
+        items: [
+          {
+            id: 'abc-123',
+            url: 'https://example.com',
+            character: Character.CAT,
+            layer: 1,
+            users: [],
+            userIds: [],
+          },
+        ],
+        itemIds: [],
+        participateGame: Game.NONE,
+        pullableGachaTimes: 0,
+        giftHistories: [],
+        createdAt: new Date(),
+      },
+      {
+        id: 'abc-456',
+        name: '_fake user',
+        email: 'test@example.com',
+        role: Role.USER,
+        totalPointDay1: 0,
+        totalPointDay2: 0,
+        consumablePoint: 0,
+        character: Character.CAT,
+        iconUrl: 'https://example.com',
+        avatarUrl: 'https://example.com',
+        items: [
+          {
+            id: 'abc-123',
+            url: 'https://example.com',
+            character: Character.CAT,
+            layer: 1,
+            users: [],
+            userIds: [],
+          },
+        ],
+        itemIds: [],
+        participateGame: Game.NONE,
+        pullableGachaTimes: 0,
+        giftHistories: [],
+        createdAt: new Date(),
+      },
+    ];
+    mockedUserService.findMany.mockResolvedValue(findManyRes);
 
     const updatedUser = await userMutation.exitGame({ where: { id: updateRes.id } });
 
