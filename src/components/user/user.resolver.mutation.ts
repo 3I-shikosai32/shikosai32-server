@@ -42,12 +42,16 @@ export default class UserMutation {
       },
     });
 
+    await this.firebaseService.adminAuth.updateUser(user.id, { displayName: args.data.name, email: args.data.email });
+
     return user;
   }
 
   @Mutation(() => User)
   async updateUser(@Args() args: UpdateUserArgs): Promise<User> {
     const user = await this.service.update(args);
+
+    await this.firebaseService.adminAuth.updateUser(args.where.id, { displayName: args.data.name });
 
     return user;
   }
