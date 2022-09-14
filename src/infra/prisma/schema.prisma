@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nestgraphql {
+  provider                              = "prisma-nestjs-graphql"
+  output                                = "./generated"
+  outputFilePattern                     = "{model}/{name}/{type}.ts"
+  noAtomicOperations                    = true
+  purgeOutput                           = true
+  noTypeId                              = true
+  requireSingleFieldsInWhereUniqueInput = ture
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Character {
+  TREE
+  FOX
+  GOKU
+  CAT
+  PUDDING
+  REAPER
+}
+
+enum Game {
+  NONE
+  XENO
+  COIN_DROPPING
+  ICE_RAZE
+  PRESIDENT
+  POKER
+  WE_DIDNT_PLAYTEST
+}
+
+model User {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  email String
+  role  Role   @default(USER)
+
+  totalPointDay1  Int @default(0) @map("total_point_day1")
+  totalPointDay2  Int @default(0) @map("total_point_day2")
+  consumablePoint Int @default(0) @map("consumption_point")
+
+  character Character
+  iconUrl   String    @map("icon_url")
+  avatarUrl String    @map("avatar_url")
+
+  items   Item[]   @relation(fields: [itemIds], references: [id])
+  itemIds String[] @map("item_ids") @db.ObjectId
+
+  participateGame Game @default(NONE) @map("participate_game")
+
+  pullableGachaTimes Int @default(0) @map("pullable_gacha_times")
+
+  giftHistories GiftHistory[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("users")
+}
+
+model Item {
+  id  String @id @default(auto()) @map("_id") @db.ObjectId
+  url String
+
+  character Character
+  layer     Int
+
+  users   User[]   @relation(fields: [userIds], references: [id])
+  userIds String[] @map("user_ids") @db.ObjectId
+
+  @@map("items")
+}
+
+model Gift {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  iconUrl String @map("icon_url")
+
+  price     Int
+  remaining Int
+
+  giftHistories GiftHistory[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("gifts")
+}
+
+model GiftHistory {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  isDelivered Boolean @default(false)
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
+
+  exchangedGift Gift   @relation(fields: [giftId], references: [id])
+  giftId        String @map("gift_id") @db.ObjectId
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  deliveredAt DateTime? @map("delivered_at")
+
+  @@map("gift_histories")
+}
