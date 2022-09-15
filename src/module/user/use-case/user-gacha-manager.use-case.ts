@@ -15,10 +15,14 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
     private readonly itemRepository: ItemRepository,
   ) {}
 
-  async pullGacha(args: PullGachaArgs, pullItem: (items: Item[]) => Item) {
+  async pullGacha(args: PullGachaArgs, pullFromItems: (items: Item[]) => Item) {
     const foundUser = await this.userRepository.findUnique(args);
     if (!foundUser) {
       throw new Error('User not found');
+    }
+
+    if (!foundUser.canPullGacha()) {
+      throw new Error('Pullable gacha times is less than 0');
     }
 
     const foundItems = await this.itemRepository.findMany({
@@ -27,17 +31,12 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
       },
     });
 
-    const pulledItem = pullItem(foundItems);
-
-    const decrementedPullableGachaTimes = foundUser.pullableGachaTimes - 1; // TODO: これはModelに移す
-    if (decrementedPullableGachaTimes < 0) {
-      throw new Error('Pullable gacha times is less than 0');
-    }
+    const pulledItem = pullFromItems(foundItems);
 
     await this.userRepository.update({
       ...args,
       data: {
-        pullableGachaTimes: decrementedPullableGachaTimes,
+        pullableGachaTimes: foundUser.pullableGachaTimes - 1,
       },
     });
 
