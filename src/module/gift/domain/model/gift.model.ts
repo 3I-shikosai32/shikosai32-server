@@ -1,17 +1,35 @@
 import { NestedGiftHistory } from '~/gift-history/domain/model/nested-gift-history.model';
 
 export class Gift {
-  id: string;
+  readonly id: string;
 
-  name: string;
+  readonly name: string;
 
-  iconUrl: string;
+  readonly iconUrl: string;
 
-  price: number;
+  readonly price: number;
 
-  remaining: number;
+  readonly remaining: number;
 
-  giftHistories: NestedGiftHistory[];
+  readonly giftHistories: NestedGiftHistory[];
 
-  createdAt: Date;
+  readonly createdAt: Date;
+
+  constructor(args: {
+    id: string;
+    name: string;
+    iconUrl: string;
+    price: number;
+    remaining: number;
+    giftHistories: NestedGiftHistory[];
+    createdAt: Date;
+  }) {
+    this.id = args.id;
+    this.name = args.name;
+    this.iconUrl = args.iconUrl;
+    this.price = args.price;
+    this.remaining = args.remaining;
+    this.giftHistories = args.giftHistories;
+    this.createdAt = args.createdAt;
+  }
 }
