@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { GiftInterface } from '../domain/service/model/gift.model';
+import { Gift } from '../domain/model/gift.model';
 import { GiftRepositoryInterface } from '../domain/service/repository/gift.repository';
 
 @Injectable()
 export class MockedGiftRepository implements GiftRepositoryInterface {
-  async findUnique(): Promise<GiftInterface> {
+  async findUnique(): Promise<Gift> {
     const foundGift = {
       id: 'abc-123',
       name: 'うまい棒',
@@ -18,7 +18,7 @@ export class MockedGiftRepository implements GiftRepositoryInterface {
     return foundGift;
   }
 
-  async findMany(): Promise<GiftInterface[]> {
+  async findMany(): Promise<Gift[]> {
     const foundGifts = [
       {
         id: 'abc-123',
@@ -43,7 +43,7 @@ export class MockedGiftRepository implements GiftRepositoryInterface {
     return foundGifts;
   }
 
-  async create(): Promise<GiftInterface> {
+  async create(): Promise<Gift> {
     const createdGift = {
       id: 'abc-123',
       name: 'うまい棒',
@@ -57,7 +57,7 @@ export class MockedGiftRepository implements GiftRepositoryInterface {
     return createdGift;
   }
 
-  async update(): Promise<GiftInterface> {
+  async update(): Promise<Gift> {
     const updatedGift = {
       id: 'abc-123',
       name: 'うまい棒',
@@ -71,7 +71,7 @@ export class MockedGiftRepository implements GiftRepositoryInterface {
     return updatedGift;
   }
 
-  async delete(): Promise<GiftInterface> {
+  async delete(): Promise<Gift> {
     const deletedGift = {
       id: 'abc-123',
       name: 'うまい棒',

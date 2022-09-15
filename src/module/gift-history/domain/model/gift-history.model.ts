@@ -1,19 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { GiftHistoryInterface } from '../service/model/gift-history.model';
-import { NestedGiftInterface } from '~/gift/domain/service/model/nested-gift.model';
-import { NestedUserInterface } from '~/user/domain/service/model/nested-user.model';
+import { NestedGift } from '~/gift/domain/model/nested-gift.model';
+import { NestedUser } from '~/user/domain/model/nested-user.model';
 
-@Injectable()
-export class GiftHistory implements GiftHistoryInterface {
+export class GiftHistory {
   id: string;
 
   isDelivered: boolean;
 
-  user: NestedUserInterface;
+  user: NestedUser;
 
   userId: string;
 
-  exchangedGift: NestedGiftInterface;
+  exchangedGift: NestedGift;
 
   giftId: string;
 

@@ -1,8 +1,4 @@
-import { Injectable } from '@nestjs/common';
-import { NestedGiftInterface } from '../service/model/nested-gift.model';
-
-@Injectable()
-export class NestedGift implements NestedGiftInterface {
+export class NestedGift {
   id: string;
 
   name: string;

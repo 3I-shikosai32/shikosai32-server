@@ -1,9 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { GiftInterface } from '../service/model/gift.model';
-import { NestedGiftHistoryInterface } from '~/gift-history/domain/service/model/nested-gift-history.model';
+import { NestedGiftHistory } from '~/gift-history/domain/model/nested-gift-history.model';
 
-@Injectable()
-export class Gift implements GiftInterface {
+export class Gift {
   id: string;
 
   name: string;
@@ -14,7 +11,7 @@ export class Gift implements GiftInterface {
 
   remaining: number;
 
-  giftHistories: NestedGiftHistoryInterface[];
+  giftHistories: NestedGiftHistory[];
 
   createdAt: Date;
 }

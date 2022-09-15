@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { GiftHistoryInterface } from '../model/gift-history.model';
+import { GiftHistory } from '../../model/gift-history.model';
 import { BaseRepositoryInterface } from '@/common/repository/base.repository';
 
 export type FindUnique = {
@@ -24,4 +24,4 @@ export type Delete = {
   where: Prisma.GiftHistoryWhereUniqueInput;
 };
 
-export type GiftHistoryRepositoryInterface = BaseRepositoryInterface<GiftHistoryInterface, FindUnique, FindMany, Create, Update, Delete>;
+export type GiftHistoryRepositoryInterface = BaseRepositoryInterface<GiftHistory, FindUnique, FindMany, Create, Update, Delete>;

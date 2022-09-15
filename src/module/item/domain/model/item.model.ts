@@ -1,10 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { ItemInterface } from '../service/model/item.model';
 import { Character } from '@/infra/prisma/generated/prisma/character/enum';
-import { NestedUserInterface } from '~/user/domain/service/model/nested-user.model';
+import { NestedUser } from '~/user/domain/model/nested-user.model';
 
-@Injectable()
-export class Item implements ItemInterface {
+export class Item {
   id: string;
 
   url: string;
@@ -13,7 +10,7 @@ export class Item implements ItemInterface {
 
   layer: number;
 
-  users: NestedUserInterface[];
+  users: NestedUser[];
 
   userIds: string[];
 }

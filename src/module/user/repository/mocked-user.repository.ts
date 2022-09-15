@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Character, Game, Role } from '@prisma/client';
-import { UserInterface } from '../domain/service/model/user.model';
+import { User } from '../domain/model/user.model';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
 
 @Injectable()
 export class MockedUserRepository implements UserRepositoryInterface {
-  async findUnique(): Promise<UserInterface> {
+  async findUnique(): Promise<User> {
     const foundUser = {
       id: 'abc-123',
       name: 'fake user',
@@ -28,7 +28,7 @@ export class MockedUserRepository implements UserRepositoryInterface {
     return foundUser;
   }
 
-  async findMany(): Promise<UserInterface[]> {
+  async findMany(): Promise<User[]> {
     const foundUsers = [
       {
         id: 'abc-123',
@@ -89,7 +89,7 @@ export class MockedUserRepository implements UserRepositoryInterface {
     return foundUsers;
   }
 
-  async create(): Promise<UserInterface> {
+  async create(): Promise<User> {
     const createdUser = {
       id: 'abc-123',
       name: 'fake user',
@@ -112,7 +112,7 @@ export class MockedUserRepository implements UserRepositoryInterface {
     return createdUser;
   }
 
-  async update(): Promise<UserInterface> {
+  async update(): Promise<User> {
     const updatedUser = {
       id: 'abc-123',
       name: 'fake user',
@@ -135,7 +135,7 @@ export class MockedUserRepository implements UserRepositoryInterface {
     return updatedUser;
   }
 
-  async delete(): Promise<UserInterface> {
+  async delete(): Promise<User> {
     const deletedUser = {
       id: 'abc-123',
       name: 'fake user',

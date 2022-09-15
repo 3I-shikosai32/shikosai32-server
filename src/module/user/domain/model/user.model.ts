@@ -1,13 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { UserInterface } from '../service/model/user.model';
 import { Character } from '@/infra/prisma/generated/prisma/character/enum';
 import { Game } from '@/infra/prisma/generated/prisma/game/enum';
 import { Role } from '@/infra/prisma/generated/prisma/role/enum';
-import { NestedGiftHistoryInterface } from '~/gift-history/domain/service/model/nested-gift-history.model';
-import { NestedItemInterface } from '~/item/domain/service/model/nested-item.model';
+import { NestedGiftHistory } from '~/gift-history/domain/model/nested-gift-history.model';
+import { NestedItem } from '~/item/domain/model/nested-item.model';
 
-@Injectable()
-export class User implements UserInterface {
+export class User {
   id: string;
 
   name: string;
@@ -28,7 +25,7 @@ export class User implements UserInterface {
 
   avatarUrl: string;
 
-  items: NestedItemInterface[];
+  items: NestedItem[];
 
   itemIds: string[];
 
@@ -36,7 +33,7 @@ export class User implements UserInterface {
 
   pullableGachaTimes: number;
 
-  giftHistories: NestedGiftHistoryInterface[];
+  giftHistories: NestedGiftHistory[];
 
   createdAt: Date;
 }

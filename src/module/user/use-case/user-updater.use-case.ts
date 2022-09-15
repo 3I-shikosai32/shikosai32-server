@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IncrementPointArgs } from '../controller/dto/args/increment-point.args';
 import { UpdateUserArgs } from '../controller/dto/args/update-user.args';
-import { UserInterface } from '../domain/service/model/user.model';
+import { User } from '../domain/model/user.model';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
 import { UserUpdaterUseCaseInterface } from '../domain/service/use-case/user-updater.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
@@ -29,7 +29,7 @@ export class UserUpdaterUseCase implements UserUpdaterUseCaseInterface {
           throw new Error('User not found');
         }
 
-        let updatedUser: UserInterface;
+        let updatedUser: User;
         if (isBeforeDay2) {
           updatedUser = await this.userRepository.update({
             where: { id: arg.id },

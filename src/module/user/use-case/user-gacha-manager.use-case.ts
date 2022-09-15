@@ -3,7 +3,7 @@ import { PullGachaArgs } from '../controller/dto/args/pull-gacha.args';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
 import { UserGachaManagerUseCaseInterface } from '../domain/service/use-case/user-gacha-manager.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
-import { ItemInterface } from '~/item/domain/service/model/item.model';
+import { Item } from '~/item/domain/model/item.model';
 import { ItemRepository } from '~/item/repository/item.repository';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
     private readonly itemRepository: ItemRepository,
   ) {}
 
-  async pullGacha(args: PullGachaArgs, pullItem: (items: ItemInterface[]) => ItemInterface) {
+  async pullGacha(args: PullGachaArgs, pullItem: (items: Item[]) => Item) {
     const foundUser = await this.userRepository.findUnique(args);
     if (!foundUser) {
       throw new Error('User not found');

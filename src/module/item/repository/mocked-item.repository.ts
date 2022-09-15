@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Character } from '@prisma/client';
-import { ItemInterface } from '../domain/service/model/item.model';
+import { Item } from '../domain/model/item.model';
 import { ItemRepositoryInterface } from '../domain/service/repository/item.repository';
 
 @Injectable()
 export class MockedItemRepository implements ItemRepositoryInterface {
-  async findUnique(): Promise<ItemInterface> {
+  async findUnique(): Promise<Item> {
     const foundItem = {
       id: 'def-123',
       url: 'https://example.com',
@@ -18,7 +18,7 @@ export class MockedItemRepository implements ItemRepositoryInterface {
     return foundItem;
   }
 
-  async findMany(): Promise<ItemInterface[]> {
+  async findMany(): Promise<Item[]> {
     const foundItems = [
       {
         id: 'def-123',
@@ -41,7 +41,7 @@ export class MockedItemRepository implements ItemRepositoryInterface {
     return foundItems;
   }
 
-  async create(): Promise<ItemInterface> {
+  async create(): Promise<Item> {
     const createdItem = {
       id: 'def-123',
       url: 'https://example.com',
@@ -54,7 +54,7 @@ export class MockedItemRepository implements ItemRepositoryInterface {
     return createdItem;
   }
 
-  async update(): Promise<ItemInterface> {
+  async update(): Promise<Item> {
     const updatedItem = {
       id: 'def-123',
       url: 'https://example.com',
@@ -67,7 +67,7 @@ export class MockedItemRepository implements ItemRepositoryInterface {
     return updatedItem;
   }
 
-  async delete(): Promise<ItemInterface> {
+  async delete(): Promise<Item> {
     const deleteItem = {
       id: 'def-123',
       url: 'https://example.com',

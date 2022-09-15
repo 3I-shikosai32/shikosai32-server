@@ -1,11 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { NestedUserInterface } from '../service/model/nested-user.model';
 import { Character } from '@/infra/prisma/generated/prisma/character/enum';
 import { Game } from '@/infra/prisma/generated/prisma/game/enum';
 import { Role } from '@/infra/prisma/generated/prisma/role/enum';
 
-@Injectable()
-export class NestedUser implements NestedUserInterface {
+export class NestedUser {
   id: string;
 
   name: string;

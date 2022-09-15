@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { UserInterface } from '../model/user.model';
+import { User } from '../../model/user.model';
 import { BaseRepositoryInterface } from '@/common/repository/base.repository';
 
 export type FindUnique = {
@@ -24,4 +24,4 @@ export type Delete = {
   where: Prisma.UserWhereUniqueInput;
 };
 
-export type UserRepositoryInterface = BaseRepositoryInterface<UserInterface, FindUnique, FindMany, Create, Update, Delete>;
+export type UserRepositoryInterface = BaseRepositoryInterface<User, FindUnique, FindMany, Create, Update, Delete>;

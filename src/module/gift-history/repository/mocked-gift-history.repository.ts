@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Character, Game, Role } from '@prisma/client';
-import { GiftHistoryInterface } from '../domain/service/model/gift-history.model';
+import { GiftHistory } from '../domain/model/gift-history.model';
 import { GiftHistoryRepositoryInterface } from '../domain/service/repository/gift-history.repository';
 
 @Injectable()
 export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterface {
-  async findUnique(): Promise<GiftHistoryInterface> {
+  async findUnique(): Promise<GiftHistory> {
     const foundGiftHistory = {
       id: 'abc-123',
       isDelivered: false,
@@ -44,7 +44,7 @@ export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterfa
     return foundGiftHistory;
   }
 
-  async findMany(): Promise<GiftHistoryInterface[]> {
+  async findMany(): Promise<GiftHistory[]> {
     const foundGiftHistories = [
       {
         id: 'abc-123',
@@ -119,7 +119,7 @@ export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterfa
     return foundGiftHistories;
   }
 
-  async create(): Promise<GiftHistoryInterface> {
+  async create(): Promise<GiftHistory> {
     const createdGiftHistory = {
       id: 'abc-123',
       isDelivered: false,
@@ -158,7 +158,7 @@ export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterfa
     return createdGiftHistory;
   }
 
-  async update(): Promise<GiftHistoryInterface> {
+  async update(): Promise<GiftHistory> {
     const updatedGiftHistory = {
       id: 'abc-123',
       isDelivered: false,
@@ -197,7 +197,7 @@ export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterfa
     return updatedGiftHistory;
   }
 
-  async delete(): Promise<GiftHistoryInterface> {
+  async delete(): Promise<GiftHistory> {
     const deletedGiftHistory = {
       id: 'abc-123',
       isDelivered: false,
