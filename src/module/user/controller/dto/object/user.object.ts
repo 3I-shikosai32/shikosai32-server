@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Character } from '@/infra/prisma/generated/prisma/character/enum';
 import { Game } from '@/infra/prisma/generated/prisma/game/enum';
 import { Role } from '@/infra/prisma/generated/prisma/role/enum';
