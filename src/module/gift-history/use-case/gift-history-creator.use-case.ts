@@ -35,16 +35,16 @@ export class GiftHistoryCreatorUseCase implements GiftHistoryCreatorUseCaseInter
       throw new Error('User not found');
     }
 
-    const decrementedConsumablePoint = foundUser.consumablePoint - foundGift.price * args.exchangeQuantity;
-    if (decrementedConsumablePoint < 0) {
+    if (!foundUser.canExchangeGift(foundGift.price * args.exchangeQuantity)) {
       throw new Error('Consumable point is less than 0');
     }
+
     await this.userRepository.update({
       where: {
         id: args.data.userId,
       },
       data: {
-        consumablePoint: decrementedConsumablePoint,
+        consumablePoint: foundUser.consumablePoint - foundGift.price * args.exchangeQuantity,
       },
     });
 
