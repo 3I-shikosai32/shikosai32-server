@@ -1,8 +1,8 @@
-import { ObjectType, Field } from '@nestjs/graphql';
-import User from '.';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { User } from './user.object';
 
 @ObjectType()
-export default class GameAttenders {
+export class GameAttenders {
   @Field(() => [User], { nullable: false })
   xeno: User[];
 
