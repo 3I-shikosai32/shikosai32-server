@@ -15,7 +15,7 @@ export class MockedGiftRepository implements GiftRepositoryInterface {
       createdAt: new Date('2021-01-01T00:00:00.000Z'),
     };
 
-    return foundGift;
+    return new Gift(foundGift);
   }
 
   async findMany(): Promise<Gift[]> {
@@ -40,7 +40,7 @@ export class MockedGiftRepository implements GiftRepositoryInterface {
       },
     ];
 
-    return foundGifts;
+    return foundGifts.map((foundGift) => new Gift(foundGift));
   }
 
   async create(): Promise<Gift> {
@@ -54,7 +54,7 @@ export class MockedGiftRepository implements GiftRepositoryInterface {
       createdAt: new Date('2021-01-01T00:00:00.000Z'),
     };
 
-    return createdGift;
+    return new Gift(createdGift);
   }
 
   async update(): Promise<Gift> {
@@ -68,7 +68,7 @@ export class MockedGiftRepository implements GiftRepositoryInterface {
       createdAt: new Date('2021-01-01T00:00:00.000Z'),
     };
 
-    return updatedGift;
+    return new Gift(updatedGift);
   }
 
   async delete(): Promise<Gift> {
@@ -82,6 +82,6 @@ export class MockedGiftRepository implements GiftRepositoryInterface {
       createdAt: new Date('2021-01-01T00:00:00.000Z'),
     };
 
-    return deletedGift;
+    return new Gift(deletedGift);
   }
 }

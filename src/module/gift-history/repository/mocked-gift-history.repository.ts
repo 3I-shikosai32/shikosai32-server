@@ -5,7 +5,7 @@ import { GiftHistoryRepositoryInterface } from '../domain/service/repository/gif
 
 @Injectable()
 export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterface {
-  async findUnique(): Promise<GiftHistory> {
+  async findUnique() {
     const foundGiftHistory = {
       id: 'abc-123',
       isDelivered: false,
@@ -41,10 +41,10 @@ export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterfa
       deliveredAt: null,
     };
 
-    return foundGiftHistory;
+    return new GiftHistory(foundGiftHistory);
   }
 
-  async findMany(): Promise<GiftHistory[]> {
+  async findMany() {
     const foundGiftHistories = [
       {
         id: 'abc-123',
@@ -116,10 +116,10 @@ export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterfa
       },
     ];
 
-    return foundGiftHistories;
+    return foundGiftHistories.map((foundGiftHistory) => new GiftHistory(foundGiftHistory));
   }
 
-  async create(): Promise<GiftHistory> {
+  async create() {
     const createdGiftHistory = {
       id: 'abc-123',
       isDelivered: false,
@@ -155,10 +155,10 @@ export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterfa
       deliveredAt: null,
     };
 
-    return createdGiftHistory;
+    return new GiftHistory(createdGiftHistory);
   }
 
-  async update(): Promise<GiftHistory> {
+  async update() {
     const updatedGiftHistory = {
       id: 'abc-123',
       isDelivered: false,
@@ -194,10 +194,10 @@ export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterfa
       deliveredAt: null,
     };
 
-    return updatedGiftHistory;
+    return new GiftHistory(updatedGiftHistory);
   }
 
-  async delete(): Promise<GiftHistory> {
+  async delete() {
     const deletedGiftHistory = {
       id: 'abc-123',
       isDelivered: false,
@@ -233,6 +233,6 @@ export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterfa
       deliveredAt: null,
     };
 
-    return deletedGiftHistory;
+    return new GiftHistory(deletedGiftHistory);
   }
 }

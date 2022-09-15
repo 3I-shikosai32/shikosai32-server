@@ -5,7 +5,7 @@ import { UserRepositoryInterface } from '../domain/service/repository/user.repos
 
 @Injectable()
 export class MockedUserRepository implements UserRepositoryInterface {
-  async findUnique(): Promise<User> {
+  async findUnique() {
     const foundUser = {
       id: 'abc-123',
       name: 'fake user',
@@ -25,10 +25,10 @@ export class MockedUserRepository implements UserRepositoryInterface {
       createdAt: new Date('2021-01-01T00:00:00.000Z'),
     };
 
-    return foundUser;
+    return new User(foundUser);
   }
 
-  async findMany(): Promise<User[]> {
+  async findMany() {
     const foundUsers = [
       {
         id: 'abc-123',
@@ -86,10 +86,10 @@ export class MockedUserRepository implements UserRepositoryInterface {
       },
     ];
 
-    return foundUsers;
+    return foundUsers.map((foundUser) => new User(foundUser));
   }
 
-  async create(): Promise<User> {
+  async create() {
     const createdUser = {
       id: 'abc-123',
       name: 'fake user',
@@ -109,10 +109,10 @@ export class MockedUserRepository implements UserRepositoryInterface {
       createdAt: new Date('2021-01-01T00:00:00.000Z'),
     };
 
-    return createdUser;
+    return new User(createdUser);
   }
 
-  async update(): Promise<User> {
+  async update() {
     const updatedUser = {
       id: 'abc-123',
       name: 'fake user',
@@ -132,10 +132,10 @@ export class MockedUserRepository implements UserRepositoryInterface {
       createdAt: new Date('2021-01-01T00:00:00.000Z'),
     };
 
-    return updatedUser;
+    return new User(updatedUser);
   }
 
-  async delete(): Promise<User> {
+  async delete() {
     const deletedUser = {
       id: 'abc-123',
       name: 'fake user',
@@ -155,6 +155,6 @@ export class MockedUserRepository implements UserRepositoryInterface {
       createdAt: new Date('2021-01-01T00:00:00.000Z'),
     };
 
-    return deletedUser;
+    return new User(deletedUser);
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Gift } from '../domain/model/gift.model';
 import { Create, Delete, FindMany, FindUnique, GiftRepositoryInterface, Update } from '../domain/service/repository/gift.repository';
 import { StrictPropertyCheck } from '@/common/type/strict-property-check.type';
 import { PrismaService } from '@/infra/prisma/prisma.service';
@@ -19,7 +20,7 @@ export class GiftRepository implements GiftRepositoryInterface {
       },
     });
 
-    return foundGift;
+    return foundGift ? new Gift(foundGift) : null;
   }
 
   async findMany<T extends FindMany>(args?: StrictPropertyCheck<T, FindMany>) {
@@ -34,7 +35,7 @@ export class GiftRepository implements GiftRepositoryInterface {
       },
     });
 
-    return foundGifts;
+    return foundGifts.map((foundGift) => new Gift(foundGift));
   }
 
   async create<T extends Create>(args: StrictPropertyCheck<T, Create>) {
@@ -49,7 +50,7 @@ export class GiftRepository implements GiftRepositoryInterface {
       },
     });
 
-    return createdGift;
+    return new Gift(createdGift);
   }
 
   async update<T extends Update>(args: StrictPropertyCheck<T, Update>) {
@@ -64,7 +65,7 @@ export class GiftRepository implements GiftRepositoryInterface {
       },
     });
 
-    return updatedGift;
+    return new Gift(updatedGift);
   }
 
   async delete<T extends Delete>(args: StrictPropertyCheck<T, Delete>) {
@@ -82,6 +83,6 @@ export class GiftRepository implements GiftRepositoryInterface {
 
     const [, deletedGift] = await this.prismaService.$transaction([deleteGiftHistories, deleteGift]);
 
-    return deletedGift;
+    return new Gift(deletedGift);
   }
 }

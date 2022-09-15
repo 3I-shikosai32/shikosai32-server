@@ -5,7 +5,7 @@ import { ItemRepositoryInterface } from '../domain/service/repository/item.repos
 
 @Injectable()
 export class MockedItemRepository implements ItemRepositoryInterface {
-  async findUnique(): Promise<Item> {
+  async findUnique() {
     const foundItem = {
       id: 'def-123',
       url: 'https://example.com',
@@ -15,10 +15,10 @@ export class MockedItemRepository implements ItemRepositoryInterface {
       userIds: [],
     };
 
-    return foundItem;
+    return new Item(foundItem);
   }
 
-  async findMany(): Promise<Item[]> {
+  async findMany() {
     const foundItems = [
       {
         id: 'def-123',
@@ -38,10 +38,10 @@ export class MockedItemRepository implements ItemRepositoryInterface {
       },
     ];
 
-    return foundItems;
+    return foundItems.map((foundItem) => new Item(foundItem));
   }
 
-  async create(): Promise<Item> {
+  async create() {
     const createdItem = {
       id: 'def-123',
       url: 'https://example.com',
@@ -51,10 +51,10 @@ export class MockedItemRepository implements ItemRepositoryInterface {
       userIds: [],
     };
 
-    return createdItem;
+    return new Item(createdItem);
   }
 
-  async update(): Promise<Item> {
+  async update() {
     const updatedItem = {
       id: 'def-123',
       url: 'https://example.com',
@@ -64,10 +64,10 @@ export class MockedItemRepository implements ItemRepositoryInterface {
       userIds: [],
     };
 
-    return updatedItem;
+    return new Item(updatedItem);
   }
 
-  async delete(): Promise<Item> {
+  async delete() {
     const deleteItem = {
       id: 'def-123',
       url: 'https://example.com',
@@ -77,6 +77,6 @@ export class MockedItemRepository implements ItemRepositoryInterface {
       userIds: [],
     };
 
-    return deleteItem;
+    return new Item(deleteItem);
   }
 }
