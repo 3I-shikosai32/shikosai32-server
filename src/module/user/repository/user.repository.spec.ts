@@ -18,18 +18,6 @@ export const createUser = async (prismaService: PrismaService) => {
       iconUrl: 'https://example.com',
       avatarUrl: 'https://example.com',
     },
-    include: {
-      items: {
-        include: {
-          users: true,
-        },
-      },
-      giftHistories: {
-        include: {
-          exchangedGift: true,
-        },
-      },
-    },
   });
 
   return createdUser;
@@ -82,18 +70,6 @@ describe('UserRepository', () => {
     const foundUser = await prismaService.user.findUnique({
       where: {
         id: createdUser.id,
-      },
-      include: {
-        items: {
-          include: {
-            users: true,
-          },
-        },
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
       },
     });
 

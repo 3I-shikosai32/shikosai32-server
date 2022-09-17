@@ -16,13 +16,6 @@ export const createGift = async (prismaService: PrismaService) => {
       price: 0,
       remaining: 0,
     },
-    include: {
-      giftHistories: {
-        include: {
-          exchangedGift: true,
-        },
-      },
-    },
   });
 
   return createdGift;
@@ -74,13 +67,6 @@ describe('GiftRepository', () => {
     const foundGift = await prismaService.gift.findUnique({
       where: {
         id: createdGift.id,
-      },
-      include: {
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
       },
     });
 
