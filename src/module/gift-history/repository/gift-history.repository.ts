@@ -3,108 +3,52 @@ import { GiftHistory } from '../domain/model/gift-history.model';
 import { Create, Delete, FindMany, FindUnique, GiftHistoryRepositoryInterface, Update } from '../domain/service/repository/gift-history.repository';
 import { StrictPropertyCheck } from '@/common/type/strict-property-check.type';
 import { PrismaService } from '@/infra/prisma/prisma.service';
+import { Gift } from '~/gift/domain/model/gift.model';
+import { User } from '~/user/domain/model/user.model';
 
 @Injectable()
 export class GiftHistoryRepository implements GiftHistoryRepositoryInterface {
   constructor(private readonly prismaService: PrismaService) {}
 
   async findUnique<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>) {
-    const foundGiftHistory = await this.prismaService.giftHistory.findUnique({
-      ...args,
-      include: {
-        user: {
-          include: {
-            giftHistories: true,
-          },
-        },
-        exchangedGift: {
-          include: {
-            giftHistories: true,
-          },
-        },
-      },
-    });
+    const foundGiftHistory = await this.prismaService.giftHistory.findUnique(args);
 
     return foundGiftHistory ? new GiftHistory(foundGiftHistory) : null;
   }
 
   async findMany<T extends FindMany>(args?: StrictPropertyCheck<T, FindMany>) {
-    const foundGiftHistories = await this.prismaService.giftHistory.findMany({
-      ...args,
-      include: {
-        user: {
-          include: {
-            giftHistories: true,
-          },
-        },
-        exchangedGift: {
-          include: {
-            giftHistories: true,
-          },
-        },
-      },
-    });
+    const foundGiftHistories = await this.prismaService.giftHistory.findMany(args);
 
     return foundGiftHistories.map((foundGiftHistory) => new GiftHistory(foundGiftHistory));
   }
 
   async create<T extends Create>(args: StrictPropertyCheck<T, Create>) {
-    const createdGiftHistory = await this.prismaService.giftHistory.create({
-      ...args,
-      include: {
-        user: {
-          include: {
-            giftHistories: true,
-          },
-        },
-        exchangedGift: {
-          include: {
-            giftHistories: true,
-          },
-        },
-      },
-    });
+    const createdGiftHistory = await this.prismaService.giftHistory.create(args);
 
     return new GiftHistory(createdGiftHistory);
   }
 
   async update<T extends Update>(args: StrictPropertyCheck<T, Update>) {
-    const updatedGiftHistory = await this.prismaService.giftHistory.update({
-      ...args,
-      include: {
-        user: {
-          include: {
-            giftHistories: true,
-          },
-        },
-        exchangedGift: {
-          include: {
-            giftHistories: true,
-          },
-        },
-      },
-    });
+    const updatedGiftHistory = await this.prismaService.giftHistory.update(args);
 
     return new GiftHistory(updatedGiftHistory);
   }
 
   async delete<T extends Delete>(args: StrictPropertyCheck<T, Delete>) {
-    const deletedGiftHistory = await this.prismaService.giftHistory.delete({
-      ...args,
-      include: {
-        user: {
-          include: {
-            giftHistories: true,
-          },
-        },
-        exchangedGift: {
-          include: {
-            giftHistories: true,
-          },
-        },
-      },
-    });
+    const deletedGiftHistory = await this.prismaService.giftHistory.delete(args);
 
     return new GiftHistory(deletedGiftHistory);
+  }
+
+  async findUserByGiftHistoryId<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>) {
+    const foundUser = await this.prismaService.giftHistory.findUnique(args).user();
+
+    return foundUser ? new User(foundUser) : null;
+  }
+
+  async findGiftByGiftHistoryId<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>) {
+    const foundGift = await this.prismaService.giftHistory.findUnique(args).exchangedGift();
+
+    return foundGift ? new Gift(foundGift) : null;
   }
 }
