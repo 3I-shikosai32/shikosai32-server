@@ -122,4 +122,14 @@ describe('GiftHistoryRepository', () => {
 
     await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, createdGiftHistory.id);
   });
+
+  test('findGiftByGiftHistoryId', async () => {
+    const { createdUser, createdGift, createdGiftHistory } = await createGiftHistory(prismaService);
+
+    const foundGift = await giftHistoryRepository.findGiftByGiftHistoryId({ where: { id: createdGiftHistory.id } });
+
+    expect(foundGift).toEqual(createdGift);
+
+    await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, createdGiftHistory.id);
+  });
 });
