@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { User as UserModel } from '../domain/model/user.model';
 import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
 import { FindUserArgs } from './dto/args/find-user.args';
 import { FindUsersArgs } from './dto/args/find-users.args';
@@ -14,14 +15,14 @@ export class UserQuery {
   ) {}
 
   @Query(() => User, { nullable: true })
-  async findUser(@Args() args: FindUserArgs): Promise<User | null> {
+  async findUser(@Args() args: FindUserArgs): Promise<UserModel | null> {
     const user = await this.readerUseCase.findUser(args);
 
     return user;
   }
 
   @Query(() => [User])
-  async findUsers(@Args() args: FindUsersArgs): Promise<User[]> {
+  async findUsers(@Args() args: FindUsersArgs): Promise<UserModel[]> {
     const users = await this.readerUseCase.findUsers(args);
 
     return users;
