@@ -31,4 +31,12 @@ describe('GiftReaderUseCase', () => {
 
     expect(foundGifts).toEqual(expectedGifts);
   });
+
+  test('findGiftHistoriesByGiftId', async () => {
+    const expectedGiftHistories = await mockedGiftRepository.findGiftHistoriesByGiftId();
+
+    const foundGiftHistories = await giftReaderUseCase.findGiftHistoriesByGiftId(expectedGiftHistories[0].giftId);
+
+    expect(foundGiftHistories).toEqual(expectedGiftHistories);
+  });
 });
