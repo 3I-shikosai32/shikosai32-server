@@ -20,13 +20,6 @@ export const createItem = async (prismaService: PrismaService) => {
       },
       userIds: [],
     },
-    include: {
-      users: {
-        include: {
-          items: true,
-        },
-      },
-    },
   });
 
   return createdItem;
@@ -81,13 +74,6 @@ describe('ItemRepository', () => {
     const foundItem = await prismaService.item.findUnique({
       where: {
         id: createdItem.id,
-      },
-      include: {
-        users: {
-          include: {
-            items: true,
-          },
-        },
       },
     });
 
