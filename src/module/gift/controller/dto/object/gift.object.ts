@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { NestedGiftHistory } from '~/gift-history/controller/dto/object/nested-gift-history.object';
+import { GiftHistory } from '~/gift-history/controller/dto/object/gift-history.object';
 
 @ObjectType()
 export class Gift {
@@ -18,8 +18,8 @@ export class Gift {
   @Field(() => Int, { nullable: false })
   remaining: number;
 
-  @Field(() => [NestedGiftHistory], { nullable: false })
-  giftHistories: NestedGiftHistory[];
+  @Field(() => [GiftHistory], { nullable: false })
+  giftHistories: GiftHistory[];
 
   @Field(() => Date, { nullable: false })
   createdAt: Date;
