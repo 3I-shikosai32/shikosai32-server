@@ -1499,7 +1499,7 @@
   resolved "https://registry.yarnpkg.com/@panva/asn1.js/-/asn1.js-1.0.0.tgz#dd55ae7b8129e02049f009408b97c61ccf9032f6"
   integrity sha512-UdkG3mLEqXgnlKsWanWcgb6dOjUzJ+XC5f+aWw30qrtjxeNUSfKX1cd5FBzOaXQumoe9nIqeZUvrRJS03HCCtw==
 
-"@prisma/client@^4.3.0":
+"@prisma/client@4.3.0":
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@prisma/client/-/client-4.3.0.tgz#147e7d7d4f390af4810e672c11ea6a7ca72b0696"
   integrity sha512-xCjLAOIOqVdjD+UZbUwx5dFocUmdsrMQFe0jXUswTUgc76NOQVh0L7Z+FCkNCVVZ9RSBfEFX22061Sa02OuPAQ==
@@ -5871,7 +5871,7 @@ pretty-format@^29.0.1:
     ansi-styles "^5.0.0"
     react-is "^18.0.0"
 
-prisma-nestjs-graphql@^17.0.0:
+prisma-nestjs-graphql@17.0.0:
   version "17.0.0"
   resolved "https://registry.yarnpkg.com/prisma-nestjs-graphql/-/prisma-nestjs-graphql-17.0.0.tgz#4e9fdc8b5f842bcd1c8f5747e3890409424b9218"
   integrity sha512-et/QVi1tOyYcNCsk60aIl4SN6UtuhbW6ph5NSITT1KC+HU0MQ2RHOqi4/WH+3ZQjQ3MPNPYX1V9lV6UlWRZENQ==
@@ -5888,7 +5888,7 @@ prisma-nestjs-graphql@^17.0.0:
     pupa "2.X"
     ts-morph ">=11"
 
-prisma@^4.3.0:
+prisma@4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/prisma/-/prisma-4.3.0.tgz#2c989be1bc6298f28bb4db40521dabec46e7a388"
   integrity sha512-Ii588H5IsbSun5BwpNQwrayrHKecFEZ6wDoJ7nr2IsqlMblmkA1dextGBObsG9tg+aIVhTrNa7OAbhbvEfqhdQ==
