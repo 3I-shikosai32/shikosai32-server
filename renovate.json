@@ -2,26 +2,28 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
   "ignorePresets": [":prHourlyLimit2"],
+  "labels": ["📚ライブラリ", "🤖renovate"],
   "packageRules": [
     {
+      "groupName": "all non-major dependencies",
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true
     },
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "matchPackagePatterns": ["eslint"],
       "groupName": "eslint",
+      "matchPackagePatterns": ["eslint"],
+      "matchUpdateTypes": ["major"],
       "automerge": true
     },
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "matchPackagePatterns": ["prisma"],
       "groupName": "prisma",
+      "matchPackagePatterns": ["prisma"],
+      "matchUpdateTypes": ["major"],
       "automerge": true
     }
   ],
-  "schedule": ["every 1 hour after 00:00 and before 23:59 every day"],
-  "automergeSchedule": ["every 1 hour after 00:00 and before 23:59 every day"],
+  "schedule": ["before 2am"],
+  "automergeSchedule": ["before 2am"],
   "timezone": "Asia/Tokyo",
   "branchConcurrentLimit": 0
 }
