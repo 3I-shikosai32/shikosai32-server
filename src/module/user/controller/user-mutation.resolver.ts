@@ -1,4 +1,4 @@
-import { Inject, UseGuards } from '@nestjs/common';
+import { Inject, Logger, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { User as UserModel } from '../domain/model/user.model';
 import { UserCreatorUseCaseInterface } from '../domain/service/use-case/user-creator.use-case';
@@ -21,6 +21,8 @@ import { Item as ItemModel } from '~/item/domain/model/item.model';
 @Resolver()
 @UseGuards(AuthGuard)
 export class UserMutation {
+  private readonly logger = new Logger(UserMutation.name);
+
   constructor(
     @Inject(InjectionToken.USER_CREATOR_USE_CASE)
     private readonly creatorUseCase: UserCreatorUseCaseInterface,
@@ -34,14 +36,24 @@ export class UserMutation {
 
   @Mutation(() => User)
   async createUser(@Args() args: CreateUserArgs): Promise<UserModel> {
+    this.logger.log('createUser called');
+    this.logger.log(args);
+
     const createdUser = await this.creatorUseCase.createUser(args);
+
+    this.logger.log(createdUser);
 
     return createdUser;
   }
 
   @Mutation(() => User)
   async updateUser(@Args() args: UpdateUserArgs): Promise<UserModel> {
+    this.logger.log('updateUser called');
+    this.logger.log(args);
+
     const updatedUser = await this.updaterUseCase.updateUser(args);
+
+    this.logger.log(updatedUser);
 
     return updatedUser;
   }
@@ -49,31 +61,51 @@ export class UserMutation {
   @Mutation(() => [User])
   @UseGuards(RoleGuard)
   async incrementPoint(@Args() args: IncrementPointArgs): Promise<UserModel[]> {
+    this.logger.log('incrementPoint called');
+    this.logger.log(args);
+
     const now = new Date(Date.now() + (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000);
     const isBeforeDay2 = now <= new Date('2022-10-22');
 
     const incrementedUser = await this.updaterUseCase.incrementPoint(args, isBeforeDay2);
+
+    this.logger.log(incrementedUser);
 
     return incrementedUser;
   }
 
   @Mutation(() => User)
   async joinGame(@Args() args: JoinGameArgs): Promise<UserModel> {
+    this.logger.log('joinGame called');
+    this.logger.log(args);
+
     const joinedUser = await this.gameManagerUseCase.joinGame(args);
+
+    this.logger.log(joinedUser);
 
     return joinedUser;
   }
 
   @Mutation(() => User)
   async exitGame(@Args() args: ExitGameArgs): Promise<UserModel> {
+    this.logger.log('exitGame called');
+    this.logger.log(args);
+
     const exitedUser = await this.gameManagerUseCase.exitGame(args);
+
+    this.logger.log(exitedUser);
 
     return exitedUser;
   }
 
   @Mutation(() => Item)
   async pullGacha(@Args() args: PullGachaArgs): Promise<ItemModel> {
+    this.logger.log('pullGacha called');
+    this.logger.log(args);
+
     const pulledItem = await this.gachaManagerUseCase.pullGacha(args, (items) => items[Math.floor(Math.random() * items.length)]);
+
+    this.logger.log(pulledItem);
 
     return pulledItem;
   }

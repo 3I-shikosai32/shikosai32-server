@@ -1,4 +1,4 @@
-import { Inject, UseGuards } from '@nestjs/common';
+import { Inject, Logger, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { GiftHistory as GiftHistoryModel } from '../domain/model/gift-history.model';
 import { GiftHistoryCreatorUseCaseInterface } from '../domain/service/use-case/gift-history-creator.use-case';
@@ -13,6 +13,8 @@ import { RoleGuard } from '@/common/guard/role.guard';
 @Resolver()
 @UseGuards(AuthGuard)
 export class GiftHistoryMutation {
+  private readonly logger = new Logger(GiftHistoryMutation.name);
+
   constructor(
     @Inject(InjectionToken.GIFT_HISTORY_CREATOR_USE_CASE)
     private readonly giftHistoryCreatorUseCase: GiftHistoryCreatorUseCaseInterface,
@@ -23,14 +25,24 @@ export class GiftHistoryMutation {
   @Mutation(() => GiftHistory)
   @UseGuards(RoleGuard)
   async updateGiftHistory(@Args() args: UpdateGiftHistoryArgs): Promise<GiftHistoryModel> {
+    this.logger.log('updateGiftHistory called');
+    this.logger.log(args);
+
     const updatedGiftHistory = await this.giftHistoryUpdaterUseCase.updateGiftHistory(args);
+
+    this.logger.log(updatedGiftHistory);
 
     return updatedGiftHistory;
   }
 
   @Mutation(() => [GiftHistory])
   async exchangeGift(@Args() args: ExchangeGiftArgs): Promise<GiftHistoryModel[]> {
+    this.logger.log('exchangeGift called');
+    this.logger.log(args);
+
     const createdGiftHistories = await this.giftHistoryCreatorUseCase.exchangeGift(args);
+
+    this.logger.log(createdGiftHistories);
 
     return createdGiftHistories;
   }
