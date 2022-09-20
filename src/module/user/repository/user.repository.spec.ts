@@ -3,6 +3,8 @@ import { Character } from '@prisma/client';
 import dotenv from 'dotenv';
 import { UserRepository } from './user.repository';
 import { PrismaService } from '@/infra/prisma/prisma.service';
+import { GiftHistory } from '~/gift-history/domain/model/gift-history.model';
+import { Item } from '~/item/domain/model/item.model';
 
 dotenv.config();
 dotenv.config({ path: '.env.test' });
@@ -17,18 +19,6 @@ export const createUser = async (prismaService: PrismaService) => {
       character: Character.CAT,
       iconUrl: 'https://example.com',
       avatarUrl: 'https://example.com',
-    },
-    include: {
-      items: {
-        include: {
-          users: true,
-        },
-      },
-      giftHistories: {
-        include: {
-          exchangedGift: true,
-        },
-      },
     },
   });
 
@@ -83,18 +73,6 @@ describe('UserRepository', () => {
       where: {
         id: createdUser.id,
       },
-      include: {
-        items: {
-          include: {
-            users: true,
-          },
-        },
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
-      },
     });
 
     expect(createdUser).toEqual(foundUser);
@@ -121,5 +99,25 @@ describe('UserRepository', () => {
     const deletedUser = await userRepository.delete({ where: { id: createdUser.id } });
 
     expect(deletedUser).toEqual(createdUser);
+  });
+
+  test('findItemsByUserId', async () => {
+    const createdUser = await createUser(prismaService);
+
+    const foundItems = await userRepository.findItemsByUserId({ where: { id: createdUser.id } });
+
+    expect(foundItems).toEqual(expect.any(Array<typeof Item>));
+
+    await prismaService.user.delete({ where: { id: createdUser.id } });
+  });
+
+  test('findGiftHistoriesByUserId', async () => {
+    const createdUser = await createUser(prismaService);
+
+    const foundGiftHistories = await userRepository.findGiftHistoriesByUserId({ where: { id: createdUser.id } });
+
+    expect(foundGiftHistories).toEqual(expect.any(Array<typeof GiftHistory>));
+
+    await prismaService.user.delete({ where: { id: createdUser.id } });
   });
 });

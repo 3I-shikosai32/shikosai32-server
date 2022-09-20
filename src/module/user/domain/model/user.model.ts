@@ -1,8 +1,6 @@
 import { Character } from '@/infra/prisma/generated/prisma/character/enum';
 import { Game } from '@/infra/prisma/generated/prisma/game/enum';
 import { Role } from '@/infra/prisma/generated/prisma/role/enum';
-import { NestedGiftHistory } from '~/gift-history/domain/model/nested-gift-history.model';
-import { NestedItem } from '~/item/domain/model/nested-item.model';
 
 export class User {
   readonly id: string;
@@ -25,15 +23,11 @@ export class User {
 
   readonly avatarUrl: string;
 
-  readonly items: NestedItem[];
-
   readonly itemIds: string[];
 
   readonly participateGame: keyof typeof Game;
 
   readonly pullableGachaTimes: number;
-
-  readonly giftHistories: NestedGiftHistory[];
 
   readonly createdAt: Date;
 
@@ -48,11 +42,9 @@ export class User {
     character: keyof typeof Character;
     iconUrl: string;
     avatarUrl: string;
-    items: NestedItem[];
     itemIds: string[];
     participateGame: keyof typeof Game;
     pullableGachaTimes: number;
-    giftHistories: NestedGiftHistory[];
     createdAt: Date;
   }) {
     this.id = args.id;
@@ -65,11 +57,9 @@ export class User {
     this.character = args.character;
     this.iconUrl = args.iconUrl;
     this.avatarUrl = args.avatarUrl;
-    this.items = args.items;
     this.itemIds = args.itemIds;
     this.participateGame = args.participateGame;
     this.pullableGachaTimes = args.pullableGachaTimes;
-    this.giftHistories = args.giftHistories;
     this.createdAt = args.createdAt;
   }
 

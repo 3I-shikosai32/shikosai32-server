@@ -2,6 +2,7 @@ import { Test } from '@nestjs/testing';
 import dotenv from 'dotenv';
 import { GiftRepository } from './gift.repository';
 import { PrismaService } from '@/infra/prisma/prisma.service';
+import { GiftHistory } from '~/gift-history/domain/model/gift-history.model';
 
 dotenv.config();
 dotenv.config({ path: '.env.test' });
@@ -15,13 +16,6 @@ export const createGift = async (prismaService: PrismaService) => {
       iconUrl: 'https://example.com',
       price: 0,
       remaining: 0,
-    },
-    include: {
-      giftHistories: {
-        include: {
-          exchangedGift: true,
-        },
-      },
     },
   });
 
@@ -75,13 +69,6 @@ describe('GiftRepository', () => {
       where: {
         id: createdGift.id,
       },
-      include: {
-        giftHistories: {
-          include: {
-            exchangedGift: true,
-          },
-        },
-      },
     });
 
     expect(createdGift).toEqual(foundGift);
@@ -108,5 +95,15 @@ describe('GiftRepository', () => {
     const deletedGift = await giftRepository.delete({ where: { id: createdGift.id } });
 
     expect(deletedGift).toEqual(createdGift);
+  });
+
+  test('findGiftHistoriesByGiftId', async () => {
+    const createdGift = await createGift(prismaService);
+
+    const foundGiftHistories = await giftRepository.findGiftHistoriesByGiftId({ where: { id: createdGift.id } });
+
+    expect(foundGiftHistories).toEqual(expect.any(Array<typeof GiftHistory>));
+
+    await prismaService.gift.delete({ where: { id: createdGift.id } });
   });
 });
