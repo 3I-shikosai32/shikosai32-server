@@ -1,5 +1,6 @@
 import { Inject, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { User as UserModel } from '../domain/model/user.model';
 import { UserCreatorUseCaseInterface } from '../domain/service/use-case/user-creator.use-case';
 import { UserGachaManagerUseCaseInterface } from '../domain/service/use-case/user-gacha-manager.use-case';
 import { UserGameManagerUseCaseInterface } from '../domain/service/use-case/user-game-manager.use-case';
@@ -15,6 +16,7 @@ import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { AuthGuard } from '@/common/guard/auth.guard';
 import { RoleGuard } from '@/common/guard/role.guard';
 import { Item } from '~/item/controller/dto/object/item.object';
+import { Item as ItemModel } from '~/item/domain/model/item.model';
 
 @Resolver()
 @UseGuards(AuthGuard)
@@ -31,14 +33,14 @@ export class UserMutation {
   ) {}
 
   @Mutation(() => User)
-  async createUser(@Args() args: CreateUserArgs): Promise<User> {
+  async createUser(@Args() args: CreateUserArgs): Promise<UserModel> {
     const createdUser = await this.creatorUseCase.createUser(args);
 
     return createdUser;
   }
 
   @Mutation(() => User)
-  async updateUser(@Args() args: UpdateUserArgs): Promise<User> {
+  async updateUser(@Args() args: UpdateUserArgs): Promise<UserModel> {
     const updatedUser = await this.updaterUseCase.updateUser(args);
 
     return updatedUser;
@@ -46,7 +48,7 @@ export class UserMutation {
 
   @Mutation(() => [User])
   @UseGuards(RoleGuard)
-  async incrementPoint(@Args() args: IncrementPointArgs): Promise<User[]> {
+  async incrementPoint(@Args() args: IncrementPointArgs): Promise<UserModel[]> {
     const now = new Date(Date.now() + (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000);
     const isBeforeDay2 = now <= new Date('2022-10-22');
 
@@ -56,21 +58,21 @@ export class UserMutation {
   }
 
   @Mutation(() => User)
-  async joinGame(@Args() args: JoinGameArgs): Promise<User> {
+  async joinGame(@Args() args: JoinGameArgs): Promise<UserModel> {
     const joinedUser = await this.gameManagerUseCase.joinGame(args);
 
     return joinedUser;
   }
 
   @Mutation(() => User)
-  async exitGame(@Args() args: ExitGameArgs): Promise<User> {
+  async exitGame(@Args() args: ExitGameArgs): Promise<UserModel> {
     const exitedUser = await this.gameManagerUseCase.exitGame(args);
 
     return exitedUser;
   }
 
   @Mutation(() => Item)
-  async pullGacha(@Args() args: PullGachaArgs): Promise<Item> {
+  async pullGacha(@Args() args: PullGachaArgs): Promise<ItemModel> {
     const pulledItem = await this.gachaManagerUseCase.pullGacha(args, (items) => items[Math.floor(Math.random() * items.length)]);
 
     return pulledItem;

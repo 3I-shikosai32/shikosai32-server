@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ExchangeGiftArgs } from '../controller/dto/args/exchange-gift.args';
 import { GiftHistoryRepositoryInterface } from '../domain/service/repository/gift-history.repository';
 import { GiftHistoryCreatorUseCaseInterface } from '../domain/service/use-case/gift-history-creator.use-case';
@@ -6,6 +6,7 @@ import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { GiftRepositoryInterface } from '~/gift/domain/service/repository/gift.repository';
 import { UserRepositoryInterface } from '~/user/domain/service/repository/user.repository';
 
+@Injectable()
 export class GiftHistoryCreatorUseCase implements GiftHistoryCreatorUseCaseInterface {
   constructor(
     @Inject(InjectionToken.USER_REPOSITORY)

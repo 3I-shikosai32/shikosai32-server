@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { NestedGift } from '~/gift/controller/dto/object/nested-gift.object';
-import { NestedUser } from '~/user/controller/dto/object/nested-user.object';
+import { Gift } from '~/gift/controller/dto/object/gift.object';
+import { User } from '~/user/controller/dto/object/user.object';
 
 @ObjectType()
 export class GiftHistory {
@@ -10,14 +10,14 @@ export class GiftHistory {
   @Field(() => Boolean, { nullable: false })
   isDelivered: boolean;
 
-  @Field(() => NestedUser, { nullable: false })
-  user: NestedUser;
+  @Field(() => User, { nullable: false })
+  user: User;
 
   @Field(() => String, { nullable: false })
   userId: string;
 
-  @Field(() => NestedGift, { nullable: false })
-  exchangedGift: NestedGift;
+  @Field(() => Gift, { nullable: false })
+  exchangedGift: Gift;
 
   @Field(() => String, { nullable: false })
   giftId: string;

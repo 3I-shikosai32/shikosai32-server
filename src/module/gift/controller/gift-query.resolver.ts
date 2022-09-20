@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Gift as GiftModel } from '../domain/model/gift.model';
 import { GiftReaderUseCaseInterface } from '../domain/service/use-case/gift-reader.use-case';
 import { FindGiftArgs } from './dto/args/find-gift.args';
 import { FindGiftsArgs } from './dto/args/find-gifts.args';
@@ -14,14 +15,14 @@ export class GiftQuery {
   ) {}
 
   @Query(() => Gift, { nullable: true })
-  async findGift(@Args() args: FindGiftArgs): Promise<Gift | null> {
+  async findGift(@Args() args: FindGiftArgs): Promise<GiftModel | null> {
     const foundGift = await this.giftReaderUseCase.findGift(args);
 
     return foundGift;
   }
 
   @Query(() => [Gift])
-  async findGifts(@Args() args: FindGiftsArgs): Promise<Gift[]> {
+  async findGifts(@Args() args: FindGiftsArgs): Promise<GiftModel[]> {
     const foundGifts = await this.giftReaderUseCase.findGifts(args);
 
     return foundGifts;

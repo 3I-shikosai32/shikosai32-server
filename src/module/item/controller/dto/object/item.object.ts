@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Character } from '@/infra/prisma/generated/prisma/character/enum';
-import { NestedUser } from '~/user/controller/dto/object/nested-user.object';
+import { User } from '~/user/controller/dto/object/user.object';
 
 @ObjectType()
 export class Item {
@@ -16,8 +16,8 @@ export class Item {
   @Field(() => Int, { nullable: false })
   layer: number;
 
-  @Field(() => [NestedUser], { nullable: false })
-  users: NestedUser[];
+  @Field(() => [User], { nullable: false })
+  users: User[];
 
   @Field(() => [String], { nullable: false })
   userIds: string[];

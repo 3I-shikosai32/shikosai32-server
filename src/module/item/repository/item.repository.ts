@@ -3,83 +3,45 @@ import { Item } from '../domain/model/item.model';
 import { Create, Delete, FindMany, FindUnique, ItemRepositoryInterface, Update } from '../domain/service/repository/item.repository';
 import { StrictPropertyCheck } from '@/common/type/strict-property-check.type';
 import { PrismaService } from '@/infra/prisma/prisma.service';
+import { User } from '~/user/domain/model/user.model';
 
 @Injectable()
 export class ItemRepository implements ItemRepositoryInterface {
   constructor(private readonly prismaService: PrismaService) {}
 
   async findUnique<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>) {
-    const foundItem = await this.prismaService.item.findUnique({
-      ...args,
-      include: {
-        users: {
-          include: {
-            items: true,
-          },
-        },
-      },
-    });
+    const foundItem = await this.prismaService.item.findUnique(args);
 
     return foundItem ? new Item(foundItem) : null;
   }
 
   async findMany<T extends FindMany>(args: StrictPropertyCheck<T, FindMany>) {
-    const foundItems = await this.prismaService.item.findMany({
-      ...args,
-      include: {
-        users: {
-          include: {
-            items: true,
-          },
-        },
-      },
-    });
+    const foundItems = await this.prismaService.item.findMany(args);
 
     return foundItems.map((foundItem) => new Item(foundItem));
   }
 
   async create<T extends Create>(args: StrictPropertyCheck<T, Create>) {
-    const createdItem = await this.prismaService.item.create({
-      ...args,
-      include: {
-        users: {
-          include: {
-            items: true,
-          },
-        },
-      },
-    });
+    const createdItem = await this.prismaService.item.create(args);
 
     return new Item(createdItem);
   }
 
   async update<T extends Update>(args: StrictPropertyCheck<T, Update>) {
-    const updatedItem = await this.prismaService.item.update({
-      ...args,
-      include: {
-        users: {
-          include: {
-            items: true,
-          },
-        },
-      },
-    });
+    const updatedItem = await this.prismaService.item.update(args);
 
     return new Item(updatedItem);
   }
 
   async delete<T extends Delete>(args: StrictPropertyCheck<T, Delete>) {
-    const deleteItem = await this.prismaService.item.delete({
-      ...args,
-      include: {
-        users: {
-          include: {
-            items: true,
-          },
-        },
-      },
-    });
+    const deleteItem = await this.prismaService.item.delete(args);
 
     return new Item(deleteItem);
+  }
+
+  async findUsersByItemId<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>) {
+    const foundUsers = await this.prismaService.item.findUnique(args).users();
+
+    return foundUsers.map((foundUser) => new User(foundUser));
   }
 }

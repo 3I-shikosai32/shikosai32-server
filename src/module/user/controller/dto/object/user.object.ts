@@ -2,8 +2,8 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Character } from '@/infra/prisma/generated/prisma/character/enum';
 import { Game } from '@/infra/prisma/generated/prisma/game/enum';
 import { Role } from '@/infra/prisma/generated/prisma/role/enum';
-import { NestedGiftHistory } from '~/gift-history/controller/dto/object/nested-gift-history.object';
-import { NestedItem } from '~/item/controller/dto/object/nested-item.object';
+import { GiftHistory } from '~/gift-history/controller/dto/object/gift-history.object';
+import { Item } from '~/item/controller/dto/object/item.object';
 
 @ObjectType()
 export class User {
@@ -37,8 +37,8 @@ export class User {
   @Field(() => String, { nullable: false })
   avatarUrl: string;
 
-  @Field(() => [NestedItem], { nullable: false })
-  items: NestedItem[];
+  @Field(() => [Item], { nullable: false })
+  items: Item[];
 
   @Field(() => [String], { nullable: false })
   itemIds: string[];
@@ -49,8 +49,8 @@ export class User {
   @Field(() => Int, { nullable: false })
   pullableGachaTimes: number;
 
-  @Field(() => [NestedGiftHistory], { nullable: false })
-  giftHistories: NestedGiftHistory[];
+  @Field(() => [GiftHistory], { nullable: false })
+  giftHistories: GiftHistory[];
 
   @Field(() => Date, { nullable: false })
   createdAt: Date;

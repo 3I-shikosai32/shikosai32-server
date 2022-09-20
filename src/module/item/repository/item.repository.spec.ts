@@ -3,6 +3,7 @@ import { Character } from '@prisma/client';
 import dotenv from 'dotenv';
 import { ItemRepository } from './item.repository';
 import { PrismaService } from '@/infra/prisma/prisma.service';
+import { User } from '~/user/domain/model/user.model';
 
 dotenv.config();
 dotenv.config({ path: '.env.test' });
@@ -19,13 +20,6 @@ export const createItem = async (prismaService: PrismaService) => {
         connect: [],
       },
       userIds: [],
-    },
-    include: {
-      users: {
-        include: {
-          items: true,
-        },
-      },
     },
   });
 
@@ -82,13 +76,6 @@ describe('ItemRepository', () => {
       where: {
         id: createdItem.id,
       },
-      include: {
-        users: {
-          include: {
-            items: true,
-          },
-        },
-      },
     });
 
     expect(createdItem).toEqual(foundItem);
@@ -115,5 +102,15 @@ describe('ItemRepository', () => {
     const deletedItem = await itemService.delete({ where: { id: createdItem.id } });
 
     expect(deletedItem).toEqual(createdItem);
+  });
+
+  test('findUsersByItemId', async () => {
+    const createdItem = await createItem(prismaService);
+
+    const foundUsers = await itemService.findUsersByItemId({ where: { id: createdItem.id } });
+
+    expect(foundUsers).toEqual(expect.any(Array<typeof User>));
+
+    await prismaService.item.delete({ where: { id: createdItem.id } });
   });
 });
