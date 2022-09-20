@@ -12,7 +12,11 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "~/gift/*": ["./src/module/gift/*"],
+      "~/gift-history/*": ["src/module/gift-history/*"],
+      "~/item/*": ["./src/module/item/*"],
+      "~/user/*": ["./src/module/user/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

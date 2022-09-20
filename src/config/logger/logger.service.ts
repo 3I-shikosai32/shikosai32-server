@@ -1,10 +1,10 @@
 import { basename } from 'path';
-import { LoggerService, Injectable, Scope } from '@nestjs/common';
+import { Injectable, LoggerService as BaseLoggerService, Scope } from '@nestjs/common';
 import { Request } from 'express';
 import { Logger } from 'log4js';
 
 @Injectable({ scope: Scope.TRANSIENT })
-export default class CustomLogger implements LoggerService {
+export class LoggerService implements BaseLoggerService {
   constructor(private readonly logger: Logger) {}
 
   setRequestInfo(req: Request) {
