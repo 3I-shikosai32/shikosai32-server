@@ -8,6 +8,16 @@
       "groupName": "all non-major dependencies",
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true
+    },
+    {
+      "groupName": "linter",
+      "matchPackageNames": ["eslint", "prettier"],
+      "matchUpdateTypes": ["major"]
+    },
+    {
+      "groupName": "prisma",
+      "matchPackageNames": ["prisma"],
+      "matchUpdateTypes": ["major"]
     }
   ],
   "schedule": ["before 2am"],
