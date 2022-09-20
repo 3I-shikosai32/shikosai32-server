@@ -2,7 +2,7 @@
 /dist
 /node_modules
 
-# Logs
+# logs
 logs
 *.log
 npm-debug.log*
@@ -17,7 +17,7 @@ lerna-debug.log*
 # env file
 .env*
 
-# Tests
+# tests
 /coverage
 /.nyc_output
 
@@ -38,8 +38,8 @@ lerna-debug.log*
 !.vscode/extensions.json
 *.code-workspace
 
-# firebase admin secret keys
+# Firebase admin secret keys
 *-firebase-adminsdk-*.json
 
-## GraphQL Schema
+## GraphQL schema
 schema.gql

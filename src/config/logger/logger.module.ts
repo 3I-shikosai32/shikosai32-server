@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { configure, getLogger } from 'log4js';
 import config from './logger.config.json';
-import LoggerService from './logger.service';
+import { LoggerService } from './logger.service';
 
 const loggerFactory = {
   provide: LoggerService,
@@ -15,4 +15,4 @@ const loggerFactory = {
   providers: [loggerFactory],
   exports: [loggerFactory],
 })
-export default class LoggerModule {}
+export class LoggerModule {}
