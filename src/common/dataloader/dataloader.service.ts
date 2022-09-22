@@ -10,7 +10,7 @@ export class DataLoaderService {
     private readonly giftHistoryUserDataLoader: GiftHistoryUserDataLoader,
   ) {}
 
-  getLoaders(): DataLoaderInterface {
+  getLoader(): DataLoaderInterface {
     return {
       userGiftHistoriesDataLoader: this.userGiftHistoriesDataLoader,
       giftHistoryUserDataLoader: this.giftHistoryUserDataLoader,
