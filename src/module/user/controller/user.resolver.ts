@@ -1,9 +1,10 @@
 import { Inject } from '@nestjs/common';
-import { Resolver, ResolveField, Parent } from '@nestjs/graphql';
+import { Context, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { User as UserModel } from '../domain/model/user.model';
 import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
 import { User } from './dto/object/user.object';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
+import { GqlContext } from '@/config/graphql/graphql-config.module';
 import { GiftHistory } from '~/gift-history/controller/dto/object/gift-history.object';
 import { GiftHistory as GiftHistoryModel } from '~/gift-history/domain/model/gift-history.model';
 import { Item } from '~/item/controller/dto/object/item.object';
@@ -24,8 +25,8 @@ export class UserResolver {
   }
 
   @ResolveField(() => [GiftHistory])
-  async giftHistories(@Parent() user: UserModel): Promise<GiftHistoryModel[]> {
-    const giftHistories = await this.readerUseCase.findGiftHistoriesByUserId(user.id);
+  async giftHistories(@Parent() user: UserModel, @Context() ctx: GqlContext): Promise<GiftHistoryModel[]> {
+    const giftHistories = await ctx.loader.userGiftHistoriesDataLoader.load(user.id);
 
     return giftHistories;
   }
