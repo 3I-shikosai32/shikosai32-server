@@ -23,8 +23,6 @@ export class UserQuery {
 
     const user = await this.readerUseCase.findUser(args);
 
-    this.logger.log(user);
-
     return user;
   }
 
@@ -34,8 +32,6 @@ export class UserQuery {
     this.logger.log(args);
 
     const users = await this.readerUseCase.findUsers(args);
-
-    this.logger.log(users);
 
     return users;
   }

@@ -41,8 +41,6 @@ export class UserMutation {
 
     const createdUser = await this.creatorUseCase.createUser(args);
 
-    this.logger.log(createdUser);
-
     return createdUser;
   }
 
@@ -52,8 +50,6 @@ export class UserMutation {
     this.logger.log(args);
 
     const updatedUser = await this.updaterUseCase.updateUser(args);
-
-    this.logger.log(updatedUser);
 
     return updatedUser;
   }
@@ -69,8 +65,6 @@ export class UserMutation {
 
     const incrementedUser = await this.updaterUseCase.incrementPoint(args, isBeforeDay2);
 
-    this.logger.log(incrementedUser);
-
     return incrementedUser;
   }
 
@@ -80,8 +74,6 @@ export class UserMutation {
     this.logger.log(args);
 
     const joinedUser = await this.gameManagerUseCase.joinGame(args);
-
-    this.logger.log(joinedUser);
 
     return joinedUser;
   }
@@ -93,8 +85,6 @@ export class UserMutation {
 
     const exitedUser = await this.gameManagerUseCase.exitGame(args);
 
-    this.logger.log(exitedUser);
-
     return exitedUser;
   }
 
@@ -104,8 +94,6 @@ export class UserMutation {
     this.logger.log(args);
 
     const pulledItem = await this.gachaManagerUseCase.pullGacha(args, (items) => items[Math.floor(Math.random() * items.length)]);
-
-    this.logger.log(pulledItem);
 
     return pulledItem;
   }

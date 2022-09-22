@@ -23,8 +23,6 @@ export class GiftHistoryQuery {
 
     const foundGiftHistory = await this.giftHistoryReaderUseCase.findGiftHistory(args);
 
-    this.logger.log(foundGiftHistory);
-
     return foundGiftHistory;
   }
 
@@ -34,8 +32,6 @@ export class GiftHistoryQuery {
     this.logger.log(args);
 
     const foundGiftHistories = await this.giftHistoryReaderUseCase.findGiftHistories(args);
-
-    this.logger.log(foundGiftHistories);
 
     return foundGiftHistories;
   }

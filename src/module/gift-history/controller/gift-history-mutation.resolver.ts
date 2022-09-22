@@ -30,8 +30,6 @@ export class GiftHistoryMutation {
 
     const updatedGiftHistory = await this.giftHistoryUpdaterUseCase.updateGiftHistory(args);
 
-    this.logger.log(updatedGiftHistory);
-
     return updatedGiftHistory;
   }
 
@@ -41,8 +39,6 @@ export class GiftHistoryMutation {
     this.logger.log(args);
 
     const createdGiftHistories = await this.giftHistoryCreatorUseCase.exchangeGift(args);
-
-    this.logger.log(createdGiftHistories);
 
     return createdGiftHistories;
   }
