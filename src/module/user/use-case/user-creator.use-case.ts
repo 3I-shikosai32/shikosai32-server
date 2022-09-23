@@ -28,9 +28,6 @@ export class UserCreatorUseCase implements UserCreatorUseCaseInterface {
         items: {
           connect: foundItems.map((item) => ({ id: item.id })),
         },
-        giftHistories: {
-          create: args.data.giftHistories,
-        },
       },
     });
 
