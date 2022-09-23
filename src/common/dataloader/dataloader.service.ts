@@ -1,19 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { DataLoaderInterface } from './dataloader.interface';
-import { GiftHistoryUserDataLoader } from './loaders/gift-history-user.dataloader';
+import { GiftGiftHistoriesDataLoader } from './loaders/gift-gift-histories.dataloader';
+import { GiftDataLoader } from './loaders/gift.dataloader';
+import { ItemDataLoader } from './loaders/item.dataloader';
 import { UserGiftHistoriesDataLoader } from './loaders/user-gift-histories.dataloader';
+import { UserDataLoader } from './loaders/user.dataloader';
 
 @Injectable()
 export class DataLoaderService {
   constructor(
+    private readonly userDataLoader: UserDataLoader,
     private readonly userGiftHistoriesDataLoader: UserGiftHistoriesDataLoader,
-    private readonly giftHistoryUserDataLoader: GiftHistoryUserDataLoader,
+    private readonly itemDataLoader: ItemDataLoader,
+    private readonly giftDataLoader: GiftDataLoader,
+    private readonly giftGiftHistoriesDataLoader: GiftGiftHistoriesDataLoader,
   ) {}
 
   getLoader(): DataLoaderInterface {
     return {
+      userDataLoader: this.userDataLoader,
       userGiftHistoriesDataLoader: this.userGiftHistoriesDataLoader,
-      giftHistoryUserDataLoader: this.giftHistoryUserDataLoader,
+      itemDataLoader: this.itemDataLoader,
+      giftDataLoader: this.giftDataLoader,
+      giftGiftHistoriesDataLoader: this.giftGiftHistoriesDataLoader,
     };
   }
 }
