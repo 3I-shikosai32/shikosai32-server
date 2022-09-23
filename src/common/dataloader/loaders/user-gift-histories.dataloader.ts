@@ -20,9 +20,9 @@ export class UserGiftHistoriesDataLoader extends BaseDataLoader<string, GiftHist
     });
 
     const mappedGiftHistoriesList = userIds.map((userId) => {
-      const mappedGiftHistories = giftHistories.filter((giftHistory) => giftHistory.id === userId);
-      if (!mappedGiftHistories) {
-        return new Error(`GiftHistory with id ${userId} not found`);
+      const mappedGiftHistories = giftHistories.filter((giftHistory) => giftHistory.userId === userId);
+      if (mappedGiftHistories.length === 0) {
+        return new Error(`GiftHistory with userId ${userId} not found`);
       }
 
       return mappedGiftHistories;
