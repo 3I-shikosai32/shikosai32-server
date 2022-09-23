@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { GiftHistoryMutation } from './controller/gift-history-mutation.resolver';
 import { GiftHistoryQuery } from './controller/gift-history-query.resolver';
 import { GiftHistoryResolver } from './controller/gift-history.resolver';
@@ -11,7 +11,7 @@ import { GiftModule } from '~/gift/gift.module';
 import { UserModule } from '~/user/user.module';
 
 @Module({
-  imports: [UserModule, GiftModule],
+  imports: [forwardRef(() => UserModule), forwardRef(() => GiftModule)],
   providers: [
     { provide: InjectionToken.GIFT_HISTORY_REPOSITORY, useClass: GiftHistoryRepository },
     { provide: InjectionToken.GIFT_HISTORY_READER_USE_CASE, useClass: GiftHistoryReaderUseCase },
