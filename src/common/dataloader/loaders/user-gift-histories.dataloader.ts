@@ -12,17 +12,22 @@ export class UserGiftHistoriesDataLoader extends BaseDataLoader<string, GiftHist
     super();
   }
 
-  protected async batchLoad(keys: string[]): Promise<(GiftHistory[] | Error)[]> {
-    const giftHistoriesList = await Promise.all(
-      keys.map((key) =>
-        this.giftHistoryRepository.findMany({
-          where: {
-            userId: key,
-          },
-        }),
-      ),
-    );
+  protected async batchLoad(userIds: string[]): Promise<(GiftHistory[] | Error)[]> {
+    const giftHistories = await this.giftHistoryRepository.findMany({
+      where: {
+        userId: { in: userIds },
+      },
+    });
 
-    return giftHistoriesList;
+    const mappedGiftHistoriesList = userIds.map((userId) => {
+      const mappedGiftHistories = giftHistories.filter((giftHistory) => giftHistory.id === userId);
+      if (!mappedGiftHistories) {
+        return new Error(`GiftHistory with id ${userId} not found`);
+      }
+
+      return mappedGiftHistories;
+    });
+
+    return mappedGiftHistoriesList;
   }
 }
