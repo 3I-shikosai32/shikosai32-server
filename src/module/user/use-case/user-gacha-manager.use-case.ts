@@ -16,10 +16,12 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
   ) {}
 
   async pullGacha(args: PullGachaArgs, pullFromItems: (items: Item[]) => Item) {
-    const foundUser = await this.userRepository.findUnique(args);
-    if (!foundUser) {
+    const foundUserWithItems = await this.userRepository.findUniqueWithItems(args);
+    if (!foundUserWithItems) {
       throw new Error('User not found');
     }
+
+    const [foundUser, foundOldItems] = foundUserWithItems;
 
     if (!foundUser.canPullGacha()) {
       throw new Error('Pullable gacha times is less than 0');
@@ -36,6 +38,10 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
     await this.userRepository.update({
       ...args,
       data: {
+        items: foundOldItems.includes(pulledItem)
+          ? undefined
+          : { connect: [...foundOldItems.map((item) => ({ id: item.id })), { id: pulledItem.id }] },
+        itemIds: foundUser.itemIds.includes(pulledItem.id) ? undefined : [...foundUser.itemIds, pulledItem.id],
         pullableGachaTimes: foundUser.pullableGachaTimes - 1,
       },
     });
