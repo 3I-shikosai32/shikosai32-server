@@ -28,6 +28,7 @@ export type Delete = {
 };
 
 export interface UserRepositoryInterface extends BaseRepositoryInterface<User, FindUnique, FindMany, Create, Update, Delete> {
+  findUniqueWithItems<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>): Promise<[User, Item[]] | null>;
   findItemsByUserId<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>): Promise<Item[]>;
   findGiftHistoriesByUserId<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>): Promise<GiftHistory[]>;
 }

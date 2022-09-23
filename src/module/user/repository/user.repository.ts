@@ -43,6 +43,17 @@ export class UserRepository implements UserRepositoryInterface {
     return new User(deletedUser);
   }
 
+  async findUniqueWithItems<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>): Promise<[User, Item[]] | null> {
+    const foundUserWithItem = await this.prismaService.user.findUnique({
+      ...args,
+      include: {
+        items: true,
+      },
+    });
+
+    return foundUserWithItem ? [new User(foundUserWithItem), foundUserWithItem.items.map((item) => new Item(item))] : null;
+  }
+
   async findItemsByUserId<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>) {
     const foundItems = await this.prismaService.user.findUnique(args).items();
 
