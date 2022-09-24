@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { Game } from '@prisma/client';
 import { IncrementPointArgs } from '../controller/dto/args/increment-point.args';
 import { UpdateUserArgs } from '../controller/dto/args/update-user.args';
 import { User } from '../domain/model/user.model';
@@ -37,6 +38,7 @@ export class UserUpdaterUseCase implements UserUpdaterUseCaseInterface {
               totalPointDay1: foundUser.totalPointDay1 + arg.increment,
               consumablePoint: foundUser.consumablePoint + arg.increment,
               pullableGachaTimes: foundUser.pullableGachaTimes + 1,
+              participateGame: Game.NONE,
             },
           });
         } else {
@@ -46,6 +48,7 @@ export class UserUpdaterUseCase implements UserUpdaterUseCaseInterface {
               totalPointDay2: foundUser.totalPointDay2 + arg.increment,
               consumablePoint: foundUser.consumablePoint + arg.increment,
               pullableGachaTimes: foundUser.pullableGachaTimes + 1,
+              participateGame: Game.NONE,
             },
           });
         }
