@@ -1,31 +1,37 @@
-import { Inject } from '@nestjs/common';
-import { Resolver, ResolveField, Parent } from '@nestjs/graphql';
+import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
+import { match, P } from 'ts-pattern';
+import { UserGiftHistoriesDataLoader } from '../dataloader/user-gift-histories.dataloader';
 import { User as UserModel } from '../domain/model/user.model';
-import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
 import { User } from './dto/object/user.object';
-import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { GiftHistory } from '~/gift-history/controller/dto/object/gift-history.object';
 import { GiftHistory as GiftHistoryModel } from '~/gift-history/domain/model/gift-history.model';
 import { Item } from '~/item/controller/dto/object/item.object';
+import { ItemDataLoader } from '~/item/dataloader/item.dataloader';
 import { Item as ItemModel } from '~/item/domain/model/item.model';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(
-    @Inject(InjectionToken.USER_READER_USE_CASE)
-    private readonly readerUseCase: UserReaderUseCaseInterface,
-  ) {}
+  constructor(private readonly userGiftHistoriesDataLoader: UserGiftHistoriesDataLoader, private readonly itemDataLoader: ItemDataLoader) {}
 
   @ResolveField(() => [Item])
   async items(@Parent() user: UserModel): Promise<ItemModel[]> {
-    const items = await this.readerUseCase.findItemsByUserId(user.id);
+    const itemsOrErrors = await this.itemDataLoader.loadMany(user.itemIds);
+
+    const items = match(itemsOrErrors)
+      .with(P.array(P.instanceOf(Error)), (errors) => {
+        throw errors;
+      })
+      .with(P.array(P.instanceOf(ItemModel)), (matchedItems) => matchedItems)
+      .otherwise(() => {
+        throw new Error('Unexpected error');
+      });
 
     return items;
   }
 
   @ResolveField(() => [GiftHistory])
   async giftHistories(@Parent() user: UserModel): Promise<GiftHistoryModel[]> {
-    const giftHistories = await this.readerUseCase.findGiftHistoriesByUserId(user.id);
+    const giftHistories = await this.userGiftHistoriesDataLoader.load(user.id);
 
     return giftHistories;
   }
