@@ -3,7 +3,6 @@ import { Gift } from '../domain/model/gift.model';
 import { Create, Delete, FindMany, FindUnique, GiftRepositoryInterface, Update } from '../domain/service/repository/gift.repository';
 import { StrictPropertyCheck } from '@/common/type/strict-property-check.type';
 import { PrismaService } from '@/infra/prisma/prisma.service';
-import { GiftHistory } from '~/gift-history/domain/model/gift-history.model';
 
 @Injectable()
 export class GiftRepository implements GiftRepositoryInterface {
@@ -40,11 +39,5 @@ export class GiftRepository implements GiftRepositoryInterface {
     const [, deletedGift] = await this.prismaService.$transaction([deleteGiftHistories, deleteGift]);
 
     return new Gift(deletedGift);
-  }
-
-  async findGiftHistoriesByGiftId<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>) {
-    const foundGiftHistories = await this.prismaService.gift.findUnique(args).giftHistories();
-
-    return foundGiftHistories.map((foundGiftHistory) => new GiftHistory(foundGiftHistory));
   }
 }
