@@ -3,7 +3,6 @@ import { Item } from '../domain/model/item.model';
 import { Create, Delete, FindMany, FindUnique, ItemRepositoryInterface, Update } from '../domain/service/repository/item.repository';
 import { StrictPropertyCheck } from '@/common/type/strict-property-check.type';
 import { PrismaService } from '@/infra/prisma/prisma.service';
-import { User } from '~/user/domain/model/user.model';
 
 @Injectable()
 export class ItemRepository implements ItemRepositoryInterface {
@@ -37,11 +36,5 @@ export class ItemRepository implements ItemRepositoryInterface {
     const deleteItem = await this.prismaService.item.delete(args);
 
     return new Item(deleteItem);
-  }
-
-  async findUsersByItemId<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>) {
-    const foundUsers = await this.prismaService.item.findUnique(args).users();
-
-    return foundUsers.map((foundUser) => new User(foundUser));
   }
 }
