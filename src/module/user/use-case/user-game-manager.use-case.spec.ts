@@ -32,4 +32,12 @@ describe('UserGameManagerUseCase', () => {
 
     expect(exitedUser).toEqual(expectUser);
   });
+
+  test('incrementPoint', async () => {
+    const expectUser = await mockedUserRepository.update();
+
+    const incrementedUsers = await userGameManagerUseCase.incrementPoint({ users: [{ id: expectUser.id, increment: 10 }] }, false);
+
+    expect(incrementedUsers).toEqual(expect.arrayContaining([expectUser]));
+  });
 });

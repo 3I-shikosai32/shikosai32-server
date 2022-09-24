@@ -78,7 +78,7 @@ export class UserMutation {
     const now = new Date(Date.now() + (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000);
     const isBeforeDay2 = now <= new Date('2022-10-22');
 
-    const incrementedUser = await this.updaterUseCase.incrementPoint(args, isBeforeDay2);
+    const incrementedUser = await this.gameManagerUseCase.incrementPoint(args, isBeforeDay2);
 
     this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUser);
 
