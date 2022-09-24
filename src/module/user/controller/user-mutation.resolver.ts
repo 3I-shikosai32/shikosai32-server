@@ -1,5 +1,6 @@
 import { Inject, Logger, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { UserDataLoader } from '../dataloader/user.dataloader';
 import { User as UserModel } from '../domain/model/user.model';
 import { UserCreatorUseCaseInterface } from '../domain/service/use-case/user-creator.use-case';
 import { UserGachaManagerUseCaseInterface } from '../domain/service/use-case/user-gacha-manager.use-case';
@@ -12,10 +13,12 @@ import { JoinGameArgs } from './dto/args/join-game.args';
 import { PullGachaArgs } from './dto/args/pull-gacha.args';
 import { UpdateUserArgs } from './dto/args/update-user.args';
 import { User } from './dto/object/user.object';
+import { DataLoaderCacheService } from '@/cache/dataloader-cache.service';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { AuthGuard } from '@/common/guard/auth.guard';
 import { RoleGuard } from '@/common/guard/role.guard';
 import { Item } from '~/item/controller/dto/object/item.object';
+import { ItemDataLoader } from '~/item/dataloader/item.dataloader';
 import { Item as ItemModel } from '~/item/domain/model/item.model';
 
 @Resolver()
@@ -32,6 +35,10 @@ export class UserMutation {
     private readonly gameManagerUseCase: UserGameManagerUseCaseInterface,
     @Inject(InjectionToken.USER_GACHA_MANAGER_USE_CASE)
     private readonly gachaManagerUseCase: UserGachaManagerUseCaseInterface,
+    private readonly userDataLoader: UserDataLoader,
+    private readonly dataLoaderCacheService: DataLoaderCacheService<UserModel, string>,
+    private readonly itemDataLoader: ItemDataLoader,
+    private readonly itemDataLoaderCacheService: DataLoaderCacheService<ItemModel, string>,
   ) {}
 
   @Mutation(() => User)
@@ -40,6 +47,8 @@ export class UserMutation {
     this.logger.log(args);
 
     const createdUser = await this.creatorUseCase.createUser(args);
+
+    this.dataLoaderCacheService.prime(this.userDataLoader, createdUser);
 
     return createdUser;
   }
@@ -50,6 +59,8 @@ export class UserMutation {
     this.logger.log(args);
 
     const updatedUser = await this.updaterUseCase.updateUser(args);
+
+    this.dataLoaderCacheService.prime(this.userDataLoader, updatedUser);
 
     return updatedUser;
   }
@@ -65,6 +76,8 @@ export class UserMutation {
 
     const incrementedUser = await this.updaterUseCase.incrementPoint(args, isBeforeDay2);
 
+    this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUser);
+
     return incrementedUser;
   }
 
@@ -74,6 +87,8 @@ export class UserMutation {
     this.logger.log(args);
 
     const joinedUser = await this.gameManagerUseCase.joinGame(args);
+
+    this.dataLoaderCacheService.prime(this.userDataLoader, joinedUser);
 
     return joinedUser;
   }
@@ -85,6 +100,8 @@ export class UserMutation {
 
     const exitedUser = await this.gameManagerUseCase.exitGame(args);
 
+    this.dataLoaderCacheService.prime(this.userDataLoader, exitedUser);
+
     return exitedUser;
   }
 
@@ -94,6 +111,8 @@ export class UserMutation {
     this.logger.log(args);
 
     const pulledItem = await this.gachaManagerUseCase.pullGacha(args, (items) => items[Math.floor(Math.random() * items.length)]);
+
+    this.itemDataLoaderCacheService.prime(this.itemDataLoader, pulledItem);
 
     return pulledItem;
   }
