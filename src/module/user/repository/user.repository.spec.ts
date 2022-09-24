@@ -5,6 +5,7 @@ import { UserRepository } from './user.repository';
 import { PrismaService } from '@/infra/prisma/prisma.service';
 import { GiftHistory } from '~/gift-history/domain/model/gift-history.model';
 import { Item } from '~/item/domain/model/item.model';
+import { createItem } from '~/item/repository/item.repository.spec';
 
 dotenv.config();
 dotenv.config({ path: '.env.test' });
@@ -99,6 +100,26 @@ describe('UserRepository', () => {
     const deletedUser = await userRepository.delete({ where: { id: createdUser.id } });
 
     expect(deletedUser).toEqual(createdUser);
+  });
+
+  test('findUniqueWithItems', async () => {
+    const createdUser = await createUser(prismaService);
+    const createdItem = await createItem(prismaService);
+
+    const foundUserWithItems = await userRepository.findUniqueWithItems({
+      where: { id: createdUser.id },
+    });
+    if (!foundUserWithItems) {
+      throw new Error('not found');
+    }
+
+    const [foundUser, foundItems] = foundUserWithItems;
+
+    expect(foundUser).toEqual(createdUser);
+    expect(foundItems).toEqual(expect.any(Array<typeof createdItem>));
+
+    await prismaService.user.delete({ where: { id: createdUser.id } });
+    await prismaService.item.delete({ where: { id: createdItem.id } });
   });
 
   test('findItemsByUserId', async () => {

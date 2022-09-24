@@ -8,48 +8,62 @@ import { EnvService } from '../env/env.service';
 
 const envService = new EnvService(new ConfigService());
 
+export type GqlContext = undefined;
+
+const gqlFactory = (apolloDriverConfig: ApolloDriverConfig) => (): ApolloDriverConfig => ({
+  ...apolloDriverConfig,
+  context: undefined,
+});
+
 const GraphQLConfigDevelopment = () =>
-  GraphQLModule.forRoot<ApolloDriverConfig>({
+  GraphQLModule.forRootAsync<ApolloDriverConfig>({
     driver: ApolloDriver,
-    subscriptions: {
-      'graphql-ws': true,
-    },
-    path: '/graphql',
-    introspection: true,
-    cache: 'bounded',
-    autoSchemaFile: join(process.cwd(), './schema.gql'),
-    sortSchema: true,
-    playground: false,
-    plugins: [ApolloServerPluginLandingPageLocalDefault()],
-    debug: true,
+    useFactory: gqlFactory({
+      subscriptions: {
+        'graphql-ws': true,
+      },
+      path: '/graphql',
+      introspection: true,
+      cache: 'bounded',
+      autoSchemaFile: join(process.cwd(), './schema.gql'),
+      sortSchema: true,
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      debug: true,
+    }),
   });
 
 export const GraphQLConfigProduction = () =>
-  GraphQLModule.forRoot<ApolloDriverConfig>({
-    apollo: envService.ApolloStudioConfig,
+  GraphQLModule.forRootAsync<ApolloDriverConfig>({
     driver: ApolloDriver,
-    subscriptions: {
-      'graphql-ws': true,
-    },
-    path: '/graphql',
-    introspection: true,
-    cache: 'bounded',
-    autoSchemaFile: join(process.cwd(), './schema.gql'),
-    sortSchema: true,
-    playground: false,
-    plugins: [ApolloServerPluginLandingPageLocalDefault()],
+    useFactory: gqlFactory({
+      apollo: envService.ApolloStudioConfig,
+      driver: ApolloDriver,
+      subscriptions: {
+        'graphql-ws': true,
+      },
+      path: '/graphql',
+      introspection: true,
+      cache: 'bounded',
+      autoSchemaFile: join(process.cwd(), './schema.gql'),
+      sortSchema: true,
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+    }),
   });
 
 const GraphQLConfigTest = () =>
-  GraphQLModule.forRoot<ApolloDriverConfig>({
+  GraphQLModule.forRootAsync<ApolloDriverConfig>({
     driver: ApolloDriver,
-    subscriptions: {
-      'graphql-ws': true,
-    },
-    path: '/graphql',
-    cache: 'bounded',
-    autoSchemaFile: join(process.cwd(), './schema.gql'),
-    playground: false,
+    useFactory: gqlFactory({
+      subscriptions: {
+        'graphql-ws': true,
+      },
+      path: '/graphql',
+      cache: 'bounded',
+      autoSchemaFile: join(process.cwd(), './schema.gql'),
+      playground: false,
+    }),
   });
 
 export const GraphQLConfigModule = match(envService.NodeEnv)
