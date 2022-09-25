@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CacheModule } from '@/cache/cache.module';
+import { DateModule } from '@/common/date/date.module';
 import { EnvModule } from '@/config/env/env.module';
 import { GraphQLConfigModule } from '@/config/graphql/graphql-config.module';
 import { FirebaseModule } from '@/infra/firebase/firebase.module';
@@ -8,6 +9,6 @@ import { PubSubModule } from '@/infra/pubsub/pubsub.module';
 import { Modules } from '@/module';
 
 @Module({
-  imports: [EnvModule, GraphQLConfigModule, PrismaModule, FirebaseModule, PubSubModule, CacheModule, ...Modules],
+  imports: [EnvModule, GraphQLConfigModule, PrismaModule, FirebaseModule, PubSubModule, CacheModule, DateModule, ...Modules],
 })
 export class AppModule {}

@@ -15,6 +15,7 @@ import { UpdateUserArgs } from './dto/args/update-user.args';
 import { User } from './dto/object/user.object';
 import { DataLoaderCacheService } from '@/cache/dataloader-cache.service';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
+import { DateService } from '@/common/date/date.service';
 import { AuthGuard } from '@/common/guard/auth.guard';
 import { RoleGuard } from '@/common/guard/role.guard';
 import { FirebaseService } from '@/infra/firebase/firebase.service';
@@ -41,6 +42,7 @@ export class UserMutation {
     private readonly itemDataLoader: ItemDataLoader,
     private readonly itemDataLoaderCacheService: DataLoaderCacheService<ItemModel, string>,
     private readonly firebaseService: FirebaseService,
+    private readonly dateService: DateService,
   ) {}
 
   @Mutation(() => User)
@@ -81,10 +83,9 @@ export class UserMutation {
     this.logger.log('incrementPoint called');
     this.logger.log(args);
 
-    const now = new Date(Date.now() + (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000);
-    const isBeforeDay2 = now <= new Date('2022-10-22');
+    const isNowBeforeDay2 = this.dateService.isBeforeDay2(this.dateService.getNow());
 
-    const incrementedUser = await this.updaterUseCase.incrementPoint(args, isBeforeDay2);
+    const incrementedUser = await this.updaterUseCase.incrementPoint(args, isNowBeforeDay2);
 
     this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUser);
 
