@@ -4,6 +4,7 @@ import { GameAttenders } from '../domain/model/game-attenders.model';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
 import { UserPublisherUseCaseInterface } from '../domain/service/use-case/user-publisher.ues-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
+import { PubSubTrigger } from '@/common/constant/pubsub-iterator.constant';
 import { PubSubService } from '@/infra/pubsub/pubsub.service';
 
 @Injectable()
@@ -30,7 +31,7 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
       we_didnt_playtest: gameAttenders.filter((user) => user.participateGame === Game.WE_DIDNT_PLAYTEST),
     };
 
-    await this.pubSubRepository.publish('updatedGameAttenders', { updatedGameAttenders });
+    await this.pubSubRepository.publish(PubSubTrigger.UPDATED_GAME_ATTENDERS, { updatedGameAttenders });
 
     return new GameAttenders(updatedGameAttenders);
   }
