@@ -77,11 +77,9 @@ export class UserMutation {
     this.logger.log('incrementPoint called');
     this.logger.log(args);
 
-    const now = this.dateService.getNow();
-    const day2 = this.dateService.getDay2();
-    const isBeforeDay2 = this.dateService.isBeforeDay2(now, day2);
+    const isNowBeforeDay2 = this.dateService.isBeforeDay2(this.dateService.getNow());
 
-    const incrementedUser = await this.updaterUseCase.incrementPoint(args, isBeforeDay2);
+    const incrementedUser = await this.updaterUseCase.incrementPoint(args, isNowBeforeDay2);
 
     this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUser);
 

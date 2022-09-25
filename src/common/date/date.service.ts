@@ -18,8 +18,8 @@ export class DateService {
     return day2;
   }
 
-  isBeforeDay2(now: Date, day2: Date): boolean {
-    const isBeforeDay2 = isBefore(now, day2);
+  isBeforeDay2(date: Date, day2: Date = this.getDay2()): boolean {
+    const isBeforeDay2 = isBefore(date, day2);
 
     return isBeforeDay2;
   }
