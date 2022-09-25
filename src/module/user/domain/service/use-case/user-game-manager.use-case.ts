@@ -4,7 +4,7 @@ import { IncrementPointArgs } from '~/user/controller/dto/args/increment-point.a
 import { JoinGameArgs } from '~/user/controller/dto/args/join-game.args';
 
 export interface UserGameManagerUseCaseInterface {
+  incrementPoint(args: IncrementPointArgs, isBeforeDay2: boolean): Promise<User[]>;
   joinGame(args: JoinGameArgs): Promise<User>;
   exitGame(args: ExitGameArgs): Promise<User>;
-  incrementPoint(args: IncrementPointArgs, isBeforeDay2: boolean): Promise<User[]>;
 }

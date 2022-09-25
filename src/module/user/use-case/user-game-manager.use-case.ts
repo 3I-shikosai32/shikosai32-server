@@ -15,28 +15,6 @@ export class UserGameManagerUseCase implements UserGameManagerUseCaseInterface {
     private readonly userRepository: UserRepositoryInterface,
   ) {}
 
-  async joinGame(args: JoinGameArgs) {
-    const updatedUser = await this.userRepository.update({
-      where: args.where,
-      data: {
-        participateGame: args.game,
-      },
-    });
-
-    return updatedUser;
-  }
-
-  async exitGame(args: ExitGameArgs) {
-    const updatedUser = await this.userRepository.update({
-      where: args.where,
-      data: {
-        participateGame: Game.NONE,
-      },
-    });
-
-    return updatedUser;
-  }
-
   async incrementPoint(args: IncrementPointArgs, isBeforeDay2: boolean) {
     const updatedUsers = await Promise.all(
       args.users.map(async (arg) => {
@@ -75,5 +53,27 @@ export class UserGameManagerUseCase implements UserGameManagerUseCaseInterface {
     );
 
     return updatedUsers;
+  }
+
+  async joinGame(args: JoinGameArgs) {
+    const updatedUser = await this.userRepository.update({
+      where: args.where,
+      data: {
+        participateGame: args.game,
+      },
+    });
+
+    return updatedUser;
+  }
+
+  async exitGame(args: ExitGameArgs) {
+    const updatedUser = await this.userRepository.update({
+      where: args.where,
+      data: {
+        participateGame: Game.NONE,
+      },
+    });
+
+    return updatedUser;
   }
 }
