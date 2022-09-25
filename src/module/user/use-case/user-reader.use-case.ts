@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FindUserArgs } from '../controller/dto/args/find-user.args';
 import { FindUsersArgs } from '../controller/dto/args/find-users.args';
+import { ObtainmentStatus } from '../domain/model/obtainment-status.model';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
 import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
@@ -60,6 +61,6 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
       obtained: foundUser.itemIds.includes(item.id),
     }));
 
-    return obtainmentStatuses;
+    return obtainmentStatuses.map((obtainmentStatus) => new ObtainmentStatus(obtainmentStatus));
   }
 }
