@@ -17,6 +17,7 @@ import { DataLoaderCacheService } from '@/cache/dataloader-cache.service';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { AuthGuard } from '@/common/guard/auth.guard';
 import { RoleGuard } from '@/common/guard/role.guard';
+import { FirebaseService } from '@/infra/firebase/firebase.service';
 import { Item } from '~/item/controller/dto/object/item.object';
 import { ItemDataLoader } from '~/item/dataloader/item.dataloader';
 import { Item as ItemModel } from '~/item/domain/model/item.model';
@@ -39,6 +40,7 @@ export class UserMutation {
     private readonly dataLoaderCacheService: DataLoaderCacheService<UserModel, string>,
     private readonly itemDataLoader: ItemDataLoader,
     private readonly itemDataLoaderCacheService: DataLoaderCacheService<ItemModel, string>,
+    private readonly firebaseService: FirebaseService,
   ) {}
 
   @Mutation(() => User)
@@ -49,6 +51,8 @@ export class UserMutation {
     const createdUser = await this.creatorUseCase.createUser(args);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, createdUser);
+
+    await this.firebaseService.adminAuth.updateUser(createdUser.id, { displayName: createdUser.name, email: createdUser.email });
 
     this.logger.log(createdUser);
 
@@ -63,6 +67,8 @@ export class UserMutation {
     const updatedUser = await this.updaterUseCase.updateUser(args);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, updatedUser);
+
+    await this.firebaseService.adminAuth.updateUser(updatedUser.id, { displayName: updatedUser.name, email: updatedUser.email });
 
     this.logger.log(updatedUser);
 
