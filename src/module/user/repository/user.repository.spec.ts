@@ -3,8 +3,6 @@ import { Character } from '@prisma/client';
 import dotenv from 'dotenv';
 import { UserRepository } from './user.repository';
 import { PrismaService } from '@/infra/prisma/prisma.service';
-import { GiftHistory } from '~/gift-history/domain/model/gift-history.model';
-import { Item } from '~/item/domain/model/item.model';
 import { createItem } from '~/item/repository/item.repository.spec';
 
 dotenv.config();
@@ -120,25 +118,5 @@ describe('UserRepository', () => {
 
     await prismaService.user.delete({ where: { id: createdUser.id } });
     await prismaService.item.delete({ where: { id: createdItem.id } });
-  });
-
-  test('findItemsByUserId', async () => {
-    const createdUser = await createUser(prismaService);
-
-    const foundItems = await userRepository.findItemsByUserId({ where: { id: createdUser.id } });
-
-    expect(foundItems).toEqual(expect.any(Array<typeof Item>));
-
-    await prismaService.user.delete({ where: { id: createdUser.id } });
-  });
-
-  test('findGiftHistoriesByUserId', async () => {
-    const createdUser = await createUser(prismaService);
-
-    const foundGiftHistories = await userRepository.findGiftHistoriesByUserId({ where: { id: createdUser.id } });
-
-    expect(foundGiftHistories).toEqual(expect.any(Array<typeof GiftHistory>));
-
-    await prismaService.user.delete({ where: { id: createdUser.id } });
   });
 });

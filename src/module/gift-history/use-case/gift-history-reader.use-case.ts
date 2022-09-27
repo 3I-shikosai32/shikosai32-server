@@ -23,20 +23,4 @@ export class GiftHistoryReaderUseCase implements GiftHistoryReaderUseCaseInterfa
 
     return foundGiftHistories;
   }
-
-  async findUserByGiftHistoryId(id: string) {
-    const foundUser = await this.giftHistoryRepository.findUserByGiftHistoryId({
-      where: { id },
-    });
-
-    return foundUser;
-  }
-
-  async findGiftByGiftHistoryId(id: string) {
-    const foundGift = await this.giftHistoryRepository.findGiftByGiftHistoryId({
-      where: { id },
-    });
-
-    return foundGift;
-  }
 }

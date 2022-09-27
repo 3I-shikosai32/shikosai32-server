@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { GiftHistory } from '../../gift-history/domain/model/gift-history.model';
 import { Gift } from '../domain/model/gift.model';
 import { GiftRepositoryInterface } from '../domain/service/repository/gift.repository';
 
@@ -78,28 +77,5 @@ export class MockedGiftRepository implements GiftRepositoryInterface {
     };
 
     return new Gift(deletedGift);
-  }
-
-  async findGiftHistoriesByGiftId() {
-    const foundGiftHistories = [
-      {
-        id: 'abc-123',
-        isDelivered: false,
-        userId: 'abc-123',
-        giftId: 'abc-123',
-        createdAt: new Date('2021-01-01T00:00:00.000Z'),
-        deliveredAt: null,
-      },
-      {
-        id: 'abc-456',
-        isDelivered: true,
-        userId: 'abc-123',
-        giftId: 'abc-123',
-        createdAt: new Date('2021-01-01T00:00:00.000Z'),
-        deliveredAt: new Date('2021-01-01T00:00:00.000Z'),
-      },
-    ];
-
-    return foundGiftHistories.map((foundGiftHistory) => new GiftHistory(foundGiftHistory));
   }
 }
