@@ -17,6 +17,14 @@ describe('UserGameManagerUseCase', () => {
     userGameManagerUseCase = moduleRef.get(UserGameManagerUseCase);
   });
 
+  test('incrementPoint', async () => {
+    const expectUser = await mockedUserRepository.update();
+
+    const incrementedUsers = await userGameManagerUseCase.incrementPoint({ users: [{ id: expectUser.id, increment: 10 }] }, false);
+
+    expect(incrementedUsers).toEqual(expect.arrayContaining([expectUser]));
+  });
+
   test('joinGame', async () => {
     const expectUser = await mockedUserRepository.update();
 
