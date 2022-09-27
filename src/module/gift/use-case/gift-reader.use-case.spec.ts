@@ -19,7 +19,7 @@ describe('GiftReaderUseCase', () => {
   test('findGift', async () => {
     const expectedGift = await mockedGiftRepository.findUnique();
 
-    const foundGift = await giftReaderUseCase.findGift({ where: { id: expectedGift.id } });
+    const foundGift = await giftReaderUseCase.findGift(expectedGift.id);
 
     expect(foundGift).toEqual(expectedGift);
   });
@@ -27,7 +27,7 @@ describe('GiftReaderUseCase', () => {
   test('findGifts', async () => {
     const expectedGifts = await mockedGiftRepository.findMany();
 
-    const foundGifts = await giftReaderUseCase.findGifts({ where: { name: { equals: expectedGifts[0].name } } });
+    const foundGifts = await giftReaderUseCase.findGifts({ name: { equals: expectedGifts[0].name } });
 
     expect(foundGifts).toEqual(expectedGifts);
   });
