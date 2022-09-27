@@ -31,13 +31,4 @@ describe('GiftReaderUseCase', () => {
 
     expect(foundGifts).toEqual(expectedGifts);
   });
-
-  test('findGiftHistoriesByGiftId', async () => {
-    const expectedGiftHistories = await mockedGiftRepository.findGiftHistoriesByGiftId();
-
-    const foundGift = await mockedGiftRepository.findUnique();
-    const foundGiftHistories = await giftReaderUseCase.findGiftHistoriesByGiftId(foundGift.id);
-
-    expect(foundGiftHistories).toEqual(expectedGiftHistories);
-  });
 });

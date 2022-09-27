@@ -3,7 +3,6 @@ import { User } from '../domain/model/user.model';
 import { Create, Delete, FindMany, FindUnique, Update, UserRepositoryInterface } from '../domain/service/repository/user.repository';
 import { StrictPropertyCheck } from '@/common/type/strict-property-check.type';
 import { PrismaService } from '@/infra/prisma/prisma.service';
-import { GiftHistory } from '~/gift-history/domain/model/gift-history.model';
 import { Item } from '~/item/domain/model/item.model';
 
 @Injectable()
@@ -52,17 +51,5 @@ export class UserRepository implements UserRepositoryInterface {
     });
 
     return foundUserWithItem ? [new User(foundUserWithItem), foundUserWithItem.items.map((item) => new Item(item))] : null;
-  }
-
-  async findItemsByUserId<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>) {
-    const foundItems = await this.prismaService.user.findUnique(args).items();
-
-    return foundItems.map((foundItem) => new Item(foundItem));
-  }
-
-  async findGiftHistoriesByUserId<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>) {
-    const foundGiftHistories = await this.prismaService.user.findUnique(args).giftHistories();
-
-    return foundGiftHistories.map((foundGiftHistory) => new GiftHistory(foundGiftHistory));
   }
 }

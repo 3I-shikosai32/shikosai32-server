@@ -30,12 +30,4 @@ export class GiftReaderUseCase implements GiftReaderUseCaseInterface {
 
     return foundGifts;
   }
-
-  async findGiftHistoriesByGiftId(id: string) {
-    const foundGiftHistories = await this.giftRepository.findGiftHistoriesByGiftId({
-      where: { id },
-    });
-
-    return foundGiftHistories;
-  }
 }

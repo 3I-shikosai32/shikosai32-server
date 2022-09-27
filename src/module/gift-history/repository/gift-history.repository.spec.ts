@@ -112,24 +112,4 @@ describe('GiftHistoryRepository', () => {
     await prismaService.user.delete({ where: { id: createdUser.id } });
     await prismaService.gift.delete({ where: { id: createdGift.id } });
   });
-
-  test('findUserByGiftHistoryId', async () => {
-    const { createdUser, createdGift, createdGiftHistory } = await createGiftHistory(prismaService);
-
-    const foundUser = await giftHistoryRepository.findUserByGiftHistoryId({ where: { id: createdGiftHistory.id } });
-
-    expect(foundUser).toEqual(createdUser);
-
-    await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, createdGiftHistory.id);
-  });
-
-  test('findGiftByGiftHistoryId', async () => {
-    const { createdUser, createdGift, createdGiftHistory } = await createGiftHistory(prismaService);
-
-    const foundGift = await giftHistoryRepository.findGiftByGiftHistoryId({ where: { id: createdGiftHistory.id } });
-
-    expect(foundGift).toEqual(createdGift);
-
-    await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, createdGiftHistory.id);
-  });
 });

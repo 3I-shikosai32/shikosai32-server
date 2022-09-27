@@ -35,22 +35,6 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
     return foundUsers;
   }
 
-  async findItemsByUserId(id: string) {
-    const foundItems = await this.userRepository.findItemsByUserId({
-      where: { id },
-    });
-
-    return foundItems;
-  }
-
-  async findGiftHistoriesByUserId(id: string) {
-    const foundGiftHistories = await this.userRepository.findGiftHistoriesByUserId({
-      where: { id },
-    });
-
-    return foundGiftHistories;
-  }
-
   async getObtainmentStatuses(userId: string) {
     const foundUser = await this.userRepository.findUnique({
       where: { id: userId },
