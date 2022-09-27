@@ -21,7 +21,7 @@ export class GiftHistoryQuery {
     this.logger.log('findGiftHistory called');
     this.logger.log(args);
 
-    const foundGiftHistory = await this.giftHistoryReaderUseCase.findGiftHistory(args);
+    const foundGiftHistory = await this.giftHistoryReaderUseCase.findGiftHistory(args.where.id);
 
     this.logger.log(foundGiftHistory);
 
@@ -33,7 +33,7 @@ export class GiftHistoryQuery {
     this.logger.log('findGiftHistories called');
     this.logger.log(args);
 
-    const foundGiftHistories = await this.giftHistoryReaderUseCase.findGiftHistories(args);
+    const foundGiftHistories = await this.giftHistoryReaderUseCase.findGiftHistories(args.where, args.orderBy, args.cursor, args.take, args.skip);
 
     this.logger.log(foundGiftHistories);
 

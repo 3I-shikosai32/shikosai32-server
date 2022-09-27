@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UpdateGiftHistoryArgs } from '../controller/dto/args/update-gift-history.args';
 import { GiftHistoryRepositoryInterface } from '../domain/service/repository/gift-history.repository';
 import { GiftHistoryUpdaterUseCaseInterface } from '../domain/service/use-case/gift-history-updater.use-case';
+import { UpdateGiftHistoryData } from '../domain/service/use-case/port/gift-history-updater.input';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 
 @Injectable()
@@ -11,12 +11,12 @@ export class GiftHistoryUpdaterUseCase implements GiftHistoryUpdaterUseCaseInter
     private readonly giftHistoryRepository: GiftHistoryRepositoryInterface,
   ) {}
 
-  async updateGiftHistory(args: UpdateGiftHistoryArgs) {
+  async updateGiftHistory(giftHistoryId: string, updateGiftHistoryData: UpdateGiftHistoryData) {
     const updateGiftHistory = await this.giftHistoryRepository.update({
-      ...args,
+      where: { id: giftHistoryId },
       data: {
-        ...args.data,
-        deliveredAt: args.data.isDelivered ? new Date() : null,
+        ...updateGiftHistoryData,
+        deliveredAt: updateGiftHistoryData.isDelivered ? new Date() : null,
       },
     });
 

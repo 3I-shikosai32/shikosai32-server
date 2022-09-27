@@ -1,8 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { FindGiftHistoriesArgs } from '../controller/dto/args/find-gift-histories.args';
-import { FindGiftHistoryArgs } from '../controller/dto/args/find-gift-history.args';
 import { GiftHistoryRepositoryInterface } from '../domain/service/repository/gift-history.repository';
 import { GiftHistoryReaderUseCaseInterface } from '../domain/service/use-case/gift-history-reader.use-case';
+import { GiftHistoryWhere, GiftHistoryOrderBy, GiftHistoryCursor } from '../domain/service/use-case/port/gift-history-reader.input';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 
 @Injectable()
@@ -12,14 +11,22 @@ export class GiftHistoryReaderUseCase implements GiftHistoryReaderUseCaseInterfa
     private readonly giftHistoryRepository: GiftHistoryRepositoryInterface,
   ) {}
 
-  async findGiftHistory(args: FindGiftHistoryArgs) {
-    const foundGiftHistory = await this.giftHistoryRepository.findUnique(args);
+  async findGiftHistory(giftHistoryId: string) {
+    const foundGiftHistory = await this.giftHistoryRepository.findUnique({
+      where: { id: giftHistoryId },
+    });
 
     return foundGiftHistory;
   }
 
-  async findGiftHistories(args: FindGiftHistoriesArgs) {
-    const foundGiftHistories = await this.giftHistoryRepository.findMany(args);
+  async findGiftHistories(where?: GiftHistoryWhere, orderBy?: GiftHistoryOrderBy[], cursor?: GiftHistoryCursor, take?: number, skip?: number) {
+    const foundGiftHistories = await this.giftHistoryRepository.findMany({
+      where,
+      orderBy,
+      cursor,
+      take,
+      skip,
+    });
 
     return foundGiftHistories;
   }
