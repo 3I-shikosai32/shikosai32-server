@@ -1,7 +1,9 @@
 import { Test } from '@nestjs/testing';
+import { ObtainmentStatus } from '../domain/model/obtainment-status.model';
 import { MockedUserRepository } from '../repository/mocked-user.repository';
 import { UserReaderUseCase } from './user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
+import { MockedItemRepository } from '~/item/repository/mocked-item.repository';
 
 describe('UserReaderUseCase', () => {
   let mockedUserRepository: MockedUserRepository;
@@ -9,7 +11,11 @@ describe('UserReaderUseCase', () => {
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      providers: [{ provide: InjectionToken.USER_REPOSITORY, useClass: MockedUserRepository }, UserReaderUseCase],
+      providers: [
+        { provide: InjectionToken.USER_REPOSITORY, useClass: MockedUserRepository },
+        { provide: InjectionToken.ITEM_REPOSITORY, useClass: MockedItemRepository },
+        UserReaderUseCase,
+      ],
     }).compile();
 
     mockedUserRepository = moduleRef.get(InjectionToken.USER_REPOSITORY);
@@ -48,5 +54,12 @@ describe('UserReaderUseCase', () => {
     const foundGiftHistories = await userReaderUseCase.findGiftHistoriesByUserId(foundUser.id);
 
     expect(foundGiftHistories).toEqual(expectGiftHistories);
+  });
+
+  test('getObtainmentStatuses', async () => {
+    const foundUser = await mockedUserRepository.findUnique();
+    const obtainmentStatuses = await userReaderUseCase.getObtainmentStatuses({ where: { id: foundUser.id } });
+
+    expect(obtainmentStatuses).toEqual(expect.any(Array<ObtainmentStatus>));
   });
 });
