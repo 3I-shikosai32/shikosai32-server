@@ -5,6 +5,7 @@ import { User as UserModel } from '../domain/model/user.model';
 import { UserCreatorUseCaseInterface } from '../domain/service/use-case/user-creator.use-case';
 import { UserGachaManagerUseCaseInterface } from '../domain/service/use-case/user-gacha-manager.use-case';
 import { UserGameManagerUseCaseInterface } from '../domain/service/use-case/user-game-manager.use-case';
+import { UserPublisherUseCaseInterface } from '../domain/service/use-case/user-publisher.ues-case';
 import { UserUpdaterUseCaseInterface } from '../domain/service/use-case/user-updater.use-case';
 import { CreateUserArgs } from './dto/args/create-user.args';
 import { ExitGameArgs } from './dto/args/exit-game.args';
@@ -37,6 +38,8 @@ export class UserMutation {
     private readonly gameManagerUseCase: UserGameManagerUseCaseInterface,
     @Inject(InjectionToken.USER_GACHA_MANAGER_USE_CASE)
     private readonly gachaManagerUseCase: UserGachaManagerUseCaseInterface,
+    @Inject(InjectionToken.USER_PUBLISHER_USE_CASE)
+    private readonly publisherUseCase: UserPublisherUseCaseInterface,
     private readonly userDataLoader: UserDataLoader,
     private readonly dataLoaderCacheService: DataLoaderCacheService<UserModel, string>,
     private readonly itemDataLoader: ItemDataLoader,
@@ -70,6 +73,8 @@ export class UserMutation {
 
     this.dataLoaderCacheService.prime(this.userDataLoader, updatedUser);
 
+    await this.publisherUseCase.publishUpdatedGameAttenders();
+
     await this.firebaseService.adminAuth.updateUser(updatedUser.id, { displayName: updatedUser.name, email: updatedUser.email });
 
     this.logger.log(updatedUser);
@@ -85,7 +90,7 @@ export class UserMutation {
 
     const isNowBeforeDay2 = this.dateService.isBeforeDay2(this.dateService.getNow());
 
-    const incrementedUser = await this.updaterUseCase.incrementPoint(args, isNowBeforeDay2);
+    const incrementedUser = await this.gameManagerUseCase.incrementPoint(args, isNowBeforeDay2);
 
     this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUser);
 
