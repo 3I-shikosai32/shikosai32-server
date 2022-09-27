@@ -90,7 +90,7 @@ export class UserMutation {
 
     const isNowBeforeDay2 = this.dateService.isBeforeDay2(this.dateService.getNow());
 
-    const incrementedUser = await this.updaterUseCase.incrementPoint(args, isNowBeforeDay2);
+    const incrementedUser = await this.gameManagerUseCase.incrementPoint(args, isNowBeforeDay2);
 
     this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUser);
 
