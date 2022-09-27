@@ -23,12 +23,4 @@ describe('UserUpdaterUseCase', () => {
 
     expect(updatedUser).toEqual(expectUser);
   });
-
-  test('incrementPoint', async () => {
-    const expectUser = await mockedUserRepository.update();
-
-    const incrementedUsers = await userUpdaterUseCase.incrementPoint([{ id: expectUser.id, increment: 10 }], false);
-
-    expect(incrementedUsers).toEqual(expect.arrayContaining([expectUser]));
-  });
 });
