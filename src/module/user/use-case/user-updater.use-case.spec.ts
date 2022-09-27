@@ -19,7 +19,7 @@ describe('UserUpdaterUseCase', () => {
   test('updateUser', async () => {
     const expectUser = await mockedUserRepository.update();
 
-    const updatedUser = await userUpdaterUseCase.updateUser({ where: { id: expectUser.id }, data: expectUser });
+    const updatedUser = await userUpdaterUseCase.updateUser(expectUser.id, expectUser);
 
     expect(updatedUser).toEqual(expectUser);
   });
@@ -27,7 +27,7 @@ describe('UserUpdaterUseCase', () => {
   test('incrementPoint', async () => {
     const expectUser = await mockedUserRepository.update();
 
-    const incrementedUsers = await userUpdaterUseCase.incrementPoint({ users: [{ id: expectUser.id, increment: 10 }] }, false);
+    const incrementedUsers = await userUpdaterUseCase.incrementPoint([{ id: expectUser.id, increment: 10 }], false);
 
     expect(incrementedUsers).toEqual(expect.arrayContaining([expectUser]));
   });

@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { FindUserArgs } from '../controller/dto/args/find-user.args';
-import { FindUsersArgs } from '../controller/dto/args/find-users.args';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
+import { UserCursor, UserOrderBy, UserWhere } from '../domain/service/use-case/port/user-reader.input';
 import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 
@@ -12,14 +11,22 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
     private readonly userRepository: UserRepositoryInterface,
   ) {}
 
-  async findUser(args: FindUserArgs) {
-    const foundUser = await this.userRepository.findUnique(args);
+  async findUser(userId: string) {
+    const foundUser = await this.userRepository.findUnique({
+      where: { id: userId },
+    });
 
     return foundUser;
   }
 
-  async findUsers(args: FindUsersArgs) {
-    const foundUsers = await this.userRepository.findMany(args);
+  async findUsers(where?: UserWhere, orderBy?: UserOrderBy[], cursor?: UserCursor, take?: number, skip?: number) {
+    const foundUsers = await this.userRepository.findMany({
+      where,
+      orderBy,
+      cursor,
+      take,
+      skip,
+    });
 
     return foundUsers;
   }

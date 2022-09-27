@@ -1,8 +1,7 @@
 import { User } from '../../model/user.model';
-import { IncrementPointArgs } from '~/user/controller/dto/args/increment-point.args';
-import { UpdateUserArgs } from '~/user/controller/dto/args/update-user.args';
+import { IncrementPointData, UpdateUserData } from './port/user-updater.input';
 
 export interface UserUpdaterUseCaseInterface {
-  updateUser(args: UpdateUserArgs): Promise<User>;
-  incrementPoint(args: IncrementPointArgs, isBeforeDay2: boolean): Promise<User[]>;
+  updateUser(userId: string, updateUserData: UpdateUserData): Promise<User>;
+  incrementPoint(incrementUsersData: IncrementPointData[], isBeforeDay2: boolean): Promise<User[]>;
 }

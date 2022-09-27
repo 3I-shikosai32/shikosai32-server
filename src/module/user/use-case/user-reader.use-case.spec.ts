@@ -19,7 +19,7 @@ describe('UserReaderUseCase', () => {
   test('findUser', async () => {
     const expectUser = await mockedUserRepository.findUnique();
 
-    const foundUser = await userReaderUseCase.findUser({ where: { id: expectUser.id } });
+    const foundUser = await userReaderUseCase.findUser(expectUser.id);
 
     expect(foundUser).toEqual(expectUser);
   });
@@ -27,7 +27,7 @@ describe('UserReaderUseCase', () => {
   test('findUsers', async () => {
     const expectUser = await mockedUserRepository.findMany();
 
-    const foundUsers = await userReaderUseCase.findUsers({ where: { name: { equals: expectUser[0].name } } });
+    const foundUsers = await userReaderUseCase.findUsers({ name: { equals: expectUser[0].name } });
 
     expect(foundUsers).toEqual(expectUser);
   });

@@ -20,7 +20,7 @@ describe('UserGameManagerUseCase', () => {
   test('joinGame', async () => {
     const expectUser = await mockedUserRepository.update();
 
-    const joinedUser = await userGameManagerUseCase.joinGame({ where: { id: expectUser.id }, game: Game.COIN_DROPPING });
+    const joinedUser = await userGameManagerUseCase.joinGame(expectUser.id, Game.COIN_DROPPING);
 
     expect(joinedUser).toEqual(expectUser);
   });
@@ -28,7 +28,7 @@ describe('UserGameManagerUseCase', () => {
   test('exitGame', async () => {
     const expectUser = await mockedUserRepository.update();
 
-    const exitedUser = await userGameManagerUseCase.exitGame({ where: { id: expectUser.id } });
+    const exitedUser = await userGameManagerUseCase.exitGame(expectUser.id);
 
     expect(exitedUser).toEqual(expectUser);
   });
