@@ -31,8 +31,6 @@ export class GiftQuery {
       this.giftDataLoaderCacheService.prime(this.giftDataLoader, foundGift);
     }
 
-    this.logger.log(foundGift);
-
     return foundGift;
   }
 
@@ -44,8 +42,6 @@ export class GiftQuery {
     const foundGifts = await this.giftReaderUseCase.findGifts(args.where, args.orderBy, args.cursor, args.take, args.skip);
 
     this.giftDataLoaderCacheService.primeMany(this.giftDataLoader, foundGifts);
-
-    this.logger.log(foundGifts);
 
     return foundGifts;
   }

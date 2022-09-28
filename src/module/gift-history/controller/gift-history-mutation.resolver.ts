@@ -7,8 +7,8 @@ import { ExchangeGiftArgs } from './dto/args/exchange-gift.args';
 import { UpdateGiftHistoryArgs } from './dto/args/update-gift-history.args';
 import { GiftHistory } from './dto/object/gift-history.object';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
-import { AuthGuard } from '@/common/guard/auth.guard';
-import { RoleGuard } from '@/common/guard/role.guard';
+import { AuthGuard } from '@/guard/auth.guard';
+import { RoleGuard } from '@/guard/role.guard';
 
 @Resolver()
 @UseGuards(AuthGuard)
@@ -30,8 +30,6 @@ export class GiftHistoryMutation {
 
     const updatedGiftHistory = await this.giftHistoryUpdaterUseCase.updateGiftHistory(args.where.id, args.data);
 
-    this.logger.log(updatedGiftHistory);
-
     return updatedGiftHistory;
   }
 
@@ -41,8 +39,6 @@ export class GiftHistoryMutation {
     this.logger.log(args);
 
     const createdGiftHistories = await this.giftHistoryCreatorUseCase.exchangeGift(args.data, args.exchangeQuantity);
-
-    this.logger.log(createdGiftHistories);
 
     return createdGiftHistories;
   }

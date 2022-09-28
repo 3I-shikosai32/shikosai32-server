@@ -16,9 +16,9 @@ import { UpdateUserArgs } from './dto/args/update-user.args';
 import { User } from './dto/object/user.object';
 import { DataLoaderCacheService } from '@/cache/dataloader-cache.service';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
-import { DateService } from '@/common/date/date.service';
-import { AuthGuard } from '@/common/guard/auth.guard';
-import { RoleGuard } from '@/common/guard/role.guard';
+import { AuthGuard } from '@/guard/auth.guard';
+import { RoleGuard } from '@/guard/role.guard';
+import { DateService } from '@/infra/date/date.service';
 import { FirebaseService } from '@/infra/firebase/firebase.service';
 import { Item } from '~/item/controller/dto/object/item.object';
 import { ItemDataLoader } from '~/item/dataloader/item.dataloader';
@@ -59,8 +59,6 @@ export class UserMutation {
 
     await this.firebaseService.adminAuth.updateUser(createdUser.id, { displayName: createdUser.name, email: createdUser.email });
 
-    this.logger.log(createdUser);
-
     return createdUser;
   }
 
@@ -77,8 +75,6 @@ export class UserMutation {
 
     await this.firebaseService.adminAuth.updateUser(updatedUser.id, { displayName: updatedUser.name, email: updatedUser.email });
 
-    this.logger.log(updatedUser);
-
     return updatedUser;
   }
 
@@ -94,8 +90,6 @@ export class UserMutation {
 
     this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUser);
 
-    this.logger.log(incrementedUser);
-
     return incrementedUser;
   }
 
@@ -107,8 +101,6 @@ export class UserMutation {
     const joinedUser = await this.gameManagerUseCase.joinGame(args.where.id, args.game);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, joinedUser);
-
-    this.logger.log(joinedUser);
 
     return joinedUser;
   }
@@ -122,8 +114,6 @@ export class UserMutation {
 
     this.dataLoaderCacheService.prime(this.userDataLoader, exitedUser);
 
-    this.logger.log(exitedUser);
-
     return exitedUser;
   }
 
@@ -135,8 +125,6 @@ export class UserMutation {
     const pulledItem = await this.gachaManagerUseCase.pullGacha(args.where.id, (items) => items[Math.floor(Math.random() * items.length)]);
 
     this.itemDataLoaderCacheService.prime(this.itemDataLoader, pulledItem);
-
-    this.logger.log(pulledItem);
 
     return pulledItem;
   }

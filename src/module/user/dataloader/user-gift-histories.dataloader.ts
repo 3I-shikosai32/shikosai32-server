@@ -1,6 +1,6 @@
 import { Inject, Injectable, Scope } from '@nestjs/common';
+import { BaseDataLoader } from '@/common/base/dataloader/base.dataloader';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
-import { BaseDataLoader } from '@/common/dataloader/base.dataloader';
 import { GiftHistory } from '~/gift-history/domain/model/gift-history.model';
 import { GiftHistoryRepositoryInterface } from '~/gift-history/domain/service/repository/gift-history.repository';
 

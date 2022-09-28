@@ -1,6 +1,6 @@
 import { Inject, Injectable, Scope } from '@nestjs/common';
+import { BaseDataLoader } from '@/common/base/dataloader/base.dataloader';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
-import { BaseDataLoader } from '@/common/dataloader/base.dataloader';
 import { User } from '~/user/domain/model/user.model';
 import { UserRepositoryInterface } from '~/user/domain/service/repository/user.repository';
 

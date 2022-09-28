@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { Item } from '../../model/item.model';
-import { BaseRepositoryInterface } from '@/common/repository/base.repository';
+import { BaseRepositoryInterface } from '@/common/base/repository/base.repository';
 
 export type FindUnique = {
   where: Prisma.ItemWhereUniqueInput;

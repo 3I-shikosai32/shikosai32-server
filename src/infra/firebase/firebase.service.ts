@@ -1,4 +1,4 @@
-import { Injectable, OnModuleDestroy } from '@nestjs/common';
+import { Injectable, Logger, OnModuleDestroy } from '@nestjs/common';
 import {
   App,
   initializeApp as initializeAdminApp,
@@ -13,6 +13,8 @@ import { EnvService } from '@/config/env/env.service';
 
 @Injectable()
 export class FirebaseService implements OnModuleDestroy {
+  private readonly logger = new Logger(FirebaseService.name);
+
   private app: FirebaseApp;
 
   private adminApp: App;
@@ -26,6 +28,8 @@ export class FirebaseService implements OnModuleDestroy {
     this.adminApp = getAdminApps().length ? getAdminApp() : initializeAdminApp(envService.FirebaseAdminConfig);
     this.auth = getAuth(this.app);
     this.adminAuth = getAdminAuth(this.adminApp);
+
+    this.logger.debug(`${FirebaseService.name} constructed`);
   }
 
   async onModuleDestroy() {

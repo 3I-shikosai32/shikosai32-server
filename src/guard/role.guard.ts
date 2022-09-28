@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Inject, Injectable } from '@nestjs/common';
 import { Role } from '@prisma/client';
-import { InjectionToken } from '../constant/injection-token.constant';
+import { InjectionToken } from '../common/constant/injection-token.constant';
 import { getIdByAuthToken } from './util/get-id-by-auth-token.util';
 import { FirebaseService } from '@/infra/firebase/firebase.service';
 import { UserRepositoryInterface } from '~/user/domain/service/repository/user.repository';

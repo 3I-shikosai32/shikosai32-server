@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { User } from '../../model/user.model';
-import { BaseRepositoryInterface } from '@/common/repository/base.repository';
+import { BaseRepositoryInterface } from '@/common/base/repository/base.repository';
 import { StrictPropertyCheck } from '@/common/type/strict-property-check.type';
 import { Item } from '~/item/domain/model/item.model';
 
