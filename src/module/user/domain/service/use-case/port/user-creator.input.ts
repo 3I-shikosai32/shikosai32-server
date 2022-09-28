@@ -6,6 +6,4 @@ export type CreateUserData = {
   email: string;
   role: keyof typeof Role;
   character: keyof typeof Character;
-  iconUrl: string;
-  avatarUrl: string;
 };
