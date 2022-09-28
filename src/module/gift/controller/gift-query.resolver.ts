@@ -25,7 +25,7 @@ export class GiftQuery {
     this.logger.log('findGift called');
     this.logger.log(args);
 
-    const foundGift = await this.giftReaderUseCase.findGift(args);
+    const foundGift = await this.giftReaderUseCase.findGift(args.where.id);
 
     if (foundGift) {
       this.giftDataLoaderCacheService.prime(this.giftDataLoader, foundGift);
@@ -41,7 +41,7 @@ export class GiftQuery {
     this.logger.log('findGifts called');
     this.logger.log(args);
 
-    const foundGifts = await this.giftReaderUseCase.findGifts(args);
+    const foundGifts = await this.giftReaderUseCase.findGifts(args.where, args.orderBy, args.cursor, args.take, args.skip);
 
     this.giftDataLoaderCacheService.primeMany(this.giftDataLoader, foundGifts);
 

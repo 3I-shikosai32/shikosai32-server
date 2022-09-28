@@ -1,6 +1,6 @@
 import { GiftHistory } from '../../model/gift-history.model';
-import { UpdateGiftHistoryArgs } from '~/gift-history/controller/dto/args/update-gift-history.args';
+import { UpdateGiftHistoryData } from './port/gift-history-updater.input';
 
 export interface GiftHistoryUpdaterUseCaseInterface {
-  updateGiftHistory(args: UpdateGiftHistoryArgs): Promise<GiftHistory>;
+  updateGiftHistory(giftHistoryId: string, updateGiftHistoryData: UpdateGiftHistoryData): Promise<GiftHistory>;
 }

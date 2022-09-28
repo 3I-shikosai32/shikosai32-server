@@ -1,5 +1,5 @@
 import { Resolver, Subscription } from '@nestjs/graphql';
-import { GameAttenders } from '../domain/model/game-attenders.model';
+import { GameAttenders } from './dto/object/game-attenders.object';
 import { PubSubTrigger } from '@/common/constant/pubsub-iterator.constant';
 import { PubSubService } from '@/infra/pubsub/pubsub.service';
 
