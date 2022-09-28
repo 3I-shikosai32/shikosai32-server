@@ -18,10 +18,4 @@ export class UserCreateInput {
 
   @Field(() => Character, { nullable: false })
   character: keyof typeof Character;
-
-  @Field(() => String, { nullable: false })
-  iconUrl: string;
-
-  @Field(() => String, { nullable: false })
-  avatarUrl: string;
 }
