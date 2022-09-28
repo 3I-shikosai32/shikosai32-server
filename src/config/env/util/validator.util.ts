@@ -43,6 +43,9 @@ class EnvValidator {
 
   @IsNotEmpty()
   FIREBASE_ADMIN_CLIENT_EMAIL: string;
+
+  @IsNotEmpty()
+  FIREBASE_STORAGE_URL: string;
 }
 
 export const validate = (config: Record<string, unknown>) => {

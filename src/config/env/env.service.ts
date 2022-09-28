@@ -55,4 +55,8 @@ export class EnvService {
       storageBucket: this.configService.getOrThrow('FIREBASE_STORAGE_BUCKET'),
     };
   }
+
+  get FirebaseStorageUrl(): string {
+    return this.configService.getOrThrow('FIREBASE_STORAGE_URL');
+  }
 }
