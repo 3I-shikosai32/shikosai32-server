@@ -23,8 +23,8 @@ export class UserCreatorUseCase implements UserCreatorUseCaseInterface {
       },
     });
 
-    const iconPath = `sys/character/${args.data.character.toLowerCase()}/icon.svg?alt=media`;
-    const avatarPath = `sys/character/${args.data.character.toLowerCase()}/base.svg?alt=media`;
+    const iconPath = `sys/character/${createUserData.character.toLowerCase()}/icon.svg?alt=media`;
+    const avatarPath = `sys/character/${createUserData.character.toLowerCase()}/base.svg?alt=media`;
 
     const createdUser = await this.userRepository.create({
       data: {
