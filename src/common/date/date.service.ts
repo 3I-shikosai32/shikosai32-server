@@ -6,6 +6,10 @@ import { formatInTimeZone, toDate } from 'date-fns-tz';
 export class DateService {
   private readonly logger = new Logger(DateService.name);
 
+  constructor() {
+    this.logger.debug(`${DateService.name} constructed`);
+  }
+
   getNow(): Date {
     const now = toDate(formatInTimeZone(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd HH:mm:ssxxx'));
 

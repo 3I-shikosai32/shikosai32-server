@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApolloConfigInput } from 'apollo-server-types';
 import { AppOptions, credential } from 'firebase-admin';
@@ -6,7 +6,11 @@ import { FirebaseOptions } from 'firebase/app';
 
 @Injectable()
 export class EnvService {
-  constructor(private configService: ConfigService) {}
+  private readonly logger = new Logger(EnvService.name);
+
+  constructor(private configService: ConfigService) {
+    this.logger.debug(`${EnvService.name} constructed`);
+  }
 
   get NodeEnv(): 'development' | 'production' | 'test' {
     const nodeEnv = this.configService.get<'development' | 'production' | 'test'>('NODE_ENV', 'development');
