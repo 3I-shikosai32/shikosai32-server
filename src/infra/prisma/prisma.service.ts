@@ -8,7 +8,7 @@ export class PrismaService extends PrismaClient<Prisma.PrismaClientOptions, Pris
   constructor() {
     super({ log: ['query', 'info', 'warn', 'error'] });
 
-    this.logger.log(`${PrismaService.name} constructed`);
+    this.logger.debug(`${PrismaService.name} constructed`);
   }
 
   async onModuleInit() {
