@@ -1,6 +1,6 @@
 import { User } from '../../model/user.model';
-import { CreateUserArgs } from '~/user/controller/dto/args/create-user.args';
+import { CreateUserData } from './port/user-creator.input';
 
 export interface UserCreatorUseCaseInterface {
-  createUser(args: CreateUserArgs): Promise<User>;
+  createUser(createUserData: CreateUserData): Promise<User>;
 }

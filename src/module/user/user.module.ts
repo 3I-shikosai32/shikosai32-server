@@ -9,6 +9,7 @@ import { UserRepository } from './repository/user.repository';
 import { UserCreatorUseCase } from './use-case/user-creator.use-case';
 import { UserGachaManagerUseCase } from './use-case/user-gacha-manager.use-case';
 import { UserGameManagerUseCase } from './use-case/user-game-manager.use-case';
+import { UserPublisherUseCase } from './use-case/user-publisher.ues-case';
 import { UserReaderUseCase } from './use-case/user-reader.use-case';
 import { UserUpdaterUseCase } from './use-case/user-updater.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
@@ -16,7 +17,7 @@ import { GiftHistoryModule } from '~/gift-history/gift-history.module';
 import { ItemModule } from '~/item/item.module';
 
 @Module({
-  imports: [ItemModule, forwardRef(() => GiftHistoryModule)],
+  imports: [forwardRef(() => ItemModule), forwardRef(() => GiftHistoryModule)],
   providers: [
     UserDataLoader,
     UserGiftHistoriesDataLoader,
@@ -26,6 +27,7 @@ import { ItemModule } from '~/item/item.module';
     { provide: InjectionToken.USER_UPDATER_USE_CASE, useClass: UserUpdaterUseCase },
     { provide: InjectionToken.USER_GAME_MANAGER_USE_CASE, useClass: UserGameManagerUseCase },
     { provide: InjectionToken.USER_GACHA_MANAGER_USE_CASE, useClass: UserGachaManagerUseCase },
+    { provide: InjectionToken.USER_PUBLISHER_USE_CASE, useClass: UserPublisherUseCase },
     UserResolver,
     UserQuery,
     UserMutation,

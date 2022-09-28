@@ -1,10 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PullGachaArgs } from '../controller/dto/args/pull-gacha.args';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
 import { UserGachaManagerUseCaseInterface } from '../domain/service/use-case/user-gacha-manager.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { Item } from '~/item/domain/model/item.model';
-import { ItemRepository } from '~/item/repository/item.repository';
+import { ItemRepositoryInterface } from '~/item/domain/service/repository/item.repository';
 
 @Injectable()
 export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface {
@@ -12,11 +11,13 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
     @Inject(InjectionToken.USER_REPOSITORY)
     private readonly userRepository: UserRepositoryInterface,
     @Inject(InjectionToken.ITEM_REPOSITORY)
-    private readonly itemRepository: ItemRepository,
+    private readonly itemRepository: ItemRepositoryInterface,
   ) {}
 
-  async pullGacha(args: PullGachaArgs, pullFromItems: (items: Item[]) => Item) {
-    const foundUserWithItems = await this.userRepository.findUniqueWithItems(args);
+  async pullGacha(userId: string, pullFromItems: (items: Item[]) => Item) {
+    const foundUserWithItems = await this.userRepository.findUniqueWithItems({
+      where: { id: userId },
+    });
     if (!foundUserWithItems) {
       throw new Error('User not found');
     }
@@ -36,7 +37,7 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
     const pulledItem = pullFromItems(foundItems);
 
     await this.userRepository.update({
-      ...args,
+      where: { id: userId },
       data: {
         items: foundOldItems.includes(pulledItem)
           ? undefined

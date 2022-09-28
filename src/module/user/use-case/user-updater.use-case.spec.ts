@@ -19,7 +19,7 @@ describe('UserUpdaterUseCase', () => {
   test('updateUser', async () => {
     const expectUser = await mockedUserRepository.update();
 
-    const updatedUser = await userUpdaterUseCase.updateUser({ where: { id: expectUser.id }, data: expectUser });
+    const updatedUser = await userUpdaterUseCase.updateUser(expectUser.id, expectUser);
 
     expect(updatedUser).toEqual(expectUser);
   });
