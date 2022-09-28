@@ -34,8 +34,6 @@ export class UserQuery {
       this.userDataLoaderCacheService.prime(this.userDataLoader, foundUser);
     }
 
-    this.logger.log(foundUser);
-
     return foundUser;
   }
 
