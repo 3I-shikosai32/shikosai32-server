@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UpdateUserArgs } from '../controller/dto/args/update-user.args';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
+import { UpdateUserData } from '../domain/service/use-case/port/user-updater.input';
 import { UserUpdaterUseCaseInterface } from '../domain/service/use-case/user-updater.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 
@@ -11,8 +11,11 @@ export class UserUpdaterUseCase implements UserUpdaterUseCaseInterface {
     private readonly userRepository: UserRepositoryInterface,
   ) {}
 
-  async updateUser(args: UpdateUserArgs) {
-    const updatedUser = await this.userRepository.update(args);
+  async updateUser(userId: string, updateUserData: UpdateUserData) {
+    const updatedUser = await this.userRepository.update({
+      where: { id: userId },
+      data: updateUserData,
+    });
 
     return updatedUser;
   }

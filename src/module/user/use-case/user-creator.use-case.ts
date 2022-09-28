@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateUserArgs } from '../controller/dto/args/create-user.args';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
+import { CreateUserData } from '../domain/service/use-case/port/user-creator.input';
 import { UserCreatorUseCaseInterface } from '../domain/service/use-case/user-creator.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { ItemRepositoryInterface } from '~/item/domain/service/repository/item.repository';
@@ -14,16 +14,16 @@ export class UserCreatorUseCase implements UserCreatorUseCaseInterface {
     private readonly itemRepository: ItemRepositoryInterface,
   ) {}
 
-  async createUser(args: CreateUserArgs) {
+  async createUser(createUserData: CreateUserData) {
     const foundItems = await this.itemRepository.findMany({
       where: {
-        character: args.data.character,
+        character: createUserData.character,
       },
     });
 
     const createdUser = await this.userRepository.create({
       data: {
-        ...args.data,
+        ...createUserData,
         itemIds: foundItems.map((item) => item.id),
         items: {
           connect: foundItems.map((item) => ({ id: item.id })),

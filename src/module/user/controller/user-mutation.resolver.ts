@@ -53,7 +53,7 @@ export class UserMutation {
     this.logger.log('createUser called');
     this.logger.log(args);
 
-    const createdUser = await this.creatorUseCase.createUser(args);
+    const createdUser = await this.creatorUseCase.createUser(args.data);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, createdUser);
 
@@ -69,7 +69,7 @@ export class UserMutation {
     this.logger.log('updateUser called');
     this.logger.log(args);
 
-    const updatedUser = await this.updaterUseCase.updateUser(args);
+    const updatedUser = await this.updaterUseCase.updateUser(args.where.id, args.data);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, updatedUser);
 
@@ -90,7 +90,7 @@ export class UserMutation {
 
     const isNowBeforeDay2 = this.dateService.isBeforeDay2(this.dateService.getNow());
 
-    const incrementedUser = await this.gameManagerUseCase.incrementPoint(args, isNowBeforeDay2);
+    const incrementedUser = await this.gameManagerUseCase.incrementPoint(args.users, isNowBeforeDay2);
 
     this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUser);
 
@@ -104,7 +104,7 @@ export class UserMutation {
     this.logger.log('joinGame called');
     this.logger.log(args);
 
-    const joinedUser = await this.gameManagerUseCase.joinGame(args);
+    const joinedUser = await this.gameManagerUseCase.joinGame(args.where.id, args.game);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, joinedUser);
 
@@ -118,7 +118,7 @@ export class UserMutation {
     this.logger.log('exitGame called');
     this.logger.log(args);
 
-    const exitedUser = await this.gameManagerUseCase.exitGame(args);
+    const exitedUser = await this.gameManagerUseCase.exitGame(args.where.id);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, exitedUser);
 
@@ -132,7 +132,7 @@ export class UserMutation {
     this.logger.log('pullGacha called');
     this.logger.log(args);
 
-    const pulledItem = await this.gachaManagerUseCase.pullGacha(args, (items) => items[Math.floor(Math.random() * items.length)]);
+    const pulledItem = await this.gachaManagerUseCase.pullGacha(args.where.id, (items) => items[Math.floor(Math.random() * items.length)]);
 
     this.itemDataLoaderCacheService.prime(this.itemDataLoader, pulledItem);
 

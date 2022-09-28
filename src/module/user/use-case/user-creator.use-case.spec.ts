@@ -24,7 +24,7 @@ describe('UserCreatorUseCase', () => {
   test('createUser', async () => {
     const expectUser = await mockedUserRepository.create();
 
-    const createdUser = await userCreatorUseCase.createUser({ data: expectUser });
+    const createdUser = await userCreatorUseCase.createUser(expectUser);
 
     expect(createdUser).toEqual(expectUser);
   });

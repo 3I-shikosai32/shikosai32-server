@@ -32,10 +32,7 @@ describe('GiftHistoryCreatorUseCase', () => {
     const foundGift = await mockedGiftRepository.findUnique();
     const expectGiftHistory = await mockedGiftHistoryRepository.create();
 
-    const createdGiftHistories = await giftHistoryCreatorUseCase.exchangeGift({
-      data: { isDelivered: false, userId: foundUser.id, giftId: foundGift.id },
-      exchangeQuantity: 1,
-    });
+    const createdGiftHistories = await giftHistoryCreatorUseCase.exchangeGift({ isDelivered: false, userId: foundUser.id, giftId: foundGift.id }, 1);
 
     expect(createdGiftHistories).toEqual(expect.arrayContaining([expectGiftHistory]));
   });

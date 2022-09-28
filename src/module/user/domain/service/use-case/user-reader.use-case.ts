@@ -1,10 +1,9 @@
 import { ObtainmentStatus } from '../../model/obtainment-status.model';
 import { User } from '../../model/user.model';
-import { FindUserArgs } from '~/user/controller/dto/args/find-user.args';
-import { FindUsersArgs } from '~/user/controller/dto/args/find-users.args';
+import { UserCursor, UserOrderBy, UserWhere } from './port/user-reader.input';
 
 export interface UserReaderUseCaseInterface {
-  findUser(args: FindUserArgs): Promise<User | null>;
-  findUsers(args: FindUsersArgs): Promise<User[]>;
-  getObtainmentStatuses(args: FindUserArgs): Promise<ObtainmentStatus[]>;
+  findUser(userId: string): Promise<User | null>;
+  findUsers(where?: UserWhere, orderBy?: UserOrderBy[], cursor?: UserCursor, take?: number, skip?: number): Promise<User[]>;
+  getObtainmentStatuses(userId: string): Promise<ObtainmentStatus[]>;
 }
