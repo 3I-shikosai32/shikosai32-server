@@ -2,7 +2,6 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Role } from '../../prisma/role/enum';
 import { Int } from '@nestjs/graphql';
-import { Character } from '../../prisma/character/enum';
 import { Game } from '../../prisma/game/enum';
 import { UserCountAggregate } from '../user-count-aggregate/output';
 import { UserAvgAggregate } from '../user-avg-aggregate/output';
@@ -33,18 +32,6 @@ export class UserGroupBy {
 
     @Field(() => Int, {nullable:false})
     consumablePoint!: number;
-
-    @Field(() => Character, {nullable:false})
-    character!: keyof typeof Character;
-
-    @Field(() => String, {nullable:false})
-    iconUrl!: string;
-
-    @Field(() => String, {nullable:false})
-    avatarUrl!: string;
-
-    @Field(() => [String], {nullable:true})
-    itemIds?: Array<string>;
 
     @Field(() => Game, {nullable:false})
     participateGame!: keyof typeof Game;

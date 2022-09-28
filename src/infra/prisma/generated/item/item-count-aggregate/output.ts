@@ -18,7 +18,7 @@ export class ItemCountAggregate {
     layer!: number;
 
     @Field(() => Int, {nullable:false})
-    userIds!: number;
+    characterStatusIds!: number;
 
     @Field(() => Int, {nullable:false})
     _all!: number;

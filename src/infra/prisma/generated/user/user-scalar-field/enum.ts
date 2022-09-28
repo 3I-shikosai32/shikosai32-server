@@ -8,10 +8,6 @@ export enum UserScalarFieldEnum {
     totalPointDay1 = "totalPointDay1",
     totalPointDay2 = "totalPointDay2",
     consumablePoint = "consumablePoint",
-    character = "character",
-    iconUrl = "iconUrl",
-    avatarUrl = "avatarUrl",
-    itemIds = "itemIds",
     participateGame = "participateGame",
     pullableGachaTimes = "pullableGachaTimes",
     createdAt = "createdAt"

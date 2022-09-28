@@ -2,7 +2,6 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Role } from '../../prisma/role/enum';
 import { Int } from '@nestjs/graphql';
-import { Character } from '../../prisma/character/enum';
 import { Game } from '../../prisma/game/enum';
 
 @InputType()
@@ -28,18 +27,6 @@ export class UserCreateManyInput {
 
     @Field(() => Int, {nullable:true})
     consumablePoint?: number;
-
-    @Field(() => Character, {nullable:false})
-    character!: keyof typeof Character;
-
-    @Field(() => String, {nullable:false})
-    iconUrl!: string;
-
-    @Field(() => String, {nullable:false})
-    avatarUrl!: string;
-
-    @Field(() => [String], {nullable:true})
-    itemIds?: Array<string>;
 
     @Field(() => Game, {nullable:true})
     participateGame?: keyof typeof Game;

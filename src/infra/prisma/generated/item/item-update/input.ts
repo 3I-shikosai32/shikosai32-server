@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Character } from '../../prisma/character/enum';
 import { Int } from '@nestjs/graphql';
-import { UserUpdateManyWithoutItemsNestedInput } from '../../user/user-update-many-without-items-nested/input';
+import { CharacterStatusUpdateManyWithoutItemsNestedInput } from '../../character-status/character-status-update-many-without-items-nested/input';
 
 @InputType()
 export class ItemUpdateInput {
@@ -16,9 +16,9 @@ export class ItemUpdateInput {
     @Field(() => Int, {nullable:true})
     layer?: number;
 
-    @Field(() => UserUpdateManyWithoutItemsNestedInput, {nullable:true})
-    users?: UserUpdateManyWithoutItemsNestedInput;
+    @Field(() => CharacterStatusUpdateManyWithoutItemsNestedInput, {nullable:true})
+    characterStatuses?: CharacterStatusUpdateManyWithoutItemsNestedInput;
 
     @Field(() => [String], {nullable:true})
-    userIds?: Array<string>;
+    characterStatusIds?: Array<string>;
 }

@@ -17,7 +17,7 @@ export class ItemCountAggregateInput {
     layer?: true;
 
     @Field(() => Boolean, {nullable:true})
-    userIds?: true;
+    characterStatusIds?: true;
 
     @Field(() => Boolean, {nullable:true})
     _all?: true;

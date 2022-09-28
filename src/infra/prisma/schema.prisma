@@ -51,22 +51,33 @@ model User {
   totalPointDay2  Int @default(0) @map("total_point_day2")
   consumablePoint Int @default(0) @map("consumption_point")
 
-  character Character
-  iconUrl   String    @map("icon_url")
-  avatarUrl String    @map("avatar_url")
-
-  items   Item[]   @relation(fields: [itemIds], references: [id])
-  itemIds String[] @map("item_ids") @db.ObjectId
-
   participateGame Game @default(NONE) @map("participate_game")
 
   pullableGachaTimes Int @default(0) @map("pullable_gacha_times")
+
+  CharacterStatuses CharacterStatus[]
 
   giftHistories GiftHistory[]
 
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("users")
+}
+
+model CharacterStatus {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  character Character
+  iconUrl   String    @map("icon_url")
+  avatarUrl String    @map("avatar_url")
+
+  characterPointDay1 Int @default(0) @map("character_point_day1")
+  characterPointDay2 Int @default(0) @map("character_point_day2")
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
+
+  items   Item[]   @relation(fields: [itemIds], references: [id])
+  itemIds String[] @map("item_ids") @db.ObjectId
 }
 
 model Item {
@@ -76,8 +87,8 @@ model Item {
   character Character
   layer     Int
 
-  users   User[]   @relation(fields: [userIds], references: [id])
-  userIds String[] @map("user_ids") @db.ObjectId
+  characterStatuses  CharacterStatus[] @relation(fields: [characterStatusIds], references: [id])
+  characterStatusIds String[]          @map("characterStatus_ids") @db.ObjectId
 
   @@map("items")
 }

@@ -27,15 +27,6 @@ export class UserMaxOrderByAggregateInput {
     consumablePoint?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    character?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    iconUrl?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    avatarUrl?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
     participateGame?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
