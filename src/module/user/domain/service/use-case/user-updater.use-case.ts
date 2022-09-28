@@ -1,6 +1,6 @@
 import { User } from '../../model/user.model';
-import { UpdateUserArgs } from '~/user/controller/dto/args/update-user.args';
+import { UpdateUserData } from './port/user-updater.input';
 
 export interface UserUpdaterUseCaseInterface {
-  updateUser(args: UpdateUserArgs): Promise<User>;
+  updateUser(userId: string, updateUserData: UpdateUserData): Promise<User>;
 }

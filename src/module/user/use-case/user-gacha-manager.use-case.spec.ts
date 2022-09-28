@@ -25,7 +25,7 @@ describe('UserGachaManagerUseCase', () => {
     const expectUser = await mockedUserRepository.findUnique();
     let expectItem;
 
-    const pulledItem = await userGachaManagerUseCase.pullGacha({ where: { id: expectUser.id } }, (items) => {
+    const pulledItem = await userGachaManagerUseCase.pullGacha(expectUser.id, (items) => {
       [expectItem] = items;
       return items[0];
     });

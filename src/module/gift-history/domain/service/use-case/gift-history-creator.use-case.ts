@@ -1,6 +1,6 @@
 import { GiftHistory } from '../../model/gift-history.model';
-import { ExchangeGiftArgs } from '~/gift-history/controller/dto/args/exchange-gift.args';
+import { CreateGiftHistoryData } from './port/gift-history-creator.input';
 
 export interface GiftHistoryCreatorUseCaseInterface {
-  exchangeGift(args: ExchangeGiftArgs): Promise<GiftHistory[]>;
+  exchangeGift(createGiftHistoryData: CreateGiftHistoryData, exchangeQuantity: number): Promise<GiftHistory[]>;
 }

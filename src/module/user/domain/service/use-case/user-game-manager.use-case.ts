@@ -1,10 +1,9 @@
+import { Game } from '@prisma/client';
 import { User } from '../../model/user.model';
-import { ExitGameArgs } from '~/user/controller/dto/args/exit-game.args';
-import { IncrementPointArgs } from '~/user/controller/dto/args/increment-point.args';
-import { JoinGameArgs } from '~/user/controller/dto/args/join-game.args';
+import { IncrementPointData } from './port/user-game-manager.input';
 
 export interface UserGameManagerUseCaseInterface {
-  incrementPoint(args: IncrementPointArgs, isBeforeDay2: boolean): Promise<User[]>;
-  joinGame(args: JoinGameArgs): Promise<User>;
-  exitGame(args: ExitGameArgs): Promise<User>;
+  incrementPoint(incrementUsersData: IncrementPointData[], isBeforeDay2: boolean): Promise<User[]>;
+  joinGame(userId: string, game: Game): Promise<User>;
+  exitGame(userId: string): Promise<User>;
 }

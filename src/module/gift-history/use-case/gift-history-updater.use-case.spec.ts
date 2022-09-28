@@ -19,7 +19,7 @@ describe('GiftHistoryUpdaterUseCase', () => {
   test('updateGiftHistory', async () => {
     const expectGiftHistory = await mockedGiftHistoryRepository.update();
 
-    const updatedGiftHistory = await giftHistoryUpdaterUseCase.updateGiftHistory({ where: { id: expectGiftHistory.id }, data: expectGiftHistory });
+    const updatedGiftHistory = await giftHistoryUpdaterUseCase.updateGiftHistory(expectGiftHistory.id, expectGiftHistory);
 
     expect(updatedGiftHistory).toEqual(expectGiftHistory);
   });
