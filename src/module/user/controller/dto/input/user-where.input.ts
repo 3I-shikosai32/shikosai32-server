@@ -1,14 +1,11 @@
 /* eslint-disable no-use-before-define */
 import { Field, InputType } from '@nestjs/graphql';
 import { DateTimeFilter } from '@/infra/prisma/generated/prisma/date-time-filter/input';
-import { EnumCharacterFilter } from '@/infra/prisma/generated/prisma/enum-character-filter/input';
 import { EnumGameFilter } from '@/infra/prisma/generated/prisma/enum-game-filter/input';
 import { EnumRoleFilter } from '@/infra/prisma/generated/prisma/enum-role-filter/input';
 import { IntFilter } from '@/infra/prisma/generated/prisma/int-filter/input';
 import { StringFilter } from '@/infra/prisma/generated/prisma/string-filter/input';
-import { StringNullableListFilter } from '@/infra/prisma/generated/prisma/string-nullable-list-filter/input';
 import { GiftHistoryListRelationFilter } from '~/gift-history/controller/dto/input/gift-history-list-relation-filter.input';
-import { ItemListRelationFilter } from '~/item/controller/dto/input/item-list-relation-filter.input';
 
 @InputType()
 export class UserWhereInput {
@@ -41,21 +38,6 @@ export class UserWhereInput {
 
   @Field(() => IntFilter, { nullable: true })
   consumablePoint?: IntFilter;
-
-  @Field(() => EnumCharacterFilter, { nullable: true })
-  character?: EnumCharacterFilter;
-
-  @Field(() => StringFilter, { nullable: true })
-  iconUrl?: StringFilter;
-
-  @Field(() => StringFilter, { nullable: true })
-  avatarUrl?: StringFilter;
-
-  @Field(() => ItemListRelationFilter, { nullable: true })
-  items?: ItemListRelationFilter;
-
-  @Field(() => StringNullableListFilter, { nullable: true })
-  itemIds?: StringNullableListFilter;
 
   @Field(() => EnumGameFilter, { nullable: true })
   participateGame?: EnumGameFilter;

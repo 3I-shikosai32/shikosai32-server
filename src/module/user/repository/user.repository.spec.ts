@@ -1,9 +1,7 @@
 import { Test } from '@nestjs/testing';
-import { Character } from '@prisma/client';
 import dotenv from 'dotenv';
 import { UserRepository } from './user.repository';
 import { PrismaService } from '@/infra/prisma/prisma.service';
-import { createItem } from '~/item/repository/item.repository.spec';
 
 dotenv.config();
 dotenv.config({ path: '.env.test' });
@@ -15,9 +13,6 @@ export const createUser = async (prismaService: PrismaService) => {
     data: {
       name: 'test user',
       email: 'test@example.com',
-      character: Character.CAT,
-      iconUrl: 'https://example.com',
-      avatarUrl: 'https://example.com',
     },
   });
 
@@ -62,9 +57,6 @@ describe('UserRepository', () => {
       data: {
         name: 'test user',
         email: 'test@example.com',
-        character: Character.CAT,
-        iconUrl: 'https://example.com',
-        avatarUrl: 'https://example.com',
       },
     });
 
@@ -100,23 +92,15 @@ describe('UserRepository', () => {
     expect(deletedUser).toEqual(createdUser);
   });
 
-  test('findUniqueWithItems', async () => {
+  test('findUniqueWithRelations', async () => {
     const createdUser = await createUser(prismaService);
-    const createdItem = await createItem(prismaService);
 
-    const foundUserWithItems = await userRepository.findUniqueWithItems({
+    const foundUser = await userRepository.findUniqueWithRelations({
       where: { id: createdUser.id },
     });
-    if (!foundUserWithItems) {
-      throw new Error('not found');
-    }
-
-    const [foundUser, foundItems] = foundUserWithItems;
 
     expect(foundUser).toEqual(createdUser);
-    expect(foundItems).toEqual(expect.any(Array<typeof createdItem>));
 
     await prismaService.user.delete({ where: { id: createdUser.id } });
-    await prismaService.item.delete({ where: { id: createdItem.id } });
   });
 });
