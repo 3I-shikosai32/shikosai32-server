@@ -10,8 +10,6 @@ import {
 } from '../domain/service/repository/character-status.repository';
 import { StrictPropertyCheck } from '@/common/type/strict-property-check.type';
 import { PrismaService } from '@/infra/prisma/prisma.service';
-import { Item } from '~/item/domain/model/item.model';
-import { User } from '~/user/domain/model/user.model';
 
 @Injectable()
 export class CharacterStatusRepository implements CharacterStatusRepositoryInterface {
@@ -62,23 +60,5 @@ export class CharacterStatusRepository implements CharacterStatusRepositoryInter
     }
 
     return new CharacterStatus(foundCharacterStatuses[0]);
-  }
-
-  async findUniqueWithUserAndItems<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>): Promise<[CharacterStatus, User, Item[]] | null> {
-    const foundCharacterStatusWithItem = await this.prismaService.characterStatus.findUnique({
-      ...args,
-      include: {
-        user: true,
-        items: true,
-      },
-    });
-
-    return foundCharacterStatusWithItem
-      ? [
-          new CharacterStatus(foundCharacterStatusWithItem),
-          new User(foundCharacterStatusWithItem.user),
-          foundCharacterStatusWithItem.items.map((item) => new Item(item)),
-        ]
-      : null;
   }
 }
