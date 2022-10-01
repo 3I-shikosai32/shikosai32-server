@@ -80,6 +80,8 @@ model CharacterStatus {
 
   items   Item[]   @relation(fields: [itemIds], references: [id])
   itemIds String[] @map("item_ids") @db.ObjectId
+
+  @@map("character_statuses")
 }
 
 model Item {
