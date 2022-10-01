@@ -35,10 +35,19 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   async delete<T extends Delete>(args: StrictPropertyCheck<T, Delete>) {
-    const deleteGiftHistories = this.prismaService.giftHistory.deleteMany({ where: { userId: args.where.id } });
+    const deleteCharacterStatus = this.prismaService.characterStatus.deleteMany({
+      where: {
+        userId: args.where.id,
+      },
+    });
+    const deleteGiftHistories = this.prismaService.giftHistory.deleteMany({
+      where: {
+        userId: args.where.id,
+      },
+    });
     const deleteUser = this.prismaService.user.delete(args);
 
-    const [, deletedUser] = await this.prismaService.$transaction([deleteGiftHistories, deleteUser]);
+    const [, , deletedUser] = await this.prismaService.$transaction([deleteCharacterStatus, deleteGiftHistories, deleteUser]);
 
     return new User(deletedUser);
   }
