@@ -15,10 +15,6 @@ export const createItem = async (prismaService: PrismaService) => {
       url: 'https://example.com',
       character: Character.CAT,
       layer: 1,
-      users: {
-        connect: [],
-      },
-      userIds: [],
     },
   });
 
