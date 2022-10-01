@@ -20,7 +20,7 @@ export class GiftHistoryResolver {
   }
 
   @ResolveField(() => Gift)
-  async gift(@Parent() giftHistory: GiftHistoryModel): Promise<GiftModel> {
+  async exchangedGift(@Parent() giftHistory: GiftHistoryModel): Promise<GiftModel> {
     const gift = await this.giftDataLoader.load(giftHistory.giftId);
 
     return gift;
