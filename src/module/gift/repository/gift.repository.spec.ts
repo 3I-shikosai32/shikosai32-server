@@ -1,5 +1,6 @@
 import { Test } from '@nestjs/testing';
 import dotenv from 'dotenv';
+import { Gift } from '../domain/model/gift.model';
 import { GiftRepository } from './gift.repository';
 import { PrismaService } from '@/infra/prisma/prisma.service';
 
@@ -18,7 +19,15 @@ export const createGift = async (prismaService: PrismaService) => {
     },
   });
 
-  return createdGift;
+  return new Gift(createdGift);
+};
+
+export const deleteGift = async (prismaService: PrismaService, giftId: string) => {
+  const deletedGift = await prismaService.gift.delete({
+    where: { id: giftId },
+  });
+
+  return new Gift(deletedGift);
 };
 
 describe('GiftRepository', () => {
@@ -41,7 +50,7 @@ describe('GiftRepository', () => {
 
     expect(foundGift).toEqual(createdGift);
 
-    await prismaService.gift.delete({ where: { id: createdGift.id } });
+    await deleteGift(prismaService, createdGift.id);
   });
 
   test('findMany', async () => {
@@ -49,9 +58,9 @@ describe('GiftRepository', () => {
 
     const foundGifts = await giftRepository.findMany({ where: { name: createdGift.name } });
 
-    expect(foundGifts).toEqual(expect.any(Array<typeof createdGift>));
+    expect(foundGifts).toEqual(expect.any(Array<Gift>));
 
-    await prismaService.gift.delete({ where: { id: createdGift.id } });
+    await deleteGift(prismaService, createdGift.id);
   });
 
   test('create', async () => {
@@ -72,7 +81,7 @@ describe('GiftRepository', () => {
 
     expect(createdGift).toEqual(foundGift);
 
-    await prismaService.gift.delete({ where: { id: createdGift.id } });
+    await deleteGift(prismaService, createdGift.id);
   });
 
   test('update', async () => {
@@ -85,7 +94,7 @@ describe('GiftRepository', () => {
 
     expect(updatedGift).toEqual({ ...createdGift, name: 'もろこし輪太郎' });
 
-    await prismaService.gift.delete({ where: { id: createdGift.id } });
+    await deleteGift(prismaService, createdGift.id);
   });
 
   test('delete', async () => {

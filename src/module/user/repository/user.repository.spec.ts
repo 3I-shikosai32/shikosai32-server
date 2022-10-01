@@ -1,7 +1,10 @@
 import { Test } from '@nestjs/testing';
 import dotenv from 'dotenv';
+import { User } from '../domain/model/user.model';
 import { UserRepository } from './user.repository';
 import { PrismaService } from '@/infra/prisma/prisma.service';
+import { createCharacterStatus, deleteCharacterStatus } from '~/character-status/repository/character-status.repository.spec';
+import { Item } from '~/item/domain/model/item.model';
 
 dotenv.config();
 dotenv.config({ path: '.env.test' });
@@ -16,7 +19,15 @@ export const createUser = async (prismaService: PrismaService) => {
     },
   });
 
-  return createdUser;
+  return new User(createdUser);
+};
+
+export const deleteUser = async (prismaService: PrismaService, userId: string) => {
+  const deletedUser = await prismaService.user.delete({
+    where: { id: userId },
+  });
+
+  return new User(deletedUser);
 };
 
 describe('UserRepository', () => {
@@ -39,7 +50,7 @@ describe('UserRepository', () => {
 
     expect(foundUser).toEqual(createdUser);
 
-    await prismaService.user.delete({ where: { id: createdUser.id } });
+    await deleteUser(prismaService, createdUser.id);
   });
 
   test('findMany', async () => {
@@ -47,9 +58,9 @@ describe('UserRepository', () => {
 
     const foundUsers = await userRepository.findMany({ where: { name: createdUser.name } });
 
-    expect(foundUsers).toEqual(expect.any(Array<typeof createdUser>));
+    expect(foundUsers).toEqual(expect.any(Array<User>));
 
-    await prismaService.user.delete({ where: { id: createdUser.id } });
+    await deleteUser(prismaService, createdUser.id);
   });
 
   test('create', async () => {
@@ -68,7 +79,7 @@ describe('UserRepository', () => {
 
     expect(createdUser).toEqual(foundUser);
 
-    await prismaService.user.delete({ where: { id: createdUser.id } });
+    await deleteUser(prismaService, createdUser.id);
   });
 
   test('update', async () => {
@@ -81,7 +92,7 @@ describe('UserRepository', () => {
 
     expect(updatedUser).toEqual({ ...createdUser, name: 'updated test user' });
 
-    await prismaService.user.delete({ where: { id: createdUser.id } });
+    await deleteUser(prismaService, createdUser.id);
   });
 
   test('delete', async () => {
@@ -94,13 +105,15 @@ describe('UserRepository', () => {
 
   test('findUniqueWithRelations', async () => {
     const createdUser = await createUser(prismaService);
+    const createdCharacterStatus = await createCharacterStatus(prismaService, createdUser.id);
 
     const foundUser = await userRepository.findUniqueWithRelations({
       where: { id: createdUser.id },
     });
 
-    expect(foundUser).toEqual(createdUser);
+    expect(foundUser).toEqual([createdUser, createdCharacterStatus, expect.any(Array<Item>)]);
 
-    await prismaService.user.delete({ where: { id: createdUser.id } });
+    await deleteCharacterStatus(prismaService, createdCharacterStatus.id);
+    await deleteUser(prismaService, createdUser.id);
   });
 });
