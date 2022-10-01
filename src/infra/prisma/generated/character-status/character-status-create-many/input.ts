@@ -18,6 +18,9 @@ export class CharacterStatusCreateManyInput {
     @Field(() => String, {nullable:false})
     avatarUrl!: string;
 
+    @Field(() => Boolean, {nullable:false})
+    isActive!: boolean;
+
     @Field(() => Int, {nullable:true})
     characterPointDay1?: number;
 

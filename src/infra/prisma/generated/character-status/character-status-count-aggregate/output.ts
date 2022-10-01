@@ -18,6 +18,9 @@ export class CharacterStatusCountAggregate {
     avatarUrl!: number;
 
     @Field(() => Int, {nullable:false})
+    isActive!: number;
+
+    @Field(() => Int, {nullable:false})
     characterPointDay1!: number;
 
     @Field(() => Int, {nullable:false})

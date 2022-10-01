@@ -23,6 +23,9 @@ export class CharacterStatusGroupBy {
     @Field(() => String, {nullable:false})
     avatarUrl!: string;
 
+    @Field(() => Boolean, {nullable:false})
+    isActive!: boolean;
+
     @Field(() => Int, {nullable:false})
     characterPointDay1!: number;
 

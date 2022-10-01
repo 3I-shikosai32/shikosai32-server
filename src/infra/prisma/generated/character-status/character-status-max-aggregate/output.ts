@@ -18,6 +18,9 @@ export class CharacterStatusMaxAggregate {
     @Field(() => String, {nullable:true})
     avatarUrl?: string;
 
+    @Field(() => Boolean, {nullable:true})
+    isActive?: boolean;
+
     @Field(() => Int, {nullable:true})
     characterPointDay1?: number;
 

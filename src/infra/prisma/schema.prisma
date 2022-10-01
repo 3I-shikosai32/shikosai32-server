@@ -70,6 +70,8 @@ model CharacterStatus {
   iconUrl   String    @map("icon_url")
   avatarUrl String    @map("avatar_url")
 
+  isActive Boolean @map("is_active")
+
   characterPointDay1 Int @default(0) @map("character_point_day1")
   characterPointDay2 Int @default(0) @map("character_point_day2")
 

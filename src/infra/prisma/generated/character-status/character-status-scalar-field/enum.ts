@@ -5,6 +5,7 @@ export enum CharacterStatusScalarFieldEnum {
     character = "character",
     iconUrl = "iconUrl",
     avatarUrl = "avatarUrl",
+    isActive = "isActive",
     characterPointDay1 = "characterPointDay1",
     characterPointDay2 = "characterPointDay2",
     userId = "userId",

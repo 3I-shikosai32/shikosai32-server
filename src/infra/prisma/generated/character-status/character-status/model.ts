@@ -21,6 +21,9 @@ export class CharacterStatus {
     @Field(() => String, {nullable:false})
     avatarUrl!: string;
 
+    @Field(() => Boolean, {nullable:false})
+    isActive!: boolean;
+
     @Field(() => Int, {nullable:false,defaultValue:0})
     characterPointDay1!: number;
 

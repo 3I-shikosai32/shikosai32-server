@@ -23,6 +23,9 @@ export class CharacterStatusOrderByWithAggregationInput {
     avatarUrl?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    isActive?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     characterPointDay1?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

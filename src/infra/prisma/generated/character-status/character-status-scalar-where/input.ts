@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../../prisma/string-filter/input';
 import { EnumCharacterFilter } from '../../prisma/enum-character-filter/input';
+import { BoolFilter } from '../../prisma/bool-filter/input';
 import { IntFilter } from '../../prisma/int-filter/input';
 import { StringNullableListFilter } from '../../prisma/string-nullable-list-filter/input';
 
@@ -28,6 +29,9 @@ export class CharacterStatusScalarWhereInput {
 
     @Field(() => StringFilter, {nullable:true})
     avatarUrl?: StringFilter;
+
+    @Field(() => BoolFilter, {nullable:true})
+    isActive?: BoolFilter;
 
     @Field(() => IntFilter, {nullable:true})
     characterPointDay1?: IntFilter;

@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringWithAggregatesFilter } from '../../prisma/string-with-aggregates-filter/input';
 import { EnumCharacterWithAggregatesFilter } from '../../prisma/enum-character-with-aggregates-filter/input';
+import { BoolWithAggregatesFilter } from '../../prisma/bool-with-aggregates-filter/input';
 import { IntWithAggregatesFilter } from '../../prisma/int-with-aggregates-filter/input';
 import { StringNullableListFilter } from '../../prisma/string-nullable-list-filter/input';
 
@@ -28,6 +29,9 @@ export class CharacterStatusScalarWhereWithAggregatesInput {
 
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     avatarUrl?: StringWithAggregatesFilter;
+
+    @Field(() => BoolWithAggregatesFilter, {nullable:true})
+    isActive?: BoolWithAggregatesFilter;
 
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     characterPointDay1?: IntWithAggregatesFilter;
