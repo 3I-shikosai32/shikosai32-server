@@ -29,11 +29,17 @@ export class UserCreatorUseCase implements UserCreatorUseCaseInterface {
     const createdUser = await this.userRepository.create({
       data: {
         ...createUserData,
-        iconUrl: `${this.envService.FirebaseStorageUrl}${encodeURIComponent(iconPath)}`,
-        avatarUrl: `${this.envService.FirebaseStorageUrl}${encodeURIComponent(avatarPath)}`,
-        itemIds: foundItems.map((item) => item.id),
-        items: {
-          connect: foundItems.map((item) => ({ id: item.id })),
+        CharacterStatuses: {
+          create: {
+            character: createUserData.character,
+            iconUrl: `${this.envService.FirebaseStorageUrl}${encodeURIComponent(iconPath)}`,
+            avatarUrl: `${this.envService.FirebaseStorageUrl}${encodeURIComponent(avatarPath)}`,
+            isActive: true,
+            itemIds: foundItems.map((item) => item.id),
+            items: {
+              connect: foundItems.map((item) => ({ id: item.id })),
+            },
+          },
         },
       },
     });
