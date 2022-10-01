@@ -12,7 +12,7 @@ export class ItemResolver {
 
   @ResolveField(() => [User])
   async users(@Parent() item: ItemModel): Promise<UserModel[]> {
-    const usersOrErrors = await this.userDataLoader.loadMany(item.userIds);
+    const usersOrErrors = await this.userDataLoader.loadMany(item.characterStatusIds);
 
     const users = match(usersOrErrors)
       .with(P.array(P.instanceOf(Error)), (errors) => {
