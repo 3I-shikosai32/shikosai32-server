@@ -30,5 +30,5 @@ export class ItemScalarWhereWithAggregatesInput {
     layer?: IntWithAggregatesFilter;
 
     @Field(() => StringNullableListFilter, {nullable:true})
-    userIds?: StringNullableListFilter;
+    characterStatusIds?: StringNullableListFilter;
 }

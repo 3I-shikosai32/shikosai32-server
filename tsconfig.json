@@ -13,6 +13,7 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],
+      "~/character-status/*": ["./src/module/character-status/*"],
       "~/gift/*": ["./src/module/gift/*"],
       "~/gift-history/*": ["src/module/gift-history/*"],
       "~/item/*": ["./src/module/item/*"],

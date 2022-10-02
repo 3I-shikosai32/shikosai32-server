@@ -2,9 +2,8 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Role } from '../../prisma/role/enum';
 import { Int } from '@nestjs/graphql';
-import { Character } from '../../prisma/character/enum';
-import { Item } from '../../item/item/model';
 import { Game } from '../../prisma/game/enum';
+import { CharacterStatus } from '../../character-status/character-status/model';
 import { GiftHistory } from '../../gift-history/gift-history/model';
 import { UserCount } from '../user-count/output';
 
@@ -32,26 +31,14 @@ export class User {
     @Field(() => Int, {nullable:false,defaultValue:0})
     consumablePoint!: number;
 
-    @Field(() => Character, {nullable:false})
-    character!: keyof typeof Character;
-
-    @Field(() => String, {nullable:false})
-    iconUrl!: string;
-
-    @Field(() => String, {nullable:false})
-    avatarUrl!: string;
-
-    @Field(() => [Item], {nullable:true})
-    items?: Array<Item>;
-
-    @Field(() => [String], {nullable:true})
-    itemIds!: Array<string>;
-
     @Field(() => Game, {nullable:false,defaultValue:'NONE'})
     participateGame!: keyof typeof Game;
 
     @Field(() => Int, {nullable:false,defaultValue:0})
     pullableGachaTimes!: number;
+
+    @Field(() => [CharacterStatus], {nullable:true})
+    CharacterStatuses?: Array<CharacterStatus>;
 
     @Field(() => [GiftHistory], {nullable:true})
     giftHistories?: Array<GiftHistory>;

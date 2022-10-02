@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Character } from '../../prisma/character/enum';
 import { Int } from '@nestjs/graphql';
-import { UserUncheckedCreateNestedManyWithoutItemsInput } from '../../user/user-unchecked-create-nested-many-without-items/input';
+import { CharacterStatusUncheckedCreateNestedManyWithoutItemsInput } from '../../character-status/character-status-unchecked-create-nested-many-without-items/input';
 
 @InputType()
 export class ItemUncheckedCreateInput {
@@ -19,9 +19,9 @@ export class ItemUncheckedCreateInput {
     @Field(() => Int, {nullable:false})
     layer!: number;
 
-    @Field(() => UserUncheckedCreateNestedManyWithoutItemsInput, {nullable:true})
-    users?: UserUncheckedCreateNestedManyWithoutItemsInput;
+    @Field(() => CharacterStatusUncheckedCreateNestedManyWithoutItemsInput, {nullable:true})
+    characterStatuses?: CharacterStatusUncheckedCreateNestedManyWithoutItemsInput;
 
     @Field(() => [String], {nullable:true})
-    userIds?: Array<string>;
+    characterStatusIds?: Array<string>;
 }

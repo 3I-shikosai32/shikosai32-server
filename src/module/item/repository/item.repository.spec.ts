@@ -1,6 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { Character } from '@prisma/client';
 import dotenv from 'dotenv';
+import { Item } from '../domain/model/item.model';
 import { ItemRepository } from './item.repository';
 import { PrismaService } from '@/infra/prisma/prisma.service';
 
@@ -15,14 +16,18 @@ export const createItem = async (prismaService: PrismaService) => {
       url: 'https://example.com',
       character: Character.CAT,
       layer: 1,
-      users: {
-        connect: [],
-      },
-      userIds: [],
     },
   });
 
-  return createdItem;
+  return new Item(createdItem);
+};
+
+export const deleteItem = async (prismaService: PrismaService, itemId: string) => {
+  const deletedItem = await prismaService.item.delete({
+    where: { id: itemId },
+  });
+
+  return new Item(deletedItem);
 };
 
 describe('ItemRepository', () => {
@@ -45,7 +50,7 @@ describe('ItemRepository', () => {
 
     expect(foundItem).toEqual(createdItem);
 
-    await prismaService.item.delete({ where: { id: createdItem.id } });
+    await deleteItem(prismaService, createdItem.id);
   });
 
   test('findMany', async () => {
@@ -53,9 +58,9 @@ describe('ItemRepository', () => {
 
     const foundItems = await itemService.findMany({ where: { character: createdItem.character } });
 
-    expect(foundItems).toEqual(expect.any(Array<typeof createdItem>));
+    expect(foundItems).toEqual(expect.any(Array<Item>));
 
-    await prismaService.item.delete({ where: { id: createdItem.id } });
+    await deleteItem(prismaService, createdItem.id);
   });
 
   test('create', async () => {
@@ -64,10 +69,6 @@ describe('ItemRepository', () => {
         url: 'https://example.com',
         character: Character.CAT,
         layer: 1,
-        users: {
-          connect: [],
-        },
-        userIds: [],
       },
     });
 
@@ -79,7 +80,7 @@ describe('ItemRepository', () => {
 
     expect(createdItem).toEqual(foundItem);
 
-    await prismaService.item.delete({ where: { id: createdItem.id } });
+    await deleteItem(prismaService, createdItem.id);
   });
 
   test('update', async () => {
@@ -92,7 +93,7 @@ describe('ItemRepository', () => {
 
     expect(updatedItem).toEqual({ ...createdItem, character: Character.FOX });
 
-    await prismaService.item.delete({ where: { id: createdItem.id } });
+    await deleteItem(prismaService, createdItem.id);
   });
 
   test('delete', async () => {

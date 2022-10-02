@@ -5,12 +5,15 @@ import { UserRepositoryInterface } from '../domain/service/repository/user.repos
 import { IncrementPointData } from '../domain/service/use-case/port/user-game-manager.input';
 import { UserGameManagerUseCaseInterface } from '../domain/service/use-case/user-game-manager.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
+import { CharacterStatusRepositoryInterface } from '~/character-status/domain/service/repository/character-status.repository';
 
 @Injectable()
 export class UserGameManagerUseCase implements UserGameManagerUseCaseInterface {
   constructor(
     @Inject(InjectionToken.USER_REPOSITORY)
     private readonly userRepository: UserRepositoryInterface,
+    @Inject(InjectionToken.CHARACTER_STATUS_REPOSITORY)
+    private readonly characterStatusRepository: CharacterStatusRepositoryInterface,
   ) {}
 
   async incrementPoint(incrementUsersData: IncrementPointData[], isBeforeDay2: boolean) {
@@ -21,6 +24,11 @@ export class UserGameManagerUseCase implements UserGameManagerUseCaseInterface {
         });
         if (!foundUser) {
           throw new Error('User not found');
+        }
+
+        const foundCharacterStatus = await this.characterStatusRepository.findActiveByUserId(foundUser.id);
+        if (!foundCharacterStatus) {
+          throw new Error('Character status not found');
         }
 
         let updatedUser: User;
@@ -34,6 +42,12 @@ export class UserGameManagerUseCase implements UserGameManagerUseCaseInterface {
               participateGame: Game.NONE,
             },
           });
+          await this.characterStatusRepository.update({
+            where: { id: foundCharacterStatus.id },
+            data: {
+              characterPointDay1: foundCharacterStatus.characterPointDay1 + incrementUserData.increment,
+            },
+          });
         } else {
           updatedUser = await this.userRepository.update({
             where: { id: incrementUserData.id },
@@ -42,6 +56,12 @@ export class UserGameManagerUseCase implements UserGameManagerUseCaseInterface {
               consumablePoint: foundUser.consumablePoint + incrementUserData.increment,
               pullableGachaTimes: foundUser.pullableGachaTimes + 1,
               participateGame: Game.NONE,
+            },
+          });
+          await this.characterStatusRepository.update({
+            where: { id: foundCharacterStatus.id },
+            data: {
+              characterPointDay2: foundCharacterStatus.characterPointDay2 + incrementUserData.increment,
             },
           });
         }

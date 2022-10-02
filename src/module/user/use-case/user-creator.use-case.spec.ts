@@ -1,4 +1,5 @@
 import { Test } from '@nestjs/testing';
+import { Character } from '@prisma/client';
 import { MockedUserRepository } from '../repository/mocked-user.repository';
 import { UserCreatorUseCase } from './user-creator.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
@@ -26,7 +27,7 @@ describe('UserCreatorUseCase', () => {
   test('createUser', async () => {
     const expectUser = await mockedUserRepository.create();
 
-    const createdUser = await userCreatorUseCase.createUser(expectUser);
+    const createdUser = await userCreatorUseCase.createUser({ ...expectUser, character: Character.CAT });
 
     expect(createdUser).toEqual(expectUser);
   });

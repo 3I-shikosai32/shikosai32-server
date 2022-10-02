@@ -3,6 +3,7 @@ import { ObtainmentStatus } from '../domain/model/obtainment-status.model';
 import { MockedUserRepository } from '../repository/mocked-user.repository';
 import { UserReaderUseCase } from './user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
+import { MockedCharacterStatusRepository } from '~/character-status/repository/mocked-character-status';
 import { MockedItemRepository } from '~/item/repository/mocked-item.repository';
 
 describe('UserReaderUseCase', () => {
@@ -13,6 +14,7 @@ describe('UserReaderUseCase', () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
         { provide: InjectionToken.USER_REPOSITORY, useClass: MockedUserRepository },
+        { provide: InjectionToken.CHARACTER_STATUS_REPOSITORY, useClass: MockedCharacterStatusRepository },
         { provide: InjectionToken.ITEM_REPOSITORY, useClass: MockedItemRepository },
         UserReaderUseCase,
       ],

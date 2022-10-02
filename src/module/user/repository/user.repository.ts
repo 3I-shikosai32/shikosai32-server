@@ -3,6 +3,7 @@ import { User } from '../domain/model/user.model';
 import { Create, Delete, FindMany, FindUnique, Update, UserRepositoryInterface } from '../domain/service/repository/user.repository';
 import { StrictPropertyCheck } from '@/common/type/strict-property-check.type';
 import { PrismaService } from '@/infra/prisma/prisma.service';
+import { CharacterStatus } from '~/character-status/domain/model/character-status.model';
 import { Item } from '~/item/domain/model/item.model';
 
 @Injectable()
@@ -34,22 +35,45 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   async delete<T extends Delete>(args: StrictPropertyCheck<T, Delete>) {
-    const deleteGiftHistories = this.prismaService.giftHistory.deleteMany({ where: { userId: args.where.id } });
+    const deleteCharacterStatus = this.prismaService.characterStatus.deleteMany({
+      where: {
+        userId: args.where.id,
+      },
+    });
+    const deleteGiftHistories = this.prismaService.giftHistory.deleteMany({
+      where: {
+        userId: args.where.id,
+      },
+    });
     const deleteUser = this.prismaService.user.delete(args);
 
-    const [, deletedUser] = await this.prismaService.$transaction([deleteGiftHistories, deleteUser]);
+    const [, , deletedUser] = await this.prismaService.$transaction([deleteCharacterStatus, deleteGiftHistories, deleteUser]);
 
     return new User(deletedUser);
   }
 
-  async findUniqueWithItems<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>): Promise<[User, Item[]] | null> {
-    const foundUserWithItem = await this.prismaService.user.findUnique({
+  async findUniqueWithRelations<T extends FindUnique>(args: StrictPropertyCheck<T, FindUnique>): Promise<[User, CharacterStatus, Item[]] | null> {
+    const foundUser = await this.prismaService.user.findUnique({
       ...args,
       include: {
-        items: true,
+        CharacterStatuses: {
+          where: {
+            isActive: { equals: true },
+          },
+          include: {
+            items: true,
+          },
+        },
       },
     });
 
-    return foundUserWithItem ? [new User(foundUserWithItem), foundUserWithItem.items.map((item) => new Item(item))] : null;
+    if (foundUser?.CharacterStatuses.length !== 1) {
+      throw new Error('User has no character or has more than one character');
+    }
+    const [foundCharacterStatus] = foundUser.CharacterStatuses;
+
+    return foundUser
+      ? [new User(foundUser), new CharacterStatus(foundCharacterStatus), foundCharacterStatus.items.map((item) => new Item(item))]
+      : null;
   }
 }

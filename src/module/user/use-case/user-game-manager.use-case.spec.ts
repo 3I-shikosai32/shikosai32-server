@@ -3,6 +3,7 @@ import { Game } from '@prisma/client';
 import { MockedUserRepository } from '../repository/mocked-user.repository';
 import { UserGameManagerUseCase } from './user-game-manager.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
+import { MockedCharacterStatusRepository } from '~/character-status/repository/mocked-character-status';
 
 describe('UserGameManagerUseCase', () => {
   let mockedUserRepository: MockedUserRepository;
@@ -10,7 +11,11 @@ describe('UserGameManagerUseCase', () => {
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      providers: [{ provide: InjectionToken.USER_REPOSITORY, useClass: MockedUserRepository }, UserGameManagerUseCase],
+      providers: [
+        { provide: InjectionToken.USER_REPOSITORY, useClass: MockedUserRepository },
+        { provide: InjectionToken.CHARACTER_STATUS_REPOSITORY, useClass: MockedCharacterStatusRepository },
+        UserGameManagerUseCase,
+      ],
     }).compile();
 
     mockedUserRepository = moduleRef.get(InjectionToken.USER_REPOSITORY);

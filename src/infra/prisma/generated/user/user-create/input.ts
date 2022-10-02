@@ -2,9 +2,8 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Role } from '../../prisma/role/enum';
 import { Int } from '@nestjs/graphql';
-import { Character } from '../../prisma/character/enum';
-import { ItemCreateNestedManyWithoutUsersInput } from '../../item/item-create-nested-many-without-users/input';
 import { Game } from '../../prisma/game/enum';
+import { CharacterStatusCreateNestedManyWithoutUserInput } from '../../character-status/character-status-create-nested-many-without-user/input';
 import { GiftHistoryCreateNestedManyWithoutUserInput } from '../../gift-history/gift-history-create-nested-many-without-user/input';
 
 @InputType()
@@ -31,26 +30,14 @@ export class UserCreateInput {
     @Field(() => Int, {nullable:true})
     consumablePoint?: number;
 
-    @Field(() => Character, {nullable:false})
-    character!: keyof typeof Character;
-
-    @Field(() => String, {nullable:false})
-    iconUrl!: string;
-
-    @Field(() => String, {nullable:false})
-    avatarUrl!: string;
-
-    @Field(() => ItemCreateNestedManyWithoutUsersInput, {nullable:true})
-    items?: ItemCreateNestedManyWithoutUsersInput;
-
-    @Field(() => [String], {nullable:true})
-    itemIds?: Array<string>;
-
     @Field(() => Game, {nullable:true})
     participateGame?: keyof typeof Game;
 
     @Field(() => Int, {nullable:true})
     pullableGachaTimes?: number;
+
+    @Field(() => CharacterStatusCreateNestedManyWithoutUserInput, {nullable:true})
+    CharacterStatuses?: CharacterStatusCreateNestedManyWithoutUserInput;
 
     @Field(() => GiftHistoryCreateNestedManyWithoutUserInput, {nullable:true})
     giftHistories?: GiftHistoryCreateNestedManyWithoutUserInput;

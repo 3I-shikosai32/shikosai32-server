@@ -27,18 +27,6 @@ export class UserCountAggregate {
     consumablePoint!: number;
 
     @Field(() => Int, {nullable:false})
-    character!: number;
-
-    @Field(() => Int, {nullable:false})
-    iconUrl!: number;
-
-    @Field(() => Int, {nullable:false})
-    avatarUrl!: number;
-
-    @Field(() => Int, {nullable:false})
-    itemIds!: number;
-
-    @Field(() => Int, {nullable:false})
     participateGame!: number;
 
     @Field(() => Int, {nullable:false})
