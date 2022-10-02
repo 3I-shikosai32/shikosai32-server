@@ -2,7 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Character } from '../../prisma/character/enum';
 import { Int } from '@nestjs/graphql';
-import { User } from '../../user/user/model';
+import { CharacterStatus } from '../../character-status/character-status/model';
 import { ItemCount } from '../item-count/output';
 
 @ObjectType()
@@ -20,11 +20,11 @@ export class Item {
     @Field(() => Int, {nullable:false})
     layer!: number;
 
-    @Field(() => [User], {nullable:true})
-    users?: Array<User>;
+    @Field(() => [CharacterStatus], {nullable:true})
+    characterStatuses?: Array<CharacterStatus>;
 
     @Field(() => [String], {nullable:true})
-    userIds!: Array<string>;
+    characterStatusIds!: Array<string>;
 
     @Field(() => ItemCount, {nullable:false})
     _count?: ItemCount;

@@ -1,32 +1,33 @@
 import { Test } from '@nestjs/testing';
 import dotenv from 'dotenv';
+import { GiftHistory } from '../domain/model/gift-history.model';
 import { GiftHistoryRepository } from './gift-history.repository';
 import { PrismaService } from '@/infra/prisma/prisma.service';
-import { createGift } from '~/gift/repository/gift.repository.spec';
-import { createUser } from '~/user/repository/user.repository.spec';
+import { createGift, deleteGift } from '~/gift/repository/gift.repository.spec';
+import { createUser, deleteUser } from '~/user/repository/user.repository.spec';
 
 dotenv.config();
 dotenv.config({ path: '.env.test' });
 
 jest.setTimeout(15000);
 
-export const createGiftHistory = async (prismaService: PrismaService) => {
-  const createdUser = await createUser(prismaService);
-  const createdGift = await createGift(prismaService);
+export const createGiftHistory = async (prismaService: PrismaService, userId: string, giftId: string) => {
   const createdGiftHistory = await prismaService.giftHistory.create({
     data: {
-      userId: createdUser.id,
-      giftId: createdGift.id,
+      userId,
+      giftId,
     },
   });
 
-  return { createdUser, createdGift, createdGiftHistory };
+  return new GiftHistory(createdGiftHistory);
 };
 
-export const deleteFakeGiftHistory = async (prismaService: PrismaService, userId: string, giftId: string, giftHistoryId: string) => {
-  await prismaService.giftHistory.delete({ where: { id: giftHistoryId } });
-  await prismaService.user.delete({ where: { id: userId } });
-  await prismaService.gift.delete({ where: { id: giftId } });
+export const deleteGiftHistory = async (prismaService: PrismaService, giftHistoryId: string) => {
+  const deletedGiftHistory = await prismaService.giftHistory.delete({
+    where: { id: giftHistoryId },
+  });
+
+  return new GiftHistory(deletedGiftHistory);
 };
 
 describe('GiftHistoryRepository', () => {
@@ -43,23 +44,31 @@ describe('GiftHistoryRepository', () => {
   });
 
   test('findUnique', async () => {
-    const { createdUser, createdGift, createdGiftHistory } = await createGiftHistory(prismaService);
+    const createdUser = await createUser(prismaService);
+    const createdGift = await createGift(prismaService);
+    const createdGiftHistory = await createGiftHistory(prismaService, createdUser.id, createdGift.id);
 
     const foundGiftHistory = await giftHistoryRepository.findUnique({ where: { id: createdGiftHistory.id } });
 
     expect(foundGiftHistory).toEqual(createdGiftHistory);
 
-    await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, createdGiftHistory.id);
+    await deleteGiftHistory(prismaService, createdGiftHistory.id);
+    await deleteUser(prismaService, createdUser.id);
+    await deleteGift(prismaService, createdGift.id);
   });
 
   test('findMany', async () => {
-    const { createdUser, createdGift, createdGiftHistory } = await createGiftHistory(prismaService);
+    const createdUser = await createUser(prismaService);
+    const createdGift = await createGift(prismaService);
+    const createdGiftHistory = await createGiftHistory(prismaService, createdUser.id, createdGift.id);
 
     const foundGiftHistories = await giftHistoryRepository.findMany({ where: { isDelivered: createdGiftHistory.isDelivered } });
 
-    expect(foundGiftHistories).toEqual(expect.any(Array<typeof createdGiftHistory>));
+    expect(foundGiftHistories).toEqual(expect.any(Array<GiftHistory>));
 
-    await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, createdGiftHistory.id);
+    await deleteGiftHistory(prismaService, createdGiftHistory.id);
+    await deleteUser(prismaService, createdUser.id);
+    await deleteGift(prismaService, createdGift.id);
   });
 
   test('create', async () => {
@@ -83,11 +92,15 @@ describe('GiftHistoryRepository', () => {
 
     expect(createdGiftHistory).toEqual(foundGiftHistory);
 
-    await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, createdGiftHistory.id);
+    await deleteGiftHistory(prismaService, createdGiftHistory.id);
+    await deleteUser(prismaService, createdUser.id);
+    await deleteGift(prismaService, createdGift.id);
   });
 
   test('update', async () => {
-    const { createdUser, createdGift, createdGiftHistory } = await createGiftHistory(prismaService);
+    const createdUser = await createUser(prismaService);
+    const createdGift = await createGift(prismaService);
+    const createdGiftHistory = await createGiftHistory(prismaService, createdUser.id, createdGift.id);
 
     const updatedGiftHistory = await giftHistoryRepository.update({
       where: { id: createdGiftHistory.id },
@@ -99,17 +112,21 @@ describe('GiftHistoryRepository', () => {
       isDelivered: true,
     });
 
-    await deleteFakeGiftHistory(prismaService, createdUser.id, createdGift.id, createdGiftHistory.id);
+    await deleteGiftHistory(prismaService, createdGiftHistory.id);
+    await deleteUser(prismaService, createdUser.id);
+    await deleteGift(prismaService, createdGift.id);
   });
 
   test('delete', async () => {
-    const { createdUser, createdGift, createdGiftHistory } = await createGiftHistory(prismaService);
+    const createdUser = await createUser(prismaService);
+    const createdGift = await createGift(prismaService);
+    const createdGiftHistory = await createGiftHistory(prismaService, createdUser.id, createdGift.id);
 
     const deletedGiftHistory = await giftHistoryRepository.delete({ where: { id: createdGiftHistory.id } });
 
     expect(deletedGiftHistory).toEqual(createdGiftHistory);
 
-    await prismaService.user.delete({ where: { id: createdUser.id } });
-    await prismaService.gift.delete({ where: { id: createdGift.id } });
+    await deleteUser(prismaService, createdUser.id);
+    await deleteGift(prismaService, createdGift.id);
   });
 });

@@ -9,13 +9,13 @@ export class Item {
 
   readonly layer: number;
 
-  readonly userIds: string[];
+  readonly characterStatusIds: string[];
 
-  constructor(args: { id: string; url: string; character: keyof typeof Character; layer: number; userIds: string[] }) {
+  constructor(args: { id: string; url: string; character: keyof typeof Character; layer: number; characterStatusIds: string[] }) {
     this.id = args.id;
     this.url = args.url;
     this.character = args.character;
     this.layer = args.layer;
-    this.userIds = args.userIds;
+    this.characterStatusIds = args.characterStatusIds;
   }
 }

@@ -4,6 +4,7 @@ import { UserRepositoryInterface } from '../domain/service/repository/user.repos
 import { UserCursor, UserOrderBy, UserWhere } from '../domain/service/use-case/port/user-reader.input';
 import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
+import { CharacterStatusRepositoryInterface } from '~/character-status/domain/service/repository/character-status.repository';
 import { ItemRepositoryInterface } from '~/item/domain/service/repository/item.repository';
 
 @Injectable()
@@ -11,6 +12,8 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
   constructor(
     @Inject(InjectionToken.USER_REPOSITORY)
     private readonly userRepository: UserRepositoryInterface,
+    @Inject(InjectionToken.CHARACTER_STATUS_REPOSITORY)
+    private readonly characterStatusRepository: CharacterStatusRepositoryInterface,
     @Inject(InjectionToken.ITEM_REPOSITORY)
     private readonly itemRepository: ItemRepositoryInterface,
   ) {}
@@ -43,15 +46,20 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
       throw new Error('User not found');
     }
 
+    const foundCharacterStatus = await this.characterStatusRepository.findActiveByUserId(userId);
+    if (!foundCharacterStatus) {
+      throw new Error('Character status not found');
+    }
+
     const foundItems = await this.itemRepository.findMany({
       where: {
-        character: { equals: foundUser.character },
+        character: { equals: foundCharacterStatus.character },
       },
     });
 
     const obtainmentStatuses = foundItems.map((item) => ({
       item,
-      obtained: foundUser.itemIds.includes(item.id),
+      obtained: foundCharacterStatus.itemIds.includes(item.id),
     }));
 
     return obtainmentStatuses.map((obtainmentStatus) => new ObtainmentStatus(obtainmentStatus));

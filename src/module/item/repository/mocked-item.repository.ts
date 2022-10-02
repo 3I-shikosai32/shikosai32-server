@@ -11,7 +11,7 @@ export class MockedItemRepository implements ItemRepositoryInterface {
       url: 'https://example.com',
       character: Character.CAT,
       layer: 1,
-      userIds: [],
+      characterStatusIds: [],
     };
 
     return new Item(foundItem);
@@ -24,14 +24,14 @@ export class MockedItemRepository implements ItemRepositoryInterface {
         url: 'https://example.com',
         character: Character.CAT,
         layer: 1,
-        userIds: [],
+        characterStatusIds: [],
       },
       {
         id: 'def-456',
         url: 'https://example.com',
         character: Character.CAT,
         layer: 1,
-        userIds: [],
+        characterStatusIds: [],
       },
     ];
 
@@ -44,7 +44,7 @@ export class MockedItemRepository implements ItemRepositoryInterface {
       url: 'https://example.com',
       character: Character.CAT,
       layer: 1,
-      userIds: [],
+      characterStatusIds: [],
     };
 
     return new Item(createdItem);
@@ -56,7 +56,7 @@ export class MockedItemRepository implements ItemRepositoryInterface {
       url: 'https://example.com',
       character: Character.CAT,
       layer: 1,
-      userIds: [],
+      characterStatusIds: [],
     };
 
     return new Item(updatedItem);
@@ -68,7 +68,7 @@ export class MockedItemRepository implements ItemRepositoryInterface {
       url: 'https://example.com',
       character: Character.CAT,
       layer: 1,
-      userIds: [],
+      characterStatusIds: [],
     };
 
     return new Item(deleteItem);

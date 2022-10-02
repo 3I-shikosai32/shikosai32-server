@@ -3,7 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../../prisma/string-filter/input';
 import { EnumCharacterFilter } from '../../prisma/enum-character-filter/input';
 import { IntFilter } from '../../prisma/int-filter/input';
-import { UserListRelationFilter } from '../../user/user-list-relation-filter/input';
+import { CharacterStatusListRelationFilter } from '../../character-status/character-status-list-relation-filter/input';
 import { StringNullableListFilter } from '../../prisma/string-nullable-list-filter/input';
 
 @InputType()
@@ -30,9 +30,9 @@ export class ItemWhereInput {
     @Field(() => IntFilter, {nullable:true})
     layer?: IntFilter;
 
-    @Field(() => UserListRelationFilter, {nullable:true})
-    users?: UserListRelationFilter;
+    @Field(() => CharacterStatusListRelationFilter, {nullable:true})
+    characterStatuses?: CharacterStatusListRelationFilter;
 
     @Field(() => StringNullableListFilter, {nullable:true})
-    userIds?: StringNullableListFilter;
+    characterStatusIds?: StringNullableListFilter;
 }

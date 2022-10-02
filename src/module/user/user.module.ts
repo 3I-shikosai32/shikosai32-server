@@ -13,11 +13,12 @@ import { UserPublisherUseCase } from './use-case/user-publisher.ues-case';
 import { UserReaderUseCase } from './use-case/user-reader.use-case';
 import { UserUpdaterUseCase } from './use-case/user-updater.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
+import { CharacterStatusModule } from '~/character-status/character-status.module';
 import { GiftHistoryModule } from '~/gift-history/gift-history.module';
 import { ItemModule } from '~/item/item.module';
 
 @Module({
-  imports: [forwardRef(() => ItemModule), forwardRef(() => GiftHistoryModule)],
+  imports: [CharacterStatusModule, forwardRef(() => ItemModule), forwardRef(() => GiftHistoryModule)],
   providers: [
     UserDataLoader,
     UserGiftHistoriesDataLoader,
