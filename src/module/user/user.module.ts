@@ -3,6 +3,7 @@ import { UserMutation } from './controller/user-mutation.resolver';
 import { UserQuery } from './controller/user-query.resolver';
 import { UserSubscription } from './controller/user-subscription.resolver';
 import { UserResolver } from './controller/user.resolver';
+import { UserCharacterStatusDataLoader } from './dataloader/user-character-status.dataloader';
 import { UserGiftHistoriesDataLoader } from './dataloader/user-gift-histories.dataloader';
 import { UserDataLoader } from './dataloader/user.dataloader';
 import { UserRepository } from './repository/user.repository';
@@ -18,9 +19,10 @@ import { GiftHistoryModule } from '~/gift-history/gift-history.module';
 import { ItemModule } from '~/item/item.module';
 
 @Module({
-  imports: [CharacterStatusModule, forwardRef(() => ItemModule), forwardRef(() => GiftHistoryModule)],
+  imports: [forwardRef(() => CharacterStatusModule), forwardRef(() => ItemModule), forwardRef(() => GiftHistoryModule)],
   providers: [
     UserDataLoader,
+    UserCharacterStatusDataLoader,
     UserGiftHistoriesDataLoader,
     { provide: InjectionToken.USER_REPOSITORY, useClass: UserRepository },
     { provide: InjectionToken.USER_READER_USE_CASE, useClass: UserReaderUseCase },
