@@ -33,8 +33,8 @@ export class User {
   @Field(() => Int, { nullable: false })
   pullableGachaTimes: number;
 
-  @Field(() => [CharacterStatus], { nullable: false })
-  characterStatuses: CharacterStatus[];
+  @Field(() => CharacterStatus, { nullable: false })
+  characterStatus: CharacterStatus;
 
   @Field(() => [GiftHistory], { nullable: false })
   giftHistories: GiftHistory[];
