@@ -7,4 +7,7 @@ export class CharacterStatusCount {
 
     @Field(() => Int, {nullable:false})
     items?: number;
+
+    @Field(() => Int, {nullable:false})
+    ItemCompletedHistories?: number;
 }

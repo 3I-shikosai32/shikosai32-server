@@ -4,6 +4,7 @@ import { Character } from '../../prisma/character/enum';
 import { Int } from '@nestjs/graphql';
 import { User } from '../../user/user/model';
 import { Item } from '../../item/item/model';
+import { ItemCompletedHistory } from '../../item-completed-history/item-completed-history/model';
 import { CharacterStatusCount } from '../character-status-count/output';
 
 @ObjectType()
@@ -41,6 +42,9 @@ export class CharacterStatus {
 
     @Field(() => [String], {nullable:true})
     itemIds!: Array<string>;
+
+    @Field(() => [ItemCompletedHistory], {nullable:true})
+    ItemCompletedHistories?: Array<ItemCompletedHistory>;
 
     @Field(() => CharacterStatusCount, {nullable:false})
     _count?: CharacterStatusCount;

@@ -78,8 +78,9 @@ model CharacterStatus {
   user   User   @relation(fields: [userId], references: [id])
   userId String @map("user_id")
 
-  items   Item[]   @relation(fields: [itemIds], references: [id])
-  itemIds String[] @map("item_ids") @db.ObjectId
+  items                  Item[]                 @relation(fields: [itemIds], references: [id])
+  itemIds                String[]               @map("item_ids") @db.ObjectId
+  ItemCompletedHistories ItemCompletedHistory[]
 
   @@map("character_statuses")
 }
@@ -95,6 +96,19 @@ model Item {
   characterStatusIds String[]          @map("characterStatus_ids") @db.ObjectId
 
   @@map("items")
+}
+
+model ItemCompletedHistory {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  isDelivered Boolean @default(false) @map("is_delivered")
+
+  characterStatus   CharacterStatus @relation(fields: [characterStatusId], references: [id])
+  characterStatusId String          @map("character_status_id")
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  deliveredAt DateTime? @map("delivered_at")
+
+  @@map("item_completed_histories")
 }
 
 model Gift {
@@ -114,7 +128,7 @@ model Gift {
 
 model GiftHistory {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  isDelivered Boolean @default(false)
+  isDelivered Boolean @default(false) @map("is_delivered")
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @map("user_id")
