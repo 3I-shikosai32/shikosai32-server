@@ -36,4 +36,8 @@ export class CharacterStatus {
     this.userId = args.userId;
     this.itemIds = args.itemIds;
   }
+
+  isItemCompleted(): boolean {
+    return this.itemIds.length === 4;
+  }
 }
