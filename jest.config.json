@@ -16,6 +16,7 @@
     "^~/gift/(.*)$": "<rootDir>/src/module/gift/$1",
     "^~/gift-history/(.*)$": "<rootDir>/src/module/gift-history/$1",
     "^~/item/(.*)$": "<rootDir>/src/module/item/$1",
+    "^~/item-completed-history/(.*)$": "<rootDir>/src/module/item-completed-history/$1",
     "^~/user/(.*)$": "<rootDir>/src/module/user/$1"
   }
 }
