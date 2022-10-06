@@ -16,10 +16,11 @@ import { UserUpdaterUseCase } from './use-case/user-updater.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { CharacterStatusModule } from '~/character-status/character-status.module';
 import { GiftHistoryModule } from '~/gift-history/gift-history.module';
+import { ItemCompletedHistoryModule } from '~/item-completed-history/item-completed-history.module';
 import { ItemModule } from '~/item/item.module';
 
 @Module({
-  imports: [forwardRef(() => CharacterStatusModule), forwardRef(() => ItemModule), forwardRef(() => GiftHistoryModule)],
+  imports: [forwardRef(() => CharacterStatusModule), forwardRef(() => ItemModule), ItemCompletedHistoryModule, forwardRef(() => GiftHistoryModule)],
   providers: [
     UserDataLoader,
     UserCharacterStatusDataLoader,
