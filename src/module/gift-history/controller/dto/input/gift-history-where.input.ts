@@ -20,19 +20,19 @@ export class GiftHistoryWhereInput {
   @Field(() => StringFilter, { nullable: true })
   id?: StringFilter;
 
-  @Field(() => BoolFilter, { nullable: false })
+  @Field(() => BoolFilter, { nullable: true })
   isDelivered?: BoolFilter;
 
-  @Field(() => UserRelationFilter, { nullable: false })
+  @Field(() => UserRelationFilter, { nullable: true })
   user?: UserRelationFilter;
 
-  @Field(() => StringFilter, { nullable: false })
+  @Field(() => StringFilter, { nullable: true })
   userId?: StringFilter;
 
-  @Field(() => GiftRelationFilter, { nullable: false })
+  @Field(() => GiftRelationFilter, { nullable: true })
   exchangedGift?: GiftRelationFilter;
 
-  @Field(() => StringFilter, { nullable: false })
+  @Field(() => StringFilter, { nullable: true })
   giftId?: StringFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
