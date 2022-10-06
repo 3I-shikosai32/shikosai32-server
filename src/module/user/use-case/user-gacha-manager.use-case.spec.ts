@@ -3,6 +3,7 @@ import { MockedUserRepository } from '../repository/mocked-user.repository';
 import { UserGachaManagerUseCase } from './user-gacha-manager.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { MockedCharacterStatusRepository } from '~/character-status/repository/mocked-character-status';
+import { MockedItemCompletedHistoryRepository } from '~/item-completed-history/repository/mocked-item-completed-history.repository';
 import { MockedItemRepository } from '~/item/repository/mocked-item.repository';
 
 describe('UserGachaManagerUseCase', () => {
@@ -15,6 +16,7 @@ describe('UserGachaManagerUseCase', () => {
         { provide: InjectionToken.USER_REPOSITORY, useClass: MockedUserRepository },
         { provide: InjectionToken.CHARACTER_STATUS_REPOSITORY, useClass: MockedCharacterStatusRepository },
         { provide: InjectionToken.ITEM_REPOSITORY, useClass: MockedItemRepository },
+        { provide: InjectionToken.ITEM_COMPLETED_HISTORY_REPOSITORY, useClass: MockedItemCompletedHistoryRepository },
         UserGachaManagerUseCase,
       ],
     }).compile();
