@@ -17,6 +17,7 @@
       "~/gift/*": ["./src/module/gift/*"],
       "~/gift-history/*": ["src/module/gift-history/*"],
       "~/item/*": ["./src/module/item/*"],
+      "~/item-completed-history/*": ["./src/module/item-completed-history/*"],
       "~/user/*": ["./src/module/user/*"]
     },
     "incremental": true,
