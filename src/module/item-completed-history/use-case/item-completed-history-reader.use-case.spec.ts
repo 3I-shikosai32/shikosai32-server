@@ -10,12 +10,12 @@ describe('ItemCompletedHistoryReaderUseCase', () => {
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
-        { provide: InjectionToken.GIFT_HISTORY_REPOSITORY, useClass: MockedItemCompletedHistoryRepository },
+        { provide: InjectionToken.ITEM_COMPLETED_HISTORY_REPOSITORY, useClass: MockedItemCompletedHistoryRepository },
         ItemCompletedHistoryReaderUseCase,
       ],
     }).compile();
 
-    mockedItemCompletedHistoryRepository = moduleRef.get(InjectionToken.GIFT_HISTORY_REPOSITORY);
+    mockedItemCompletedHistoryRepository = moduleRef.get(InjectionToken.ITEM_COMPLETED_HISTORY_REPOSITORY);
     giftHistoryReaderUseCase = moduleRef.get(ItemCompletedHistoryReaderUseCase);
   });
 
