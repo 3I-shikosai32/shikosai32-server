@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { Character } from '../../prisma/character/enum';
 import { Int } from '@nestjs/graphql';
 import { ItemUncheckedCreateNestedManyWithoutCharacterStatusesInput } from '../../item/item-unchecked-create-nested-many-without-character-statuses/input';
+import { ItemCompletedHistoryUncheckedCreateNestedManyWithoutCharacterStatusInput } from '../../item-completed-history/item-completed-history-unchecked-create-nested-many-without-character-status/input';
 
 @InputType()
 export class CharacterStatusUncheckedCreateWithoutUserInput {
@@ -33,4 +34,7 @@ export class CharacterStatusUncheckedCreateWithoutUserInput {
 
     @Field(() => [String], {nullable:true})
     itemIds?: Array<string>;
+
+    @Field(() => ItemCompletedHistoryUncheckedCreateNestedManyWithoutCharacterStatusInput, {nullable:true})
+    ItemCompletedHistories?: ItemCompletedHistoryUncheckedCreateNestedManyWithoutCharacterStatusInput;
 }
