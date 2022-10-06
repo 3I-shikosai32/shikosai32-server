@@ -3,6 +3,7 @@ import { UserRepositoryInterface } from '../domain/service/repository/user.repos
 import { UserGachaManagerUseCaseInterface } from '../domain/service/use-case/user-gacha-manager.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { CharacterStatusRepositoryInterface } from '~/character-status/domain/service/repository/character-status.repository';
+import { ItemCompletedHistoryRepositoryInterface } from '~/item-completed-history/domain/service/repository/item-completed-history.repository';
 import { Item } from '~/item/domain/model/item.model';
 import { ItemRepositoryInterface } from '~/item/domain/service/repository/item.repository';
 
@@ -15,6 +16,8 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
     private readonly characterStatusRepository: CharacterStatusRepositoryInterface,
     @Inject(InjectionToken.ITEM_REPOSITORY)
     private readonly itemRepository: ItemRepositoryInterface,
+    @Inject(InjectionToken.ITEM_COMPLETED_HISTORY_REPOSITORY)
+    private readonly itemCompletedHistoryRepository: ItemCompletedHistoryRepositoryInterface,
   ) {}
 
   async pullGacha(userId: string, pullFromItems: (items: Item[]) => Item) {
@@ -45,7 +48,7 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
         pullableGachaTimes: foundUser.pullableGachaTimes - 1,
       },
     });
-    await this.characterStatusRepository.update({
+    const updatedCharacterStatus = await this.characterStatusRepository.update({
       where: { id: foundCharacterStatus.id },
       data: {
         items: foundOldItems.includes(pulledItem)
@@ -54,6 +57,14 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
         itemIds: foundCharacterStatus.itemIds.includes(pulledItem.id) ? undefined : [...foundCharacterStatus.itemIds, pulledItem.id],
       },
     });
+
+    if (updatedCharacterStatus.isItemCompleted()) {
+      await this.itemCompletedHistoryRepository.create({
+        data: {
+          characterStatus: { connect: { id: foundCharacterStatus.id } },
+        },
+      });
+    }
 
     return pulledItem;
   }
