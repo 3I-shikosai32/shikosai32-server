@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { ItemCompletedHistory } from './item-completed-history.object';
 import { Character } from '@/infra/prisma/generated/prisma/character/enum';
 import { Item } from '~/item/controller/dto/object/item.object';
 import { User } from '~/user/controller/dto/object/user.object';
@@ -34,4 +35,7 @@ export class CharacterStatus {
 
   @Field(() => [String], { nullable: false })
   itemIds: string[];
+
+  @Field(() => ItemCompletedHistory, { nullable: true })
+  itemCompletedHistory: ItemCompletedHistory | null;
 }
