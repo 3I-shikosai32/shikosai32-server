@@ -1,4 +1,5 @@
 import { Character } from '@prisma/client';
+import { ItemCompletedHistory } from './item-completed-history.model';
 
 export class CharacterStatus {
   readonly id: string;
@@ -17,6 +18,8 @@ export class CharacterStatus {
 
   readonly itemIds: string[];
 
+  readonly itemCompletedHistory: ItemCompletedHistory | null;
+
   constructor(args: {
     id: string;
     character: Character;
@@ -26,6 +29,7 @@ export class CharacterStatus {
     characterPointDay2: number;
     userId: string;
     itemIds: string[];
+    itemCompletedHistory: ItemCompletedHistory | null;
   }) {
     this.id = args.id;
     this.character = args.character;
@@ -35,5 +39,6 @@ export class CharacterStatus {
     this.characterPointDay2 = args.characterPointDay2;
     this.userId = args.userId;
     this.itemIds = args.itemIds;
+    this.itemCompletedHistory = args.itemCompletedHistory;
   }
 }
