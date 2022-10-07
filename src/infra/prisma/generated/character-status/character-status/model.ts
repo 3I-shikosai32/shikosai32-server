@@ -43,8 +43,8 @@ export class CharacterStatus {
     @Field(() => [String], {nullable:true})
     itemIds!: Array<string>;
 
-    @Field(() => [ItemCompletedHistory], {nullable:true})
-    ItemCompletedHistories?: Array<ItemCompletedHistory>;
+    @Field(() => ItemCompletedHistory, {nullable:true})
+    itemCompletedHistory?: ItemCompletedHistory | null;
 
     @Field(() => CharacterStatusCount, {nullable:false})
     _count?: CharacterStatusCount;

@@ -3,7 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../../prisma/sort-order/enum';
 import { UserOrderByWithRelationInput } from '../../user/user-order-by-with-relation/input';
 import { ItemOrderByRelationAggregateInput } from '../../item/item-order-by-relation-aggregate/input';
-import { ItemCompletedHistoryOrderByRelationAggregateInput } from '../../item-completed-history/item-completed-history-order-by-relation-aggregate/input';
+import { ItemCompletedHistoryOrderByInput } from '../../item-completed-history/item-completed-history-order-by/input';
 
 @InputType()
 export class CharacterStatusOrderByWithRelationInput {
@@ -41,6 +41,6 @@ export class CharacterStatusOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     itemIds?: keyof typeof SortOrder;
 
-    @Field(() => ItemCompletedHistoryOrderByRelationAggregateInput, {nullable:true})
-    ItemCompletedHistories?: ItemCompletedHistoryOrderByRelationAggregateInput;
+    @Field(() => ItemCompletedHistoryOrderByInput, {nullable:true})
+    itemCompletedHistory?: ItemCompletedHistoryOrderByInput;
 }

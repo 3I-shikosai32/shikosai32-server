@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Character } from '../../prisma/character/enum';
 import { Int } from '@nestjs/graphql';
+import { ItemCompletedHistoryNullableUpdateEnvelopeInput } from '../../prisma/item-completed-history-nullable-update-envelope/input';
 
 @InputType()
 export class CharacterStatusUpdateManyMutationInput {
@@ -26,4 +27,7 @@ export class CharacterStatusUpdateManyMutationInput {
 
     @Field(() => [String], {nullable:true})
     itemIds?: Array<string>;
+
+    @Field(() => ItemCompletedHistoryNullableUpdateEnvelopeInput, {nullable:true})
+    itemCompletedHistory?: ItemCompletedHistoryNullableUpdateEnvelopeInput;
 }

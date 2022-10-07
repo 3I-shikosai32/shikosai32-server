@@ -7,7 +7,7 @@ import { IntFilter } from '../../prisma/int-filter/input';
 import { UserRelationFilter } from '../../user/user-relation-filter/input';
 import { ItemListRelationFilter } from '../../item/item-list-relation-filter/input';
 import { StringNullableListFilter } from '../../prisma/string-nullable-list-filter/input';
-import { ItemCompletedHistoryListRelationFilter } from '../../item-completed-history/item-completed-history-list-relation-filter/input';
+import { ItemCompletedHistoryNullableCompositeFilter } from '../../prisma/item-completed-history-nullable-composite-filter/input';
 
 @InputType()
 export class CharacterStatusWhereInput {
@@ -54,6 +54,6 @@ export class CharacterStatusWhereInput {
     @Field(() => StringNullableListFilter, {nullable:true})
     itemIds?: StringNullableListFilter;
 
-    @Field(() => ItemCompletedHistoryListRelationFilter, {nullable:true})
-    ItemCompletedHistories?: ItemCompletedHistoryListRelationFilter;
+    @Field(() => ItemCompletedHistoryNullableCompositeFilter, {nullable:true})
+    itemCompletedHistory?: ItemCompletedHistoryNullableCompositeFilter;
 }

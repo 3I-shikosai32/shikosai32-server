@@ -3,7 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { Character } from '../../prisma/character/enum';
 import { Int } from '@nestjs/graphql';
 import { ItemUpdateManyWithoutCharacterStatusesNestedInput } from '../../item/item-update-many-without-character-statuses-nested/input';
-import { ItemCompletedHistoryUpdateManyWithoutCharacterStatusNestedInput } from '../../item-completed-history/item-completed-history-update-many-without-character-status-nested/input';
+import { ItemCompletedHistoryNullableUpdateEnvelopeInput } from '../../prisma/item-completed-history-nullable-update-envelope/input';
 
 @InputType()
 export class CharacterStatusUpdateWithoutUserInput {
@@ -32,6 +32,6 @@ export class CharacterStatusUpdateWithoutUserInput {
     @Field(() => [String], {nullable:true})
     itemIds?: Array<string>;
 
-    @Field(() => ItemCompletedHistoryUpdateManyWithoutCharacterStatusNestedInput, {nullable:true})
-    ItemCompletedHistories?: ItemCompletedHistoryUpdateManyWithoutCharacterStatusNestedInput;
+    @Field(() => ItemCompletedHistoryNullableUpdateEnvelopeInput, {nullable:true})
+    itemCompletedHistory?: ItemCompletedHistoryNullableUpdateEnvelopeInput;
 }
