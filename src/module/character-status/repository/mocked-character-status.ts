@@ -15,6 +15,11 @@ export class MockedCharacterStatusRepository implements CharacterStatusRepositor
       characterPointDay2: 0,
       userId: 'def-123',
       itemIds: [],
+      itemCompletedHistory: {
+        isDelivered: false,
+        createdAt: new Date('2021-01-01T00:00:00.000Z'),
+        deliveredAt: null,
+      },
     };
 
     return new CharacterStatus(foundCharacterStatus);
@@ -31,6 +36,11 @@ export class MockedCharacterStatusRepository implements CharacterStatusRepositor
         characterPointDay2: 0,
         userId: 'def-123',
         itemIds: [],
+        itemCompletedHistory: {
+          isDelivered: false,
+          createdAt: new Date('2021-01-01T00:00:00.000Z'),
+          deliveredAt: null,
+        },
       },
       {
         id: 'abc-456',
@@ -41,6 +51,11 @@ export class MockedCharacterStatusRepository implements CharacterStatusRepositor
         characterPointDay2: 0,
         userId: 'def-123',
         itemIds: [],
+        itemCompletedHistory: {
+          isDelivered: false,
+          createdAt: new Date('2021-01-01T00:00:00.000Z'),
+          deliveredAt: null,
+        },
       },
     ];
 
@@ -57,6 +72,11 @@ export class MockedCharacterStatusRepository implements CharacterStatusRepositor
       characterPointDay2: 0,
       userId: 'def-123',
       itemIds: [],
+      itemCompletedHistory: {
+        isDelivered: false,
+        createdAt: new Date('2021-01-01T00:00:00.000Z'),
+        deliveredAt: null,
+      },
     };
 
     return new CharacterStatus(createdCharacterStatus);
@@ -72,6 +92,11 @@ export class MockedCharacterStatusRepository implements CharacterStatusRepositor
       characterPointDay2: 0,
       userId: 'def-123',
       itemIds: [],
+      itemCompletedHistory: {
+        isDelivered: false,
+        createdAt: new Date('2021-01-01T00:00:00.000Z'),
+        deliveredAt: null,
+      },
     };
 
     return new CharacterStatus(updatedCharacterStatus);
@@ -87,6 +112,11 @@ export class MockedCharacterStatusRepository implements CharacterStatusRepositor
       characterPointDay2: 0,
       userId: 'def-123',
       itemIds: [],
+      itemCompletedHistory: {
+        isDelivered: false,
+        createdAt: new Date('2021-01-01T00:00:00.000Z'),
+        deliveredAt: null,
+      },
     };
 
     return new CharacterStatus(deletedCharacterStatus);
@@ -102,6 +132,11 @@ export class MockedCharacterStatusRepository implements CharacterStatusRepositor
       characterPointDay2: 0,
       userId: 'def-123',
       itemIds: [],
+      itemCompletedHistory: {
+        isDelivered: false,
+        createdAt: new Date('2021-01-01T00:00:00.000Z'),
+        deliveredAt: null,
+      },
     };
 
     return new CharacterStatus(foundCharacterStatus);
