@@ -153,6 +153,11 @@ export class MockedUserRepository implements UserRepositoryInterface {
       avatarUrl: 'https://example.com',
       userId: 'abc-123',
       itemIds: ['ghi-123', 'ghi-456'],
+      itemCompletedHistory: {
+        isDelivered: false,
+        createdAt: new Date('2021-01-01T00:00:00.000Z'),
+        deliveredAt: null,
+      },
     };
 
     const foundItems = [

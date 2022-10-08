@@ -1,0 +1,13 @@
+import { Field, ObjectType } from '@nestjs/graphql';
+
+@ObjectType()
+export class ItemCompletedHistory {
+  @Field(() => Boolean, { nullable: false })
+  isDelivered: boolean;
+
+  @Field(() => Date, { nullable: false })
+  createdAt: Date;
+
+  @Field(() => Date, { nullable: true })
+  deliveredAt: Date | null;
+}
