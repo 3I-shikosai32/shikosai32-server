@@ -20,7 +20,4 @@ export class Gift {
 
   @Field(() => [GiftHistory], { nullable: false })
   giftHistories: GiftHistory[];
-
-  @Field(() => Date, { nullable: false })
-  createdAt: Date;
 }
