@@ -12,7 +12,7 @@ describe('CharacterStatusReaderUseCase', () => {
       providers: [{ provide: InjectionToken.CHARACTER_STATUS_REPOSITORY, useClass: MockedCharacterStatusRepository }, CharacterStatusReaderUseCase],
     }).compile();
 
-    mockedCharacterStatusRepository = moduleRef.get(InjectionToken.GIFT_HISTORY_REPOSITORY);
+    mockedCharacterStatusRepository = moduleRef.get(InjectionToken.CHARACTER_STATUS_REPOSITORY);
     characterStatusReaderUseCase = moduleRef.get(CharacterStatusReaderUseCase);
   });
 
