@@ -25,9 +25,6 @@ export class GiftGroupBy {
     @Field(() => Int, {nullable:false})
     remaining!: number;
 
-    @Field(() => Date, {nullable:false})
-    createdAt!: Date | string;
-
     @Field(() => GiftCountAggregate, {nullable:true})
     _count?: GiftCountAggregate;
 

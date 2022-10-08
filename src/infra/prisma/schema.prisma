@@ -115,8 +115,6 @@ model Gift {
 
   giftHistories GiftHistory[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-
   @@map("gifts")
 }
 

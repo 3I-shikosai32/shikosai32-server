@@ -25,9 +25,6 @@ export class Gift {
     @Field(() => [GiftHistory], {nullable:true})
     giftHistories?: Array<GiftHistory>;
 
-    @Field(() => Date, {nullable:false})
-    createdAt!: Date;
-
     @Field(() => GiftCount, {nullable:false})
     _count?: GiftCount;
 }

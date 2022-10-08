@@ -16,7 +16,4 @@ export class GiftUpdateManyMutationInput {
 
     @Field(() => Int, {nullable:true})
     remaining?: number;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
 }

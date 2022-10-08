@@ -19,7 +19,4 @@ export class GiftMaxAggregate {
 
     @Field(() => Int, {nullable:true})
     remaining?: number;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
 }

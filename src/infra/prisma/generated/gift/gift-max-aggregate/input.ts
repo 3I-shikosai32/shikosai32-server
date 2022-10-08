@@ -18,7 +18,4 @@ export class GiftMaxAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     remaining?: true;
-
-    @Field(() => Boolean, {nullable:true})
-    createdAt?: true;
 }
