@@ -12,7 +12,7 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
   constructor(
     @Inject(InjectionToken.USER_REPOSITORY)
     private readonly userRepository: UserRepositoryInterface,
-    private readonly pubSubRepository: PubSubService,
+    private readonly pubSubService: PubSubService,
   ) {}
 
   async publishUpdatedGameAttenders() {
@@ -31,7 +31,7 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
       we_didnt_playtest: gameAttenders.filter((user) => user.participateGame === Game.WE_DIDNT_PLAYTEST),
     };
 
-    await this.pubSubRepository.publish(PubSubTrigger.UPDATED_GAME_ATTENDERS, { updatedGameAttenders });
+    await this.pubSubService.publish(PubSubTrigger.UPDATED_GAME_ATTENDERS, { updatedGameAttenders });
 
     return new GameAttenders(updatedGameAttenders);
   }
