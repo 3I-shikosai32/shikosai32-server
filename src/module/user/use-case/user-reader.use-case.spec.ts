@@ -3,7 +3,7 @@ import { ObtainmentStatus } from '../domain/model/obtainment-status.model';
 import { MockedUserRepository } from '../repository/mocked-user.repository';
 import { UserReaderUseCase } from './user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
-import { MockedCharacterStatusRepository } from '~/character-status/repository/mocked-character-status';
+import { MockedCharacterStatusRepository } from '~/character-status/repository/mocked-character-status.repository';
 import { MockedItemRepository } from '~/item/repository/mocked-item.repository';
 
 describe('UserReaderUseCase', () => {

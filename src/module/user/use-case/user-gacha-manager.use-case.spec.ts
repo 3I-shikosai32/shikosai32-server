@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { MockedUserRepository } from '../repository/mocked-user.repository';
 import { UserGachaManagerUseCase } from './user-gacha-manager.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
-import { MockedCharacterStatusRepository } from '~/character-status/repository/mocked-character-status';
+import { MockedCharacterStatusRepository } from '~/character-status/repository/mocked-character-status.repository';
 import { MockedItemRepository } from '~/item/repository/mocked-item.repository';
 
 describe('UserGachaManagerUseCase', () => {
