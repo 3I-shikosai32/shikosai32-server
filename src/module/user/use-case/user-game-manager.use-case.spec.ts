@@ -3,7 +3,7 @@ import { Game } from '@prisma/client';
 import { MockedUserRepository } from '../repository/mocked-user.repository';
 import { UserGameManagerUseCase } from './user-game-manager.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
-import { MockedCharacterStatusRepository } from '~/character-status/repository/mocked-character-status';
+import { MockedCharacterStatusRepository } from '~/character-status/repository/mocked-character-status.repository';
 
 describe('UserGameManagerUseCase', () => {
   let mockedUserRepository: MockedUserRepository;
