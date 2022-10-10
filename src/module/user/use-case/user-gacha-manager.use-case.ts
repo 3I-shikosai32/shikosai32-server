@@ -27,8 +27,8 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
 
     const [foundUser, foundCharacterStatus, foundOldItems] = foundUserWithRelations;
 
-    if (!foundUser.canPullGacha()) {
-      throw new Error('Pullable gacha times is less than 0');
+    if (!foundUser.canPullGacha(foundCharacterStatus)) {
+      throw new Error('Pullable gacha times is less than 0 or item is already complete');
     }
 
     const foundItems = await this.itemRepository.findMany({
@@ -55,7 +55,7 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
       },
     });
 
-    if (updatedCharacterStatus.itemCompletedHistory === null && updatedCharacterStatus.isItemCompleted()) {
+    if (updatedCharacterStatus.shouldCreateItemCompletedHistory()) {
       await this.characterStatusRepository.update({
         where: { id: updatedCharacterStatus.id },
         data: {
