@@ -55,12 +55,14 @@
     "firebase-admin": "11.1.0",
     "graphql-subscriptions": "2.0.0",
     "graphql-tag": "2.12.6",
+    "graphql-validation-complexity": "^0.4.2",
     "supertest-graphql": "1.1.4",
     "ts-pattern": "4.0.5"
   },
   "devDependencies": {
     "@apollo/rover": "0.9.1",
     "@nestjs/schematics": "9.0.3",
+    "@types/graphql-validation-complexity": "^0.4.0",
     "@types/jest": "29.1.2",
     "@types/node": "18.7.18",
     "@typescript-eslint/eslint-plugin": "5.39.0",
