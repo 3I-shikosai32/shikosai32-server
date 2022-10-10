@@ -20,7 +20,7 @@ export class CharacterStatusQuery {
     this.logger.log('findItemCompletedCharacterStatuses called');
     this.logger.log(args);
 
-    const foundItemCompletedHistories = await this.characterStatusReaderUseCase.findItemCompletedCharacterStatuses(
+    const foundCharacterStatuses = await this.characterStatusReaderUseCase.findItemCompletedCharacterStatuses(
       args.where,
       args.orderBy,
       args.cursor,
@@ -28,6 +28,6 @@ export class CharacterStatusQuery {
       args.skip,
     );
 
-    return foundItemCompletedHistories;
+    return foundCharacterStatuses;
   }
 }
