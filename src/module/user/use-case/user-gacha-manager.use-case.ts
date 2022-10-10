@@ -45,7 +45,7 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
         pullableGachaTimes: foundUser.pullableGachaTimes - 1,
       },
     });
-    await this.characterStatusRepository.update({
+    const updatedCharacterStatus = await this.characterStatusRepository.update({
       where: { id: foundCharacterStatus.id },
       data: {
         items: foundOldItems.includes(pulledItem)
@@ -54,6 +54,19 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
         itemIds: foundCharacterStatus.itemIds.includes(pulledItem.id) ? undefined : [...foundCharacterStatus.itemIds, pulledItem.id],
       },
     });
+
+    if (updatedCharacterStatus.itemCompletedHistory === null && updatedCharacterStatus.isItemCompleted()) {
+      await this.characterStatusRepository.update({
+        where: { id: updatedCharacterStatus.id },
+        data: {
+          itemCompletedHistory: {
+            isDelivered: false,
+            createdAt: new Date(),
+            deliveredAt: null,
+          },
+        },
+      });
+    }
 
     return pulledItem;
   }
