@@ -1,5 +1,6 @@
 import { Game } from '@/infra/prisma/generated/prisma/game/enum';
 import { Role } from '@/infra/prisma/generated/prisma/role/enum';
+import { CharacterStatus } from '~/character-status/domain/model/character-status.model';
 
 export class User {
   readonly id: string;
@@ -46,8 +47,11 @@ export class User {
     this.createdAt = args.createdAt;
   }
 
-  canPullGacha() {
-    return this.pullableGachaTimes - 1 > 0;
+  canPullGacha(characterStatus: CharacterStatus) {
+    const canPullMoreGacha = this.pullableGachaTimes - 1 > 0;
+    const canObtainMoreItem = !characterStatus.isItemCompleted();
+
+    return canPullMoreGacha && canObtainMoreItem;
   }
 
   canExchangeGift(price: number) {
