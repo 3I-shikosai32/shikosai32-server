@@ -20,7 +20,4 @@ export class GiftUpdateInput {
 
     @Field(() => GiftHistoryUpdateManyWithoutExchangedGiftNestedInput, {nullable:true})
     giftHistories?: GiftHistoryUpdateManyWithoutExchangedGiftNestedInput;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
 }

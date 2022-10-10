@@ -23,7 +23,4 @@ export class GiftOrderByWithRelationInput {
 
     @Field(() => GiftHistoryOrderByRelationAggregateInput, {nullable:true})
     giftHistories?: GiftHistoryOrderByRelationAggregateInput;
-
-    @Field(() => SortOrder, {nullable:true})
-    createdAt?: keyof typeof SortOrder;
 }

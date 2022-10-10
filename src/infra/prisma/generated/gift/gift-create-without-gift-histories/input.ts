@@ -19,7 +19,4 @@ export class GiftCreateWithoutGiftHistoriesInput {
 
     @Field(() => Int, {nullable:false})
     remaining!: number;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
 }

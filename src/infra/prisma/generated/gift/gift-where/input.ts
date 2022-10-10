@@ -3,7 +3,6 @@ import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../../prisma/string-filter/input';
 import { IntFilter } from '../../prisma/int-filter/input';
 import { GiftHistoryListRelationFilter } from '../../gift-history/gift-history-list-relation-filter/input';
-import { DateTimeFilter } from '../../prisma/date-time-filter/input';
 
 @InputType()
 export class GiftWhereInput {
@@ -34,7 +33,4 @@ export class GiftWhereInput {
 
     @Field(() => GiftHistoryListRelationFilter, {nullable:true})
     giftHistories?: GiftHistoryListRelationFilter;
-
-    @Field(() => DateTimeFilter, {nullable:true})
-    createdAt?: DateTimeFilter;
 }

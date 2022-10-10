@@ -5,8 +5,7 @@ export enum GiftScalarFieldEnum {
     name = "name",
     iconUrl = "iconUrl",
     price = "price",
-    remaining = "remaining",
-    createdAt = "createdAt"
+    remaining = "remaining"
 }
 
 

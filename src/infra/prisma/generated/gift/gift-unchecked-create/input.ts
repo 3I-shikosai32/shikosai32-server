@@ -23,7 +23,4 @@ export class GiftUncheckedCreateInput {
 
     @Field(() => GiftHistoryUncheckedCreateNestedManyWithoutExchangedGiftInput, {nullable:true})
     giftHistories?: GiftHistoryUncheckedCreateNestedManyWithoutExchangedGiftInput;
-
-    @Field(() => Date, {nullable:true})
-    createdAt?: Date | string;
 }

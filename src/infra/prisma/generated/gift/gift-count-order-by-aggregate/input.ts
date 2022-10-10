@@ -19,7 +19,4 @@ export class GiftCountOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     remaining?: keyof typeof SortOrder;
-
-    @Field(() => SortOrder, {nullable:true})
-    createdAt?: keyof typeof SortOrder;
 }
