@@ -3,6 +3,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import { createComplexityLimitRule } from 'graphql-validation-complexity';
 import { match } from 'ts-pattern';
 import { EnvService } from '../env/env.service';
 
@@ -30,6 +31,7 @@ const GraphQLConfigDevelopment = () =>
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       debug: true,
+      validationRules: [createComplexityLimitRule(1000)],
     }),
   });
 
@@ -49,6 +51,7 @@ export const GraphQLConfigProduction = () =>
       sortSchema: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      validationRules: [createComplexityLimitRule(1000)],
     }),
   });
 
@@ -63,6 +66,7 @@ const GraphQLConfigTest = () =>
       cache: 'bounded',
       autoSchemaFile: join(process.cwd(), './schema.gql'),
       playground: false,
+      validationRules: [createComplexityLimitRule(1000)],
     }),
   });
 

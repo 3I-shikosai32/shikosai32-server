@@ -41,4 +41,12 @@ export class CharacterStatus {
     this.itemIds = args.itemIds;
     this.itemCompletedHistory = args.itemCompletedHistory;
   }
+
+  isItemCompleted(): boolean {
+    return this.itemIds.length === 4;
+  }
+
+  shouldCreateItemCompletedHistory(): boolean {
+    return this.isItemCompleted() && this.itemCompletedHistory === null;
+  }
 }
