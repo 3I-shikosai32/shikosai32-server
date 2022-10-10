@@ -45,4 +45,8 @@ export class CharacterStatus {
   isItemCompleted(): boolean {
     return this.itemIds.length === 4;
   }
+
+  shouldCreateItemCompletedHistory(): boolean {
+    return this.isItemCompleted() && this.itemCompletedHistory === null;
+  }
 }
