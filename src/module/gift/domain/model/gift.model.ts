@@ -9,14 +9,11 @@ export class Gift {
 
   readonly remaining: number;
 
-  readonly createdAt: Date;
-
-  constructor(args: { id: string; name: string; iconUrl: string; price: number; remaining: number; createdAt: Date }) {
+  constructor(args: { id: string; name: string; iconUrl: string; price: number; remaining: number }) {
     this.id = args.id;
     this.name = args.name;
     this.iconUrl = args.iconUrl;
     this.price = args.price;
     this.remaining = args.remaining;
-    this.createdAt = args.createdAt;
   }
 }
