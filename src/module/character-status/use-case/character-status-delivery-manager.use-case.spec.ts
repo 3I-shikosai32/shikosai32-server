@@ -22,7 +22,7 @@ describe('CharacterStatusDeliveryManagerUseCase', () => {
   test('changeDeliveryStatus', async () => {
     const expectCharacterStatus = await mockedCharacterStatusRepository.update();
 
-    const updatedCharacterStatus = await characterStatusDeliveryManagerUseCase.changeDeliveryStatus(expectCharacterStatus.id, true);
+    const updatedCharacterStatus = await characterStatusDeliveryManagerUseCase.changeDeliveryState(expectCharacterStatus.id, true);
 
     expect(updatedCharacterStatus).toEqual(expectCharacterStatus);
   });

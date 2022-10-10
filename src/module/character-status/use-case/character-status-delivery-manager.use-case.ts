@@ -10,7 +10,7 @@ export class CharacterStatusDeliveryManagerUseCase implements CharacterStatusDel
     private readonly characterStatusRepository: CharacterStatusRepositoryInterface,
   ) {}
 
-  async changeDeliveryStatus(characterStatusId: string, isDelivered: boolean) {
+  async changeDeliveryState(characterStatusId: string, isDelivered: boolean) {
     const updatedCharacterStatus = await this.characterStatusRepository.update({
       where: { id: characterStatusId },
       data: {
