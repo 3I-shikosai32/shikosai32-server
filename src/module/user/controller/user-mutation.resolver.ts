@@ -74,8 +74,6 @@ export class UserMutation {
 
     this.dataLoaderCacheService.prime(this.userDataLoader, updatedUser);
 
-    await this.publisherUseCase.publishUpdatedGameAttenders();
-
     await this.firebaseService.adminAuth.updateUser(updatedUser.id, { displayName: updatedUser.name, email: updatedUser.email });
 
     return updatedUser;
@@ -93,6 +91,8 @@ export class UserMutation {
 
     this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUsers);
 
+    await this.publisherUseCase.publishUpdatedGameAttenders();
+
     const changedCharacters = await this.characterStatusReaderUseCase.findIncludeCharacterFromUserIds(incrementedUsers.map((user) => user.id));
     await Promise.all(changedCharacters.map((character) => this.publisherUseCase.publishRanking(character, isNowBeforeDay2)));
 
@@ -108,6 +108,8 @@ export class UserMutation {
 
     this.dataLoaderCacheService.prime(this.userDataLoader, joinedUser);
 
+    await this.publisherUseCase.publishUpdatedGameAttenders();
+
     return joinedUser;
   }
 
@@ -119,6 +121,8 @@ export class UserMutation {
     const exitedUser = await this.gameManagerUseCase.exitGame(args.where.id);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, exitedUser);
+
+    await this.publisherUseCase.publishUpdatedGameAttenders();
 
     return exitedUser;
   }
