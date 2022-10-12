@@ -33,7 +33,7 @@ export class UserUncheckedUpdateWithoutGiftHistoriesInput {
     pullableGachaTimes?: number;
 
     @Field(() => CharacterStatusUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
-    CharacterStatuses?: CharacterStatusUncheckedUpdateManyWithoutUserNestedInput;
+    characterStatuses?: CharacterStatusUncheckedUpdateManyWithoutUserNestedInput;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
