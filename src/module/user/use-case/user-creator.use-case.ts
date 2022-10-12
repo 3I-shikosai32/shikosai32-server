@@ -29,7 +29,7 @@ export class UserCreatorUseCase implements UserCreatorUseCaseInterface {
     const createdUser = await this.userRepository.create({
       data: {
         ...createUserData,
-        CharacterStatuses: {
+        characterStatuses: {
           create: {
             character: createUserData.character,
             iconUrl: `${this.envService.FirebaseStorageUrl}${encodeURIComponent(iconPath)}`,
