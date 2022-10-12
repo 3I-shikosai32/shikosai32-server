@@ -32,15 +32,15 @@ export class UserMutation {
 
   constructor(
     @Inject(InjectionToken.USER_CREATOR_USE_CASE)
-    private readonly creatorUseCase: UserCreatorUseCaseInterface,
+    private readonly userCreatorUseCase: UserCreatorUseCaseInterface,
     @Inject(InjectionToken.USER_UPDATER_USE_CASE)
-    private readonly updaterUseCase: UserUpdaterUseCaseInterface,
+    private readonly userUpdaterUseCase: UserUpdaterUseCaseInterface,
     @Inject(InjectionToken.USER_GAME_MANAGER_USE_CASE)
-    private readonly gameManagerUseCase: UserGameManagerUseCaseInterface,
+    private readonly userGameManagerUseCase: UserGameManagerUseCaseInterface,
     @Inject(InjectionToken.USER_GACHA_MANAGER_USE_CASE)
-    private readonly gachaManagerUseCase: UserGachaManagerUseCaseInterface,
+    private readonly userGachaManagerUseCase: UserGachaManagerUseCaseInterface,
     @Inject(InjectionToken.USER_PUBLISHER_USE_CASE)
-    private readonly publisherUseCase: UserPublisherUseCaseInterface,
+    private readonly userPublisherUseCase: UserPublisherUseCaseInterface,
     @Inject(InjectionToken.CHARACTER_STATUS_READER_USE_CASE)
     private readonly characterStatusReaderUseCase: CharacterStatusReaderUseCaseInterface,
     private readonly userDataLoader: UserDataLoader,
@@ -56,7 +56,7 @@ export class UserMutation {
     this.logger.log('createUser called');
     this.logger.log(args);
 
-    const createdUser = await this.creatorUseCase.createUser(args.data);
+    const createdUser = await this.userCreatorUseCase.createUser(args.data);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, createdUser);
 
@@ -70,7 +70,7 @@ export class UserMutation {
     this.logger.log('updateUserBio called');
     this.logger.log(args);
 
-    const updatedUser = await this.updaterUseCase.updateUserBio(args.where.id, args.data);
+    const updatedUser = await this.userUpdaterUseCase.updateUserBio(args.where.id, args.data);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, updatedUser);
 
@@ -87,14 +87,14 @@ export class UserMutation {
 
     const isNowBeforeDay2 = this.dateService.isBeforeDay2(this.dateService.getNow());
 
-    const incrementedUsers = await this.gameManagerUseCase.incrementPoint(args.users, isNowBeforeDay2);
+    const incrementedUsers = await this.userGameManagerUseCase.incrementPoint(args.users, isNowBeforeDay2);
 
     this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUsers);
 
-    await this.publisherUseCase.publishUpdatedGameAttenders();
+    await this.userPublisherUseCase.publishUpdatedGameAttenders();
 
     const changedCharacters = await this.characterStatusReaderUseCase.findIncludeCharacterFromUserIds(incrementedUsers.map((user) => user.id));
-    await Promise.all(changedCharacters.map((character) => this.publisherUseCase.publishRanking(character, isNowBeforeDay2)));
+    await Promise.all(changedCharacters.map((character) => this.userPublisherUseCase.publishRanking(character, isNowBeforeDay2)));
 
     return incrementedUsers;
   }
@@ -104,11 +104,11 @@ export class UserMutation {
     this.logger.log('joinGame called');
     this.logger.log(args);
 
-    const joinedUser = await this.gameManagerUseCase.joinGame(args.where.id, args.game);
+    const joinedUser = await this.userGameManagerUseCase.joinGame(args.where.id, args.game);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, joinedUser);
 
-    await this.publisherUseCase.publishUpdatedGameAttenders();
+    await this.userPublisherUseCase.publishUpdatedGameAttenders();
 
     return joinedUser;
   }
@@ -118,11 +118,11 @@ export class UserMutation {
     this.logger.log('exitGame called');
     this.logger.log(args);
 
-    const exitedUser = await this.gameManagerUseCase.exitGame(args.where.id);
+    const exitedUser = await this.userGameManagerUseCase.exitGame(args.where.id);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, exitedUser);
 
-    await this.publisherUseCase.publishUpdatedGameAttenders();
+    await this.userPublisherUseCase.publishUpdatedGameAttenders();
 
     return exitedUser;
   }
@@ -132,7 +132,7 @@ export class UserMutation {
     this.logger.log('pullGacha called');
     this.logger.log(args);
 
-    const pulledItem = await this.gachaManagerUseCase.pullGacha(args.where.id, (items) => items[Math.floor(Math.random() * items.length)]);
+    const pulledItem = await this.userGachaManagerUseCase.pullGacha(args.where.id, (items) => items[Math.floor(Math.random() * items.length)]);
 
     this.itemDataLoaderCacheService.prime(this.itemDataLoader, pulledItem);
 

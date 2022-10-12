@@ -18,7 +18,7 @@ export class UserQuery {
 
   constructor(
     @Inject(InjectionToken.USER_READER_USE_CASE)
-    private readonly readerUseCase: UserReaderUseCaseInterface,
+    private readonly userReaderUseCase: UserReaderUseCaseInterface,
     private readonly userDataLoader: UserDataLoader,
     private readonly userDataLoaderCacheService: DataLoaderCacheService<UserModel, string>,
   ) {}
@@ -28,7 +28,7 @@ export class UserQuery {
     this.logger.log('findUser called');
     this.logger.log(args);
 
-    const foundUser = await this.readerUseCase.findUser(args.where.id);
+    const foundUser = await this.userReaderUseCase.findUser(args.where.id);
 
     if (foundUser) {
       this.userDataLoaderCacheService.prime(this.userDataLoader, foundUser);
@@ -42,7 +42,7 @@ export class UserQuery {
     this.logger.log('findUsers called');
     this.logger.log(args);
 
-    const foundUsers = await this.readerUseCase.findUsers(args.where, args.orderBy, args.cursor, args.take, args.skip);
+    const foundUsers = await this.userReaderUseCase.findUsers(args.where, args.orderBy, args.cursor, args.take, args.skip);
 
     this.userDataLoaderCacheService.primeMany(this.userDataLoader, foundUsers);
 
@@ -54,7 +54,7 @@ export class UserQuery {
     this.logger.log('getObtainmentStatuses called');
     this.logger.log(args);
 
-    const obtainmentStatuses = await this.readerUseCase.getObtainmentStatuses(args.where.id);
+    const obtainmentStatuses = await this.userReaderUseCase.getObtainmentStatuses(args.where.id);
 
     return obtainmentStatuses;
   }
