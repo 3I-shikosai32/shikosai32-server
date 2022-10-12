@@ -127,4 +127,28 @@ describe('CharacterStatusRepository', () => {
 
     await deleteUser(prismaService, createdUser.id);
   });
+
+  test('findActiveByUserId', async () => {
+    const createdUser = await createUser(prismaService);
+    const createdCharacterStatus = await createCharacterStatus(prismaService, createdUser.id);
+
+    const foundCharacterStatus = await characterStatusRepository.findActiveByUserId(createdUser.id);
+
+    expect(foundCharacterStatus).toEqual(createdCharacterStatus);
+
+    await deleteCharacterStatus(prismaService, createdCharacterStatus.id);
+    await deleteUser(prismaService, createdUser.id);
+  });
+
+  test('findManyWithUser', async () => {
+    const createdUser = await createUser(prismaService);
+    const createdCharacterStatus = await createCharacterStatus(prismaService, createdUser.id);
+
+    const foundCharacterStatusWithUserList = await characterStatusRepository.findManyWithUser({});
+
+    expect(foundCharacterStatusWithUserList).toEqual(expect.arrayContaining([[createdCharacterStatus, createdUser]]));
+
+    await deleteCharacterStatus(prismaService, createdCharacterStatus.id);
+    await deleteUser(prismaService, createdUser.id);
+  });
 });

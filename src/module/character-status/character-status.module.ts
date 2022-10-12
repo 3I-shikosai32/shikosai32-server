@@ -19,6 +19,9 @@ import { UserModule } from '~/user/user.module';
     CharacterStatusQuery,
     CharacterStatusMutation,
   ],
-  exports: [{ provide: InjectionToken.CHARACTER_STATUS_REPOSITORY, useClass: CharacterStatusRepository }],
+  exports: [
+    { provide: InjectionToken.CHARACTER_STATUS_REPOSITORY, useClass: CharacterStatusRepository },
+    { provide: InjectionToken.CHARACTER_STATUS_READER_USE_CASE, useClass: CharacterStatusReaderUseCase },
+  ],
 })
 export class CharacterStatusModule {}
