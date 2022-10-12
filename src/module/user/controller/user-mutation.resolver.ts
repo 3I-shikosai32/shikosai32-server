@@ -91,10 +91,10 @@ export class UserMutation {
 
     this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUsers);
 
-    await this.publisherUseCase.publishUpdatedGameAttenders();
+    await this.userPublisherUseCase.publishUpdatedGameAttenders();
 
     const changedCharacters = await this.characterStatusReaderUseCase.findIncludeCharacterFromUserIds(incrementedUsers.map((user) => user.id));
-    await Promise.all(changedCharacters.map((character) => this.publisherUseCase.publishRanking(character, isNowBeforeDay2)));
+    await Promise.all(changedCharacters.map((character) => this.userPublisherUseCase.publishRanking(character, isNowBeforeDay2)));
 
     return incrementedUsers;
   }
@@ -108,7 +108,7 @@ export class UserMutation {
 
     this.dataLoaderCacheService.prime(this.userDataLoader, joinedUser);
 
-    await this.publisherUseCase.publishUpdatedGameAttenders();
+    await this.userPublisherUseCase.publishUpdatedGameAttenders();
 
     return joinedUser;
   }
@@ -122,7 +122,7 @@ export class UserMutation {
 
     this.dataLoaderCacheService.prime(this.userDataLoader, exitedUser);
 
-    await this.publisherUseCase.publishUpdatedGameAttenders();
+    await this.userPublisherUseCase.publishUpdatedGameAttenders();
 
     return exitedUser;
   }
