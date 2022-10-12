@@ -1,0 +1,16 @@
+changelog:
+  exclude:
+    labels:
+      - 🤖renovate
+    authors:
+      - renovate-bot
+  categories:
+    - title: Some critical issues have been resolved! 🚑
+      labels:
+        - 🚑重大な問題
+    - title: Oh, There are new features!! 🎉
+      labels:
+        - ✨新機能
+    - title: Other Changes
+      labels:
+        - '*'
