@@ -146,7 +146,7 @@ describe('CharacterStatusRepository', () => {
 
     const foundCharacterStatusWithUserList = await characterStatusRepository.findManyWithUser({});
 
-    expect(foundCharacterStatusWithUserList).toEqual([[createdCharacterStatus, createdUser]]);
+    expect(foundCharacterStatusWithUserList).toEqual(expect.arrayContaining([[createdCharacterStatus, createdUser]]));
 
     await deleteCharacterStatus(prismaService, createdCharacterStatus.id);
     await deleteUser(prismaService, createdUser.id);
