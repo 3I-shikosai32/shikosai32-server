@@ -63,11 +63,11 @@ export class UserMutation {
   }
 
   @Mutation(() => User)
-  async updateUser(@Args() args: UpdateUserArgs): Promise<UserModel> {
+  async updateUserBio(@Args() args: UpdateUserArgs): Promise<UserModel> {
     this.logger.log('updateUser called');
     this.logger.log(args);
 
-    const updatedUser = await this.updaterUseCase.updateUser(args.where.id, args.data);
+    const updatedUser = await this.updaterUseCase.updateUserBio(args.where.id, args.data);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, updatedUser);
 
