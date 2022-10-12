@@ -2,7 +2,7 @@ import { Inject, Logger, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { GiftHistory as GiftHistoryModel } from '../domain/model/gift-history.model';
 import { GiftHistoryCreatorUseCaseInterface } from '../domain/service/use-case/gift-history-creator.use-case';
-import { GiftHistoryUpdaterUseCaseInterface } from '../domain/service/use-case/gift-history-updater.use-case';
+import { GiftHistoryDeliveryManagerUseCaseInterface } from '../domain/service/use-case/gift-history-delivery-manager.use-case';
 import { ChangeDeliveryStateGiftHistoryArgs } from './dto/args/change-delivery-state-gift-history.args';
 import { ExchangeGiftArgs } from './dto/args/exchange-gift.args';
 import { GiftHistory } from './dto/object/gift-history.object';
@@ -18,8 +18,8 @@ export class GiftHistoryMutation {
   constructor(
     @Inject(InjectionToken.GIFT_HISTORY_CREATOR_USE_CASE)
     private readonly giftHistoryCreatorUseCase: GiftHistoryCreatorUseCaseInterface,
-    @Inject(InjectionToken.GIFT_HISTORY_UPDATER_USE_CASE)
-    private readonly giftHistoryUpdaterUseCase: GiftHistoryUpdaterUseCaseInterface,
+    @Inject(InjectionToken.GIFT_HISTORY_DELIVERY_MANAGER_USE_CASE)
+    private readonly giftHistoryDeliveryManagerUseCase: GiftHistoryDeliveryManagerUseCaseInterface,
   ) {}
 
   @Mutation(() => GiftHistory)
@@ -28,7 +28,7 @@ export class GiftHistoryMutation {
     this.logger.log('changeDeliveryStateGiftHistory called');
     this.logger.log(args);
 
-    const updatedGiftHistory = await this.giftHistoryUpdaterUseCase.changeDeliveryState(args.where.id, args.data);
+    const updatedGiftHistory = await this.giftHistoryDeliveryManagerUseCase.changeDeliveryState(args.where.id, args.data);
 
     return updatedGiftHistory;
   }
