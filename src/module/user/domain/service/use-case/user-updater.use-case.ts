@@ -1,6 +1,6 @@
 import { User } from '../../model/user.model';
-import { UpdateUserData } from './port/user-updater.input';
+import { UpdateUserBioData } from './port/user-updater.input';
 
 export interface UserUpdaterUseCaseInterface {
-  updateUser(userId: string, updateUserData: UpdateUserData): Promise<User>;
+  updateUserBio(userId: string, updateUserData: UpdateUserBioData): Promise<User>;
 }

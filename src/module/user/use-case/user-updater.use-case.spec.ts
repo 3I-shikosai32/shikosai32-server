@@ -16,10 +16,10 @@ describe('UserUpdaterUseCase', () => {
     userUpdaterUseCase = moduleRef.get(UserUpdaterUseCase);
   });
 
-  test('updateUser', async () => {
+  test('updateUserBio', async () => {
     const expectUser = await mockedUserRepository.update();
 
-    const updatedUser = await userUpdaterUseCase.updateUser(expectUser.id, expectUser);
+    const updatedUser = await userUpdaterUseCase.updateUserBio(expectUser.id, expectUser);
 
     expect(updatedUser).toEqual(expectUser);
   });

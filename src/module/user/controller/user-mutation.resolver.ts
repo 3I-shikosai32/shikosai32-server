@@ -12,7 +12,7 @@ import { ExitGameArgs } from './dto/args/exit-game.args';
 import { IncrementPointArgs } from './dto/args/increment-point.args';
 import { JoinGameArgs } from './dto/args/join-game.args';
 import { PullGachaArgs } from './dto/args/pull-gacha.args';
-import { UpdateUserArgs } from './dto/args/update-user.args';
+import { UpdateUserBioArgs } from './dto/args/update-user-bio.args';
 import { User } from './dto/object/user.object';
 import { DataLoaderCacheService } from '@/cache/dataloader-cache.service';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
@@ -20,6 +20,7 @@ import { AuthGuard } from '@/guard/auth.guard';
 import { RoleGuard } from '@/guard/role.guard';
 import { DateService } from '@/infra/date/date.service';
 import { FirebaseService } from '@/infra/firebase/firebase.service';
+import { CharacterStatusReaderUseCaseInterface } from '~/character-status/domain/service/use-case/character-status-reader.use-case';
 import { Item } from '~/item/controller/dto/object/item.object';
 import { ItemDataLoader } from '~/item/dataloader/item.dataloader';
 import { Item as ItemModel } from '~/item/domain/model/item.model';
@@ -40,6 +41,8 @@ export class UserMutation {
     private readonly gachaManagerUseCase: UserGachaManagerUseCaseInterface,
     @Inject(InjectionToken.USER_PUBLISHER_USE_CASE)
     private readonly publisherUseCase: UserPublisherUseCaseInterface,
+    @Inject(InjectionToken.CHARACTER_STATUS_READER_USE_CASE)
+    private readonly characterStatusReaderUseCase: CharacterStatusReaderUseCaseInterface,
     private readonly userDataLoader: UserDataLoader,
     private readonly dataLoaderCacheService: DataLoaderCacheService<UserModel, string>,
     private readonly itemDataLoader: ItemDataLoader,
@@ -63,15 +66,13 @@ export class UserMutation {
   }
 
   @Mutation(() => User)
-  async updateUser(@Args() args: UpdateUserArgs): Promise<UserModel> {
-    this.logger.log('updateUser called');
+  async updateUserBio(@Args() args: UpdateUserBioArgs): Promise<UserModel> {
+    this.logger.log('updateUserBio called');
     this.logger.log(args);
 
-    const updatedUser = await this.updaterUseCase.updateUser(args.where.id, args.data);
+    const updatedUser = await this.updaterUseCase.updateUserBio(args.where.id, args.data);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, updatedUser);
-
-    await this.publisherUseCase.publishUpdatedGameAttenders();
 
     await this.firebaseService.adminAuth.updateUser(updatedUser.id, { displayName: updatedUser.name, email: updatedUser.email });
 
@@ -86,11 +87,16 @@ export class UserMutation {
 
     const isNowBeforeDay2 = this.dateService.isBeforeDay2(this.dateService.getNow());
 
-    const incrementedUser = await this.gameManagerUseCase.incrementPoint(args.users, isNowBeforeDay2);
+    const incrementedUsers = await this.gameManagerUseCase.incrementPoint(args.users, isNowBeforeDay2);
 
-    this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUser);
+    this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUsers);
 
-    return incrementedUser;
+    await this.publisherUseCase.publishUpdatedGameAttenders();
+
+    const changedCharacters = await this.characterStatusReaderUseCase.findIncludeCharacterFromUserIds(incrementedUsers.map((user) => user.id));
+    await Promise.all(changedCharacters.map((character) => this.publisherUseCase.publishRanking(character, isNowBeforeDay2)));
+
+    return incrementedUsers;
   }
 
   @Mutation(() => User)
@@ -101,6 +107,8 @@ export class UserMutation {
     const joinedUser = await this.gameManagerUseCase.joinGame(args.where.id, args.game);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, joinedUser);
+
+    await this.publisherUseCase.publishUpdatedGameAttenders();
 
     return joinedUser;
   }
@@ -113,6 +121,8 @@ export class UserMutation {
     const exitedUser = await this.gameManagerUseCase.exitGame(args.where.id);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, exitedUser);
+
+    await this.publisherUseCase.publishUpdatedGameAttenders();
 
     return exitedUser;
   }
