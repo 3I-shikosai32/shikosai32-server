@@ -55,7 +55,7 @@ model User {
 
   pullableGachaTimes Int @default(0) @map("pullable_gacha_times")
 
-  CharacterStatuses CharacterStatus[]
+  characterStatuses CharacterStatus[]
 
   giftHistories GiftHistory[]
 

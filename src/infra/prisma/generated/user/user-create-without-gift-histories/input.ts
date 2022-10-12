@@ -36,7 +36,7 @@ export class UserCreateWithoutGiftHistoriesInput {
     pullableGachaTimes?: number;
 
     @Field(() => CharacterStatusCreateNestedManyWithoutUserInput, {nullable:true})
-    CharacterStatuses?: CharacterStatusCreateNestedManyWithoutUserInput;
+    characterStatuses?: CharacterStatusCreateNestedManyWithoutUserInput;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;

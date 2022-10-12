@@ -48,7 +48,7 @@ export class UserWhereInput {
     pullableGachaTimes?: IntFilter;
 
     @Field(() => CharacterStatusListRelationFilter, {nullable:true})
-    CharacterStatuses?: CharacterStatusListRelationFilter;
+    characterStatuses?: CharacterStatusListRelationFilter;
 
     @Field(() => GiftHistoryListRelationFilter, {nullable:true})
     giftHistories?: GiftHistoryListRelationFilter;

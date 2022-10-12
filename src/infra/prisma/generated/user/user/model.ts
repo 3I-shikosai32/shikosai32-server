@@ -38,7 +38,7 @@ export class User {
     pullableGachaTimes!: number;
 
     @Field(() => [CharacterStatus], {nullable:true})
-    CharacterStatuses?: Array<CharacterStatus>;
+    characterStatuses?: Array<CharacterStatus>;
 
     @Field(() => [GiftHistory], {nullable:true})
     giftHistories?: Array<GiftHistory>;
