@@ -11,6 +11,7 @@ import {
 } from '../domain/service/repository/character-status.repository';
 import { StrictPropertyCheck } from '@/common/type/strict-property-check.type';
 import { PrismaService } from '@/infra/prisma/prisma.service';
+import { User } from '~/user/domain/model/user.model';
 
 @Injectable()
 export class CharacterStatusRepository implements CharacterStatusRepositoryInterface {
@@ -96,5 +97,24 @@ export class CharacterStatusRepository implements CharacterStatusRepositoryInter
         ? new ItemCompletedHistory(foundCharacterStatuses[0].itemCompletedHistory)
         : null,
     });
+  }
+
+  async findManyWithUser<T extends FindMany>(args: StrictPropertyCheck<T, FindMany>): Promise<[CharacterStatus, User][]> {
+    const foundCharacterStatusWithUserList = await this.prismaService.characterStatus.findMany({
+      ...args,
+      include: {
+        user: true,
+      },
+    });
+
+    return foundCharacterStatusWithUserList.map((foundCharacterStatusWithUser) => [
+      new CharacterStatus({
+        ...foundCharacterStatusWithUser,
+        itemCompletedHistory: foundCharacterStatusWithUser.itemCompletedHistory
+          ? new ItemCompletedHistory(foundCharacterStatusWithUser.itemCompletedHistory)
+          : null,
+      }),
+      new User(foundCharacterStatusWithUser.user),
+    ]);
   }
 }

@@ -20,6 +20,7 @@ import { AuthGuard } from '@/guard/auth.guard';
 import { RoleGuard } from '@/guard/role.guard';
 import { DateService } from '@/infra/date/date.service';
 import { FirebaseService } from '@/infra/firebase/firebase.service';
+import { CharacterStatusReaderUseCaseInterface } from '~/character-status/domain/service/use-case/character-status-reader.use-case';
 import { Item } from '~/item/controller/dto/object/item.object';
 import { ItemDataLoader } from '~/item/dataloader/item.dataloader';
 import { Item as ItemModel } from '~/item/domain/model/item.model';
@@ -40,6 +41,8 @@ export class UserMutation {
     private readonly userGachaManagerUseCase: UserGachaManagerUseCaseInterface,
     @Inject(InjectionToken.USER_PUBLISHER_USE_CASE)
     private readonly userPublisherUseCase: UserPublisherUseCaseInterface,
+    @Inject(InjectionToken.CHARACTER_STATUS_READER_USE_CASE)
+    private readonly characterStatusReaderUseCase: CharacterStatusReaderUseCaseInterface,
     private readonly userDataLoader: UserDataLoader,
     private readonly dataLoaderCacheService: DataLoaderCacheService<UserModel, string>,
     private readonly itemDataLoader: ItemDataLoader,
@@ -71,8 +74,6 @@ export class UserMutation {
 
     this.dataLoaderCacheService.prime(this.userDataLoader, updatedUser);
 
-    await this.userPublisherUseCase.publishUpdatedGameAttenders();
-
     await this.firebaseService.adminAuth.updateUser(updatedUser.id, { displayName: updatedUser.name, email: updatedUser.email });
 
     return updatedUser;
@@ -86,11 +87,16 @@ export class UserMutation {
 
     const isNowBeforeDay2 = this.dateService.isBeforeDay2(this.dateService.getNow());
 
-    const incrementedUser = await this.userGameManagerUseCase.incrementPoint(args.users, isNowBeforeDay2);
+    const incrementedUsers = await this.userGameManagerUseCase.incrementPoint(args.users, isNowBeforeDay2);
 
-    this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUser);
+    this.dataLoaderCacheService.primeMany(this.userDataLoader, incrementedUsers);
 
-    return incrementedUser;
+    await this.publisherUseCase.publishUpdatedGameAttenders();
+
+    const changedCharacters = await this.characterStatusReaderUseCase.findIncludeCharacterFromUserIds(incrementedUsers.map((user) => user.id));
+    await Promise.all(changedCharacters.map((character) => this.publisherUseCase.publishRanking(character, isNowBeforeDay2)));
+
+    return incrementedUsers;
   }
 
   @Mutation(() => User)
@@ -101,6 +107,8 @@ export class UserMutation {
     const joinedUser = await this.userGameManagerUseCase.joinGame(args.where.id, args.game);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, joinedUser);
+
+    await this.publisherUseCase.publishUpdatedGameAttenders();
 
     return joinedUser;
   }
@@ -113,6 +121,8 @@ export class UserMutation {
     const exitedUser = await this.userGameManagerUseCase.exitGame(args.where.id);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, exitedUser);
+
+    await this.publisherUseCase.publishUpdatedGameAttenders();
 
     return exitedUser;
   }
