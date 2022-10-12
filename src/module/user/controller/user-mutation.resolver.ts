@@ -12,7 +12,7 @@ import { ExitGameArgs } from './dto/args/exit-game.args';
 import { IncrementPointArgs } from './dto/args/increment-point.args';
 import { JoinGameArgs } from './dto/args/join-game.args';
 import { PullGachaArgs } from './dto/args/pull-gacha.args';
-import { UpdateUserArgs } from './dto/args/update-user.args';
+import { UpdateUserBioArgs } from './dto/args/update-user-bio.args';
 import { User } from './dto/object/user.object';
 import { DataLoaderCacheService } from '@/cache/dataloader-cache.service';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
@@ -66,11 +66,11 @@ export class UserMutation {
   }
 
   @Mutation(() => User)
-  async updateUser(@Args() args: UpdateUserArgs): Promise<UserModel> {
-    this.logger.log('updateUser called');
+  async updateUserBio(@Args() args: UpdateUserBioArgs): Promise<UserModel> {
+    this.logger.log('updateUserBio called');
     this.logger.log(args);
 
-    const updatedUser = await this.updaterUseCase.updateUser(args.where.id, args.data);
+    const updatedUser = await this.updaterUseCase.updateUserBio(args.where.id, args.data);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, updatedUser);
 

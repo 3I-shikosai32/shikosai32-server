@@ -2,7 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 import { Role } from '@/infra/prisma/generated/prisma/role/enum';
 
 @InputType()
-export class UserUpdateInput {
+export class UserUpdateBioInput {
   @Field(() => String, { nullable: true })
   name?: string;
 
