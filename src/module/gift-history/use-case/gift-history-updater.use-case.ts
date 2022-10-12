@@ -11,7 +11,7 @@ export class GiftHistoryUpdaterUseCase implements GiftHistoryUpdaterUseCaseInter
     private readonly giftHistoryRepository: GiftHistoryRepositoryInterface,
   ) {}
 
-  async updateGiftHistory(giftHistoryId: string, updateGiftHistoryData: UpdateGiftHistoryData) {
+  async changeDeliveryState(giftHistoryId: string, updateGiftHistoryData: UpdateGiftHistoryData) {
     const updateGiftHistory = await this.giftHistoryRepository.update({
       where: { id: giftHistoryId },
       data: {

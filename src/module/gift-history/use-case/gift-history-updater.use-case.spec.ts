@@ -16,10 +16,10 @@ describe('GiftHistoryUpdaterUseCase', () => {
     giftHistoryUpdaterUseCase = moduleRef.get(GiftHistoryUpdaterUseCase);
   });
 
-  test('updateGiftHistory', async () => {
+  test('changeDeliveryState', async () => {
     const expectGiftHistory = await mockedGiftHistoryRepository.update();
 
-    const updatedGiftHistory = await giftHistoryUpdaterUseCase.updateGiftHistory(expectGiftHistory.id, expectGiftHistory);
+    const updatedGiftHistory = await giftHistoryUpdaterUseCase.changeDeliveryState(expectGiftHistory.id, expectGiftHistory);
 
     expect(updatedGiftHistory).toEqual(expectGiftHistory);
   });
