@@ -1,6 +1,6 @@
 import { Role } from '@prisma/client';
 
-export type UpdateUserData = {
+export type UpdateUserBioData = {
   name?: string;
   role?: keyof typeof Role;
 };

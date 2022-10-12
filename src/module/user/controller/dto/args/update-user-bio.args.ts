@@ -1,12 +1,12 @@
 import { ArgsType, Field } from '@nestjs/graphql';
-import { UserUpdateInput } from '../input/user-update.input';
+import { UserUpdateBioInput } from '../input/user-update-bio.input';
 import { UserWhereUniqueInput } from '../input/user-where-unique.input';
 
 @ArgsType()
-export class UpdateUserArgs {
+export class UpdateUserBioArgs {
   @Field(() => UserWhereUniqueInput, { nullable: false })
   where: UserWhereUniqueInput;
 
-  @Field(() => UserUpdateInput, { nullable: false })
-  data: UserUpdateInput;
+  @Field(() => UserUpdateBioInput, { nullable: false })
+  data: UserUpdateBioInput;
 }
