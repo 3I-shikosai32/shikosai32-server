@@ -34,7 +34,7 @@ export class UserUncheckedUpdateInput {
     pullableGachaTimes?: number;
 
     @Field(() => CharacterStatusUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
-    CharacterStatuses?: CharacterStatusUncheckedUpdateManyWithoutUserNestedInput;
+    characterStatuses?: CharacterStatusUncheckedUpdateManyWithoutUserNestedInput;
 
     @Field(() => GiftHistoryUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
     giftHistories?: GiftHistoryUncheckedUpdateManyWithoutUserNestedInput;

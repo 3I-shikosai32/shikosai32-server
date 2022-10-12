@@ -35,7 +35,7 @@ export class UserOrderByWithRelationInput {
     pullableGachaTimes?: keyof typeof SortOrder;
 
     @Field(() => CharacterStatusOrderByRelationAggregateInput, {nullable:true})
-    CharacterStatuses?: CharacterStatusOrderByRelationAggregateInput;
+    characterStatuses?: CharacterStatusOrderByRelationAggregateInput;
 
     @Field(() => GiftHistoryOrderByRelationAggregateInput, {nullable:true})
     giftHistories?: GiftHistoryOrderByRelationAggregateInput;

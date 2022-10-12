@@ -56,7 +56,7 @@ export class UserRepository implements UserRepositoryInterface {
     const foundUser = await this.prismaService.user.findUnique({
       ...args,
       include: {
-        CharacterStatuses: {
+        characterStatuses: {
           where: {
             isActive: { equals: true },
           },
@@ -67,10 +67,10 @@ export class UserRepository implements UserRepositoryInterface {
       },
     });
 
-    if (foundUser?.CharacterStatuses.length !== 1) {
+    if (foundUser?.characterStatuses.length !== 1) {
       throw new Error('User has no character or has more than one character');
     }
-    const [foundCharacterStatus] = foundUser.CharacterStatuses;
+    const [foundCharacterStatus] = foundUser.characterStatuses;
 
     return foundUser
       ? [new User(foundUser), new CharacterStatus(foundCharacterStatus), foundCharacterStatus.items.map((item) => new Item(item))]
