@@ -1,19 +1,19 @@
 import { Test } from '@nestjs/testing';
 import { MockedGiftHistoryRepository } from '../repository/mocked-gift-history.repository';
-import { GiftHistoryUpdaterUseCase } from './gift-history-updater.use-case';
+import { GiftHistoryDeliveryManagerUseCase } from './gift-history-delivery-manager.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 
-describe('GiftHistoryUpdaterUseCase', () => {
+describe('GiftHistoryDeliveryManagerUseCase', () => {
   let mockedGiftHistoryRepository: MockedGiftHistoryRepository;
-  let giftHistoryUpdaterUseCase: GiftHistoryUpdaterUseCase;
+  let giftHistoryUpdaterUseCase: GiftHistoryDeliveryManagerUseCase;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      providers: [{ provide: InjectionToken.GIFT_HISTORY_REPOSITORY, useClass: MockedGiftHistoryRepository }, GiftHistoryUpdaterUseCase],
+      providers: [{ provide: InjectionToken.GIFT_HISTORY_REPOSITORY, useClass: MockedGiftHistoryRepository }, GiftHistoryDeliveryManagerUseCase],
     }).compile();
 
     mockedGiftHistoryRepository = moduleRef.get(InjectionToken.GIFT_HISTORY_REPOSITORY);
-    giftHistoryUpdaterUseCase = moduleRef.get(GiftHistoryUpdaterUseCase);
+    giftHistoryUpdaterUseCase = moduleRef.get(GiftHistoryDeliveryManagerUseCase);
   });
 
   test('changeDeliveryState', async () => {
