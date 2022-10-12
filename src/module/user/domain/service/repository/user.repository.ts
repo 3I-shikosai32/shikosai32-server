@@ -13,7 +13,7 @@ export type FindMany = {
   skip?: number;
   take?: number;
   cursor?: Prisma.UserWhereUniqueInput;
-  orderBy?: Prisma.UserOrderByWithAggregationInput[];
+  orderBy?: Prisma.UserOrderByWithRelationInput[];
   distinct?: Prisma.UserScalarFieldEnum[];
 };
 export type Create = {
