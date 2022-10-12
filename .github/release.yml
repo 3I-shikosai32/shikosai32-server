@@ -2,8 +2,6 @@ changelog:
   exclude:
     labels:
       - 🤖renovate
-    authors:
-      - renovate-bot
   categories:
     - title: Some critical issues have been resolved! 🚑
       labels:
