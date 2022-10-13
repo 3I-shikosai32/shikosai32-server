@@ -8,7 +8,8 @@ export class MockedItemRepository implements ItemRepositoryInterface {
   async findUnique() {
     const foundItem = {
       id: 'def-123',
-      url: 'https://example.com',
+      iconUrl: 'https://example.com',
+      layerUrl: 'https://example.com',
       character: Character.CAT,
       layer: 1,
       characterStatusIds: [],
@@ -21,14 +22,16 @@ export class MockedItemRepository implements ItemRepositoryInterface {
     const foundItems = [
       {
         id: 'def-123',
-        url: 'https://example.com',
+        iconUrl: 'https://example.com',
+        layerUrl: 'https://example.com',
         character: Character.CAT,
         layer: 1,
         characterStatusIds: [],
       },
       {
         id: 'def-456',
-        url: 'https://example.com',
+        iconUrl: 'https://example.com',
+        layerUrl: 'https://example.com',
         character: Character.CAT,
         layer: 1,
         characterStatusIds: [],
@@ -41,7 +44,8 @@ export class MockedItemRepository implements ItemRepositoryInterface {
   async create() {
     const createdItem = {
       id: 'def-123',
-      url: 'https://example.com',
+      iconUrl: 'https://example.com',
+      layerUrl: 'https://example.com',
       character: Character.CAT,
       layer: 1,
       characterStatusIds: [],
@@ -53,7 +57,8 @@ export class MockedItemRepository implements ItemRepositoryInterface {
   async update() {
     const updatedItem = {
       id: 'def-123',
-      url: 'https://example.com',
+      iconUrl: 'https://example.com',
+      layerUrl: 'https://example.com',
       character: Character.CAT,
       layer: 1,
       characterStatusIds: [],
@@ -65,7 +70,8 @@ export class MockedItemRepository implements ItemRepositoryInterface {
   async delete() {
     const deleteItem = {
       id: 'def-123',
-      url: 'https://example.com',
+      iconUrl: 'https://example.com',
+      layerUrl: 'https://example.com',
       character: Character.CAT,
       layer: 1,
       characterStatusIds: [],
