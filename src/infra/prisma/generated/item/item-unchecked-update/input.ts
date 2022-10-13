@@ -8,7 +8,10 @@ import { CharacterStatusUncheckedUpdateManyWithoutItemsNestedInput } from '../..
 export class ItemUncheckedUpdateInput {
 
     @Field(() => String, {nullable:true})
-    url?: string;
+    iconUrl?: string;
+
+    @Field(() => String, {nullable:true})
+    layerUrl?: string;
 
     @Field(() => Character, {nullable:true})
     character?: keyof typeof Character;

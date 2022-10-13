@@ -7,7 +7,10 @@ import { Int } from '@nestjs/graphql';
 export class ItemUncheckedUpdateManyInput {
 
     @Field(() => String, {nullable:true})
-    url?: string;
+    iconUrl?: string;
+
+    @Field(() => String, {nullable:true})
+    layerUrl?: string;
 
     @Field(() => Character, {nullable:true})
     character?: keyof typeof Character;

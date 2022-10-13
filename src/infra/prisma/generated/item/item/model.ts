@@ -12,7 +12,10 @@ export class Item {
     id!: string;
 
     @Field(() => String, {nullable:false})
-    url!: string;
+    iconUrl!: string;
+
+    @Field(() => String, {nullable:false})
+    layerUrl!: string;
 
     @Field(() => Character, {nullable:false})
     character!: keyof typeof Character;
