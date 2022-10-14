@@ -2,7 +2,8 @@ import { registerEnumType } from '@nestjs/graphql';
 
 export enum ItemScalarFieldEnum {
     id = "id",
-    url = "url",
+    iconUrl = "iconUrl",
+    layerUrl = "layerUrl",
     character = "character",
     layer = "layer",
     characterStatusIds = "characterStatusIds"

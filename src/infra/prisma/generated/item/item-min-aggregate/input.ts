@@ -8,7 +8,10 @@ export class ItemMinAggregateInput {
     id?: true;
 
     @Field(() => Boolean, {nullable:true})
-    url?: true;
+    iconUrl?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    layerUrl?: true;
 
     @Field(() => Boolean, {nullable:true})
     character?: true;

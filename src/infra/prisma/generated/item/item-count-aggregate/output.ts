@@ -9,7 +9,10 @@ export class ItemCountAggregate {
     id!: number;
 
     @Field(() => Int, {nullable:false})
-    url!: number;
+    iconUrl!: number;
+
+    @Field(() => Int, {nullable:false})
+    layerUrl!: number;
 
     @Field(() => Int, {nullable:false})
     character!: number;

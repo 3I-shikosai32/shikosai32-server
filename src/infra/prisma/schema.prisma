@@ -93,8 +93,9 @@ model CharacterStatus {
 }
 
 model Item {
-  id  String @id @default(auto()) @map("_id") @db.ObjectId
-  url String
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  iconUrl  String @map("icon_url")
+  layerUrl String @map("layer_url")
 
   character Character
   layer     Int
