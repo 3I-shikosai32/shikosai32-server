@@ -13,7 +13,8 @@ jest.setTimeout(15000);
 export const createItem = async (prismaService: PrismaService) => {
   const createdItem = await prismaService.item.create({
     data: {
-      url: 'https://example.com',
+      iconUrl: 'https://example.com',
+      layerUrl: 'https://example.com',
       character: Character.CAT,
       layer: 1,
     },
@@ -66,7 +67,8 @@ describe('ItemRepository', () => {
   test('create', async () => {
     const createdItem = await itemService.create({
       data: {
-        url: 'https://example.com',
+        iconUrl: 'https://example.com',
+        layerUrl: 'https://example.com',
         character: Character.CAT,
         layer: 1,
       },

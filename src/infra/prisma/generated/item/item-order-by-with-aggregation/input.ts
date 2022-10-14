@@ -14,7 +14,10 @@ export class ItemOrderByWithAggregationInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    url?: keyof typeof SortOrder;
+    iconUrl?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    layerUrl?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     character?: keyof typeof SortOrder;

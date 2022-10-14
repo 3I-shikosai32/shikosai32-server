@@ -21,7 +21,10 @@ export class ItemScalarWhereWithAggregatesInput {
     id?: StringWithAggregatesFilter;
 
     @Field(() => StringWithAggregatesFilter, {nullable:true})
-    url?: StringWithAggregatesFilter;
+    iconUrl?: StringWithAggregatesFilter;
+
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    layerUrl?: StringWithAggregatesFilter;
 
     @Field(() => EnumCharacterWithAggregatesFilter, {nullable:true})
     character?: EnumCharacterWithAggregatesFilter;

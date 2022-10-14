@@ -163,14 +163,16 @@ export class MockedUserRepository implements UserRepositoryInterface {
     const foundItems = [
       {
         id: 'ghi-123',
-        url: 'https://example.com',
+        iconUrl: 'https://example.com',
+        layerUrl: 'https://example.com',
         character: Character.CAT,
         layer: 1,
         characterStatusIds: ['def-123'],
       },
       {
         id: 'ghi-456',
-        url: 'https://example.com',
+        iconUrl: 'https://example.com',
+        layerUrl: 'https://example.com',
         character: Character.CAT,
         layer: 2,
         characterStatusIds: ['def-123'],

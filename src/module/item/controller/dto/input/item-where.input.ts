@@ -21,7 +21,10 @@ export class ItemWhereInput {
   id?: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  url?: StringFilter;
+  iconUrl?: StringFilter;
+
+  @Field(() => StringFilter, { nullable: true })
+  layerUrl?: StringFilter;
 
   @Field(() => EnumCharacterFilter, { nullable: true })
   character?: EnumCharacterFilter;
