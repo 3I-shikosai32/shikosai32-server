@@ -7,10 +7,10 @@ export class GameAttenders {
   xeno: User[];
 
   @Field(() => [User], { nullable: false })
-  coin_dropping: User[];
+  coinDropping: User[];
 
   @Field(() => [User], { nullable: false })
-  ice_raze: User[];
+  iceRaze: User[];
 
   @Field(() => [User], { nullable: false })
   president: User[];
@@ -19,5 +19,5 @@ export class GameAttenders {
   poker: User[];
 
   @Field(() => [User], { nullable: false })
-  we_didnt_playtest: User[];
+  weDidntPlaytest: User[];
 }
