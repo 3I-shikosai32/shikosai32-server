@@ -20,26 +20,13 @@ const main = async () => {
   await itemSeeder.deleteItems();
   await userSeeder.deleteUsers();
 
-  await userSeeder.createUsers();
-  const createdUsers = await userSeeder.findUsers();
-
-  await itemSeeder.createItems();
-  const createdItems = await itemSeeder.findItems();
-
+  const createdUsers = await userSeeder.createUsers();
+  const createdItems = await itemSeeder.createItems();
   await characterStatusSeeder.createCharacterStatuses(
     createdUsers.map((user) => user.id),
     createdItems.map((item) => item.id),
   );
-  const createdCharacterStatuses = await characterStatusSeeder.findCharacterStatuses();
-
-  await itemSeeder.updateItems(
-    createdItems.map((item) => item.id),
-    createdCharacterStatuses.map((character) => character.id),
-  );
-
-  await giftSeeder.createGifts();
-  const createdGifts = await giftSeeder.findGifts();
-
+  const createdGifts = await giftSeeder.createGifts();
   await giftHistorySeeder.createGiftHistories(createdUsers[0].id, createdGifts[0].id);
 };
 
