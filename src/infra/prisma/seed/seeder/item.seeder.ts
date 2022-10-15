@@ -11,7 +11,7 @@ export class ItemSeeder {
 
   async createItems() {
     await this.prisma.item.createMany({
-      data: Array.from({ length: 4 }).map<Prisma.ItemCreateManyInput>((_, index) => ({
+      data: Array.from<never, Prisma.ItemCreateManyInput>({ length: 4 }, (_, index) => ({
         iconUrl: `https://firebasestorage.googleapis.com/v0/b/i-shikosai32.appspot.com/o/sys%2Fcharacter%2Fcat%2Fitem%2${index}.icon.svg?alt=media`,
         layerUrl: `https://firebasestorage.googleapis.com/v0/b/i-shikosai32.appspot.com/o/sys%2Fcharacter%2Fcat%2Fitem%2${index}.layer.svg?alt=media`,
         character: Character.CAT,

@@ -11,7 +11,7 @@ export class UserSeeder {
 
   async createUsers() {
     await this.prisma.user.createMany({
-      data: Array.from({ length: 30 }).map<Prisma.UserCreateManyInput>((_, index) => ({
+      data: Array.from<never, Prisma.UserCreateManyInput>({ length: 30 }, (_, index) => ({
         name: `user-${index < 10 ? `0${index}` : index}`,
         email: `user-${index < 10 ? `0${index}` : index}@example.com`,
       })),

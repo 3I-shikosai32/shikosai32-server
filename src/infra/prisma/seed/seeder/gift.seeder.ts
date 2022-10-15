@@ -11,7 +11,7 @@ export class GiftSeeder {
 
   async createGifts() {
     await this.prisma.gift.createMany({
-      data: Array.from({ length: 10 }).map<Prisma.GiftCreateManyInput>((_, index) => ({
+      data: Array.from<never, Prisma.GiftCreateManyInput>({ length: 10 }, (_, index) => ({
         name: `Gift-${index < 10 ? `0${index}` : index}`,
         iconUrl: `https://firebasestorage.googleapis.com/v0/b/i-shikosai32.appspot.com/o/sys%2Fgift%2${index}.png?alt=media`,
         price: 10,

@@ -5,7 +5,7 @@ export class GiftHistorySeeder {
 
   async createGiftHistories(userId: string, giftId: string) {
     await this.prisma.giftHistory.createMany({
-      data: Array.from({ length: 10 }).map<Prisma.GiftHistoryCreateManyInput>(() => ({
+      data: Array.from<never, Prisma.GiftHistoryCreateManyInput>({ length: 10 }, () => ({
         userId,
         giftId,
       })),
