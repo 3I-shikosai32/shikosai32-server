@@ -37,4 +37,10 @@ export class GiftHistoryRepository implements GiftHistoryRepositoryInterface {
 
     return new GiftHistory(deletedGiftHistory);
   }
+
+  async createMany<T extends Create>(argsList: Array<StrictPropertyCheck<T, Create>>) {
+    const createdGiftHistories = await this.prismaService.$transaction(argsList.map((args) => this.prismaService.giftHistory.create(args)));
+
+    return createdGiftHistories.map((createdGiftHistory) => new GiftHistory(createdGiftHistory));
+  }
 }
