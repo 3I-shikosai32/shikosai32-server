@@ -83,7 +83,7 @@ model CharacterStatus {
   characterPointDay2 Int @default(0) @map("character_point_day2")
 
   user   User   @relation(fields: [userId], references: [id])
-  userId String @map("user_id")
+  userId String @map("user_id") @db.ObjectId
 
   items                Item[]                @relation(fields: [itemIds], references: [id])
   itemIds              String[]              @map("item_ids") @db.ObjectId
@@ -124,7 +124,7 @@ model GiftHistory {
   isDelivered Boolean @default(false) @map("is_delivered")
 
   user   User   @relation(fields: [userId], references: [id])
-  userId String @map("user_id")
+  userId String @map("user_id") @db.ObjectId
 
   exchangedGift Gift   @relation(fields: [giftId], references: [id])
   giftId        String @map("gift_id") @db.ObjectId
