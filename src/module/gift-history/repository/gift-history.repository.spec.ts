@@ -161,7 +161,7 @@ describe('GiftHistoryRepository', () => {
 
     expect(createdGiftHistories).toEqual(foundGiftHistories);
 
-    Promise.all(foundGiftHistories.map((giftHistory) => deleteGiftHistory(prismaService, giftHistory.id))); // 徳澤追記
+    await Promise.all(foundGiftHistories.map((giftHistory) => deleteGiftHistory(prismaService, giftHistory.id)));
     await deleteUser(prismaService, createdUser.id);
     await deleteGift(prismaService, createdGift.id);
   });
