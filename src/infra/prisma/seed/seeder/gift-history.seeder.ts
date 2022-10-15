@@ -1,15 +1,21 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 export class GiftHistorySeeder {
   constructor(private readonly prisma: PrismaClient) {}
 
   async createGiftHistories(userId: string, giftId: string) {
-    await this.prisma.giftHistory.createMany({
-      data: Array.from<never, Prisma.GiftHistoryCreateManyInput>({ length: 10 }, () => ({
-        userId,
-        giftId,
-      })),
-    });
+    const createdGiftHistories = await this.prisma.$transaction(
+      Array.from<never, ReturnType<PrismaClient['giftHistory']['create']>>({ length: 10 }, () =>
+        this.prisma.giftHistory.create({
+          data: {
+            userId,
+            giftId,
+          },
+        }),
+      ),
+    );
+
+    return createdGiftHistories;
   }
 
   async deleteGiftHistories() {
