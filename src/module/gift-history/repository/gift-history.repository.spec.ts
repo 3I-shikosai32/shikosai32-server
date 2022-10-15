@@ -150,16 +150,12 @@ describe('GiftHistoryRepository', () => {
 
     const foundGiftHistories = await prismaService.giftHistory.findMany({
       where: {
-        user: {
-          id: createdUser.id,
-        },
-        exchangedGift: {
-          id: createdGift.id,
-        },
+        userId: createdUser.id,
+        giftId: createdGift.id,
       },
     });
 
-    expect(createdGiftHistories).toEqual(foundGiftHistories);
+    expect(createdGiftHistories).toEqual(expect.arrayContaining(foundGiftHistories));
 
     await Promise.all(foundGiftHistories.map((giftHistory) => deleteGiftHistory(prismaService, giftHistory.id)));
     await deleteUser(prismaService, createdUser.id);
