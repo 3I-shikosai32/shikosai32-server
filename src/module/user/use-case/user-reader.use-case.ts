@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { Game } from '@prisma/client';
 import { Date } from '../controller/dto/enum/date.enum';
 import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
+import { GameAttenders } from '../domain/model/game-attenders.model';
 import { ObtainmentStatus } from '../domain/model/obtainment-status.model';
 import { User } from '../domain/model/user.model';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
@@ -122,5 +124,24 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
     }
 
     return foundRanking;
+  }
+
+  async getGameAttenders() {
+    const gameAttenders = await this.userRepository.findMany({
+      where: {
+        participateGame: { not: Game.NONE },
+      },
+    });
+
+    const updatedGameAttenders = {
+      xeno: gameAttenders.filter((user) => user.participateGame === Game.XENO),
+      coin_dropping: gameAttenders.filter((user) => user.participateGame === Game.COIN_DROPPING),
+      ice_raze: gameAttenders.filter((user) => user.participateGame === Game.ICE_RAZE),
+      president: gameAttenders.filter((user) => user.participateGame === Game.PRESIDENT),
+      poker: gameAttenders.filter((user) => user.participateGame === Game.POKER),
+      we_didnt_playtest: gameAttenders.filter((user) => user.participateGame === Game.WE_DIDNT_PLAYTEST),
+    };
+
+    return new GameAttenders(updatedGameAttenders);
   }
 }
