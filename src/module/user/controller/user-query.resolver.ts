@@ -7,6 +7,7 @@ import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-read
 import { FindUserArgs } from './dto/args/find-user.args';
 import { FindUsersArgs } from './dto/args/find-users.args';
 import { GetObtainmentStatusesArgs } from './dto/args/get-obtainment-statuses.args';
+import { UpdatedRankingArgs } from './dto/args/updated-ranking.args';
 import { ObtainmentStatus } from './dto/object/obtainment-status.object';
 import { User } from './dto/object/user.object';
 import { DataLoaderCacheService } from '@/cache/dataloader-cache.service';
@@ -57,5 +58,15 @@ export class UserQuery {
     const obtainmentStatuses = await this.userReaderUseCase.getObtainmentStatuses(args.where.id);
 
     return obtainmentStatuses;
+  }
+
+  @Query(() => [User])
+  async getRanking(@Args() args: UpdatedRankingArgs): Promise<UserModel[]> {
+    this.logger.log('getRanking called');
+    this.logger.log(args);
+
+    const ranking = await this.userReaderUseCase.getRanking(args.rankingTarget, args.date);
+
+    return ranking;
   }
 }
