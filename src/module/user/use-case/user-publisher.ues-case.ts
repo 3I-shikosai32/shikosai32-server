@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Game } from '@prisma/client';
+import { Date } from '../controller/dto/enum/date.enum';
 import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
 import { GameAttenders } from '../domain/model/game-attenders.model';
 import { User } from '../domain/model/user.model';
@@ -73,7 +74,7 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
         break;
     }
 
-    await this.pubSubService.publish(generateUpdatedRankingTrigger(rankingTarget), { updatedRanking });
+    await this.pubSubService.publish(generateUpdatedRankingTrigger(rankingTarget, isBeforeDay2 ? Date.DAY1 : Date.DAY2), { updatedRanking });
 
     return updatedRanking;
   }
