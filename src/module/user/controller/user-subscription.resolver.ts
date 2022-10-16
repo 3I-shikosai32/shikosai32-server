@@ -11,7 +11,7 @@ export class UserSubscription {
 
   @Subscription(() => [User])
   async updatedRanking(@Args() args: UpdatedRankingArgs) {
-    return this.pubSubService.asyncIterator(generateUpdatedRankingTrigger(args.rankingTarget));
+    return this.pubSubService.asyncIterator(generateUpdatedRankingTrigger(args.rankingTarget, args.date));
   }
 
   @Subscription(() => GameAttenders)
