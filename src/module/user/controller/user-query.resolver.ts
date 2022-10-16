@@ -1,6 +1,7 @@
 import { Inject, Logger } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { UserDataLoader } from '../dataloader/user.dataloader';
+import { GameAttenders as GameAttendersModel } from '../domain/model/game-attenders.model';
 import { ObtainmentStatus as ObtainmentStatusModel } from '../domain/model/obtainment-status.model';
 import { User as UserModel } from '../domain/model/user.model';
 import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
@@ -8,6 +9,7 @@ import { FindUserArgs } from './dto/args/find-user.args';
 import { FindUsersArgs } from './dto/args/find-users.args';
 import { GetObtainmentStatusesArgs } from './dto/args/get-obtainment-statuses.args';
 import { UpdatedRankingArgs } from './dto/args/updated-ranking.args';
+import { GameAttenders } from './dto/object/game-attenders.object';
 import { ObtainmentStatus } from './dto/object/obtainment-status.object';
 import { User } from './dto/object/user.object';
 import { DataLoaderCacheService } from '@/cache/dataloader-cache.service';
@@ -65,8 +67,17 @@ export class UserQuery {
     this.logger.log('getRanking called');
     this.logger.log(args);
 
-    const ranking = await this.userReaderUseCase.getRanking(args.rankingTarget, args.date);
+    const foundRanking = await this.userReaderUseCase.getRanking(args.rankingTarget, args.date);
 
-    return ranking;
+    return foundRanking;
+  }
+
+  @Query(() => GameAttenders)
+  async getGameAttenders(): Promise<GameAttendersModel> {
+    this.logger.log('getGameAttenders called');
+
+    const foundGameAttenders = await this.userReaderUseCase.getGameAttenders();
+
+    return foundGameAttenders;
   }
 }
