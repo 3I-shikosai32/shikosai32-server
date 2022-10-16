@@ -78,4 +78,27 @@ export class MockedGiftHistoryRepository implements GiftHistoryRepositoryInterfa
 
     return new GiftHistory(deletedGiftHistory);
   }
+
+  async createMany() {
+    const createdGiftHistories = [
+      {
+        id: 'abc-123',
+        isDelivered: false,
+        userId: 'def-123',
+        giftId: 'ghi-123',
+        createdAt: new Date('2021-01-01T00:00:00.000Z'),
+        deliveredAt: null,
+      },
+      {
+        id: 'abc-456',
+        isDelivered: false,
+        userId: 'def-456',
+        giftId: 'ghi-456',
+        createdAt: new Date('2021-01-01T00:00:00.000Z'),
+        deliveredAt: null,
+      },
+    ];
+
+    return createdGiftHistories.map((createdGiftHistory) => new GiftHistory(createdGiftHistory));
+  }
 }

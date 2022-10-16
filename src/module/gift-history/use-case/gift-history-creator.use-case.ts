@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { GiftHistoryRepositoryInterface } from '../domain/service/repository/gift-history.repository';
+import { Create, GiftHistoryRepositoryInterface } from '../domain/service/repository/gift-history.repository';
 import { GiftHistoryCreatorUseCaseInterface } from '../domain/service/use-case/gift-history-creator.use-case';
 import { CreateGiftHistoryData } from '../domain/service/use-case/port/gift-history-creator.input';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
@@ -49,22 +49,18 @@ export class GiftHistoryCreatorUseCase implements GiftHistoryCreatorUseCaseInter
       },
     });
 
-    const createdGiftHistories = await Promise.all(
-      new Array<null>(exchangeQuantity).fill(null).map(async () => {
-        const createdGiftHistory = await this.giftHistoryRepository.create({
-          data: {
-            ...createGiftHistoryData,
-            user: {
-              connect: { id: createGiftHistoryData.userId },
-            },
-            exchangedGift: {
-              connect: { id: createGiftHistoryData.giftId },
-            },
+    const createdGiftHistories = await this.giftHistoryRepository.createMany(
+      Array.from<never, Create>({ length: exchangeQuantity }, () => ({
+        data: {
+          ...createGiftHistoryData,
+          user: {
+            connect: { id: createGiftHistoryData.userId },
           },
-        });
-
-        return createdGiftHistory;
-      }),
+          exchangedGift: {
+            connect: { id: createGiftHistoryData.giftId },
+          },
+        },
+      })),
     );
 
     return createdGiftHistories;

@@ -129,4 +129,36 @@ describe('GiftHistoryRepository', () => {
     await deleteUser(prismaService, createdUser.id);
     await deleteGift(prismaService, createdGift.id);
   });
+
+  test('createMany', async () => {
+    const createdUser = await createUser(prismaService);
+    const createdGift = await createGift(prismaService);
+    const createdGiftHistories = await giftHistoryRepository.createMany([
+      {
+        data: {
+          user: { connect: { id: createdUser.id } },
+          exchangedGift: { connect: { id: createdGift.id } },
+        },
+      },
+      {
+        data: {
+          user: { connect: { id: createdUser.id } },
+          exchangedGift: { connect: { id: createdGift.id } },
+        },
+      },
+    ]);
+
+    const foundGiftHistories = await prismaService.giftHistory.findMany({
+      where: {
+        userId: createdUser.id,
+        giftId: createdGift.id,
+      },
+    });
+
+    expect(createdGiftHistories).toEqual(expect.arrayContaining(foundGiftHistories));
+
+    await Promise.all(foundGiftHistories.map((giftHistory) => deleteGiftHistory(prismaService, giftHistory.id)));
+    await deleteUser(prismaService, createdUser.id);
+    await deleteGift(prismaService, createdGift.id);
+  });
 });
