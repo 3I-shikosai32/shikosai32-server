@@ -1,4 +1,5 @@
-import { RankingTarget } from '../../module/user/controller/dto/enum/ranking-target.enum';
+import { Date } from '~/user/controller/dto/enum/date.enum';
+import { RankingTarget } from '~/user/controller/dto/enum/ranking-target.enum';
 
 // eslint-disable-next-line no-shadow
 export enum PubSubTrigger {
@@ -6,4 +7,5 @@ export enum PubSubTrigger {
   UPDATED_GAME_ATTENDERS = 'UPDATED_GAME_ATTENDERS',
 }
 
-export const generateUpdatedRankingTrigger = (rankingTarget: keyof typeof RankingTarget) => `${PubSubTrigger.UPDATED_RANKING}_${rankingTarget}`;
+export const generateUpdatedRankingTrigger = (rankingTarget: keyof typeof RankingTarget, date: keyof typeof Date) =>
+  `${PubSubTrigger.UPDATED_RANKING}_${rankingTarget}_${date}`;
