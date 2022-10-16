@@ -1,5 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { Game } from '@prisma/client';
+import { Date } from '../controller/dto/enum/date.enum';
+import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
+import { GameAttenders } from '../domain/model/game-attenders.model';
 import { ObtainmentStatus } from '../domain/model/obtainment-status.model';
+import { User } from '../domain/model/user.model';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
 import { UserCursor, UserOrderBy, UserWhere } from '../domain/service/use-case/port/user-reader.input';
 import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
@@ -63,5 +68,80 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
     }));
 
     return obtainmentStatuses.map((obtainmentStatus) => new ObtainmentStatus(obtainmentStatus));
+  }
+
+  async getRanking(rankingTarget: RankingTarget, date: Date) {
+    let foundRanking: User[];
+    switch (rankingTarget) {
+      case RankingTarget.TOTAL:
+        if (date === Date.DAY1) {
+          foundRanking = await this.userRepository.findMany({
+            orderBy: [
+              {
+                totalPointDay1: 'desc',
+              },
+            ],
+          });
+        } else {
+          foundRanking = await this.userRepository.findMany({
+            orderBy: [
+              {
+                totalPointDay2: 'desc',
+              },
+            ],
+          });
+        }
+        break;
+      default:
+        if (date === Date.DAY1) {
+          foundRanking = (
+            await this.characterStatusRepository.findManyWithUser({
+              where: {
+                character: rankingTarget,
+              },
+              orderBy: [
+                {
+                  characterPointDay1: 'desc',
+                },
+              ],
+            })
+          ).map(([, user]) => user);
+        } else {
+          foundRanking = (
+            await this.characterStatusRepository.findManyWithUser({
+              where: {
+                character: rankingTarget,
+              },
+              orderBy: [
+                {
+                  characterPointDay2: 'desc',
+                },
+              ],
+            })
+          ).map(([, user]) => user);
+        }
+        break;
+    }
+
+    return foundRanking;
+  }
+
+  async getGameAttenders() {
+    const gameAttenders = await this.userRepository.findMany({
+      where: {
+        participateGame: { not: Game.NONE },
+      },
+    });
+
+    const updatedGameAttenders = {
+      xeno: gameAttenders.filter((user) => user.participateGame === Game.XENO),
+      coin_dropping: gameAttenders.filter((user) => user.participateGame === Game.COIN_DROPPING),
+      ice_raze: gameAttenders.filter((user) => user.participateGame === Game.ICE_RAZE),
+      president: gameAttenders.filter((user) => user.participateGame === Game.PRESIDENT),
+      poker: gameAttenders.filter((user) => user.participateGame === Game.POKER),
+      we_didnt_playtest: gameAttenders.filter((user) => user.participateGame === Game.WE_DIDNT_PLAYTEST),
+    };
+
+    return new GameAttenders(updatedGameAttenders);
   }
 }
