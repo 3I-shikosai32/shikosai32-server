@@ -9,6 +9,7 @@ export interface UserReaderUseCaseInterface {
   findUser(userId: string): Promise<User | null>;
   findUsers(where?: UserWhere, orderBy?: UserOrderBy[], cursor?: UserCursor, take?: number, skip?: number): Promise<User[]>;
   getObtainmentStatuses(userId: string): Promise<ObtainmentStatus[]>;
+  getRankingPosition(userId: string): Promise<number>;
   getRanking(rankingTarget: keyof typeof RankingTarget, date: keyof typeof Date, take?: number): Promise<User[]>;
   getGameAttenders(): Promise<GameAttenders>;
 }

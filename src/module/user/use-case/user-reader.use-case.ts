@@ -70,6 +70,20 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
     return obtainmentStatuses.map((obtainmentStatus) => new ObtainmentStatus(obtainmentStatus));
   }
 
+  async getRankingPosition(userId: string) {
+    const foundUser = await this.userRepository.findUnique({
+      where: { id: userId },
+    });
+    if (!foundUser) {
+      throw new Error('User not found');
+    }
+
+    const foundRanking = await this.getRanking(RankingTarget.TOTAL, Date.DAY1);
+    const foundRankingPosition = foundRanking.findIndex((user) => user.id === userId) + 1;
+
+    return foundRankingPosition;
+  }
+
   async getRanking(rankingTarget: RankingTarget, date: Date, take?: number) {
     let foundRanking: User[];
     switch (rankingTarget) {
