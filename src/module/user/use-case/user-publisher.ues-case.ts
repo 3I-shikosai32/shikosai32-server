@@ -6,77 +6,23 @@ import { GameAttenders } from '../domain/model/game-attenders.model';
 import { User } from '../domain/model/user.model';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
 import { UserPublisherUseCaseInterface } from '../domain/service/use-case/user-publisher.ues-case';
+import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { generateUpdatedRankingTrigger, PubSubTrigger } from '@/common/constant/pubsub-iterator.constant';
 import { PubSubService } from '@/infra/pubsub/pubsub.service';
-import { CharacterStatusRepositoryInterface } from '~/character-status/domain/service/repository/character-status.repository';
 
 @Injectable()
 export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
   constructor(
     @Inject(InjectionToken.USER_REPOSITORY)
     private readonly userRepository: UserRepositoryInterface,
-    @Inject(InjectionToken.CHARACTER_STATUS_REPOSITORY)
-    private readonly characterStatusRepository: CharacterStatusRepositoryInterface,
+    @Inject(InjectionToken.USER_READER_USE_CASE)
+    private readonly userReaderUseCase: UserReaderUseCaseInterface,
     private readonly pubSubService: PubSubService,
   ) {}
 
   async publishRanking(rankingTarget: RankingTarget, isBeforeDay2: boolean): Promise<User[]> {
-    let updatedRanking: User[];
-    switch (rankingTarget) {
-      case RankingTarget.TOTAL:
-        if (isBeforeDay2) {
-          updatedRanking = await this.userRepository.findMany({
-            orderBy: [
-              {
-                totalPointDay1: 'desc',
-              },
-            ],
-            take: 30,
-          });
-        } else {
-          updatedRanking = await this.userRepository.findMany({
-            orderBy: [
-              {
-                totalPointDay2: 'desc',
-              },
-            ],
-            take: 30,
-          });
-        }
-        break;
-      default:
-        if (isBeforeDay2) {
-          updatedRanking = (
-            await this.characterStatusRepository.findManyWithUser({
-              where: {
-                character: rankingTarget,
-              },
-              orderBy: [
-                {
-                  characterPointDay1: 'desc',
-                },
-              ],
-              take: 30,
-            })
-          ).map(([, user]) => user);
-        } else {
-          updatedRanking = (
-            await this.characterStatusRepository.findManyWithUser({
-              where: {
-                character: rankingTarget,
-              },
-              orderBy: [
-                {
-                  characterPointDay2: 'desc',
-                },
-              ],
-              take: 30,
-            })
-          ).map(([, user]) => user);
-        }
-        break;
-    }
+    const updatedRanking = await this.userReaderUseCase.getRanking(rankingTarget, isBeforeDay2 ? Date.DAY1 : Date.DAY2, 30);
 
     await this.pubSubService.publish(generateUpdatedRankingTrigger(rankingTarget, isBeforeDay2 ? Date.DAY1 : Date.DAY2), { updatedRanking });
 
