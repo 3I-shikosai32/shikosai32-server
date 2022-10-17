@@ -53,7 +53,7 @@ describe('UserReaderUseCase', () => {
 
   test('getRankingPosition', async () => {
     const foundUser = await mockedUserRepository.findUnique();
-    const rankingPosition = await userReaderUseCase.getRankingPosition(foundUser.id);
+    const rankingPosition = await userReaderUseCase.getRankingPosition(foundUser.id, Date.DAY1);
 
     expect(rankingPosition).toEqual(expect.any(Number));
   });
