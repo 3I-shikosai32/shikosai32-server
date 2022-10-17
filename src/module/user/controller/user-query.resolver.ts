@@ -10,11 +10,13 @@ import { FindUsersArgs } from './dto/args/find-users.args';
 import { GetObtainmentStatusesArgs } from './dto/args/get-obtainment-statuses.args';
 import { GetRankingPositionArgs } from './dto/args/get-ranking-position.args';
 import { UpdatedRankingArgs } from './dto/args/updated-ranking.args';
+import { Date } from './dto/enum/date.enum';
 import { GameAttenders } from './dto/object/game-attenders.object';
 import { ObtainmentStatus } from './dto/object/obtainment-status.object';
 import { User } from './dto/object/user.object';
 import { DataLoaderCacheService } from '@/cache/dataloader-cache.service';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
+import { DateService } from '@/infra/date/date.service';
 
 @Resolver()
 export class UserQuery {
@@ -25,6 +27,7 @@ export class UserQuery {
     private readonly userReaderUseCase: UserReaderUseCaseInterface,
     private readonly userDataLoader: UserDataLoader,
     private readonly userDataLoaderCacheService: DataLoaderCacheService<UserModel, string>,
+    private readonly dateService: DateService,
   ) {}
 
   @Query(() => User, { nullable: true })
@@ -68,7 +71,9 @@ export class UserQuery {
     this.logger.log('getRankingPosition called');
     this.logger.log(args);
 
-    const rankingPosition = await this.userReaderUseCase.getRankingPosition(args.where.id);
+    const isNowBeforeDay2 = this.dateService.isBeforeDay2(this.dateService.getNow());
+
+    const rankingPosition = await this.userReaderUseCase.getRankingPosition(args.where.id, isNowBeforeDay2 ? Date.DAY1 : Date.DAY2);
 
     return rankingPosition;
   }
