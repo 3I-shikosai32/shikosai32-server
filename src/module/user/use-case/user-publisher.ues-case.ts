@@ -3,7 +3,6 @@ import { Date } from '../controller/dto/enum/date.enum';
 import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
 import { GameAttenders } from '../domain/model/game-attenders.model';
 import { User } from '../domain/model/user.model';
-import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
 import { UserPublisherUseCaseInterface } from '../domain/service/use-case/user-publisher.ues-case';
 import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
@@ -13,8 +12,6 @@ import { PubSubService } from '@/infra/pubsub/pubsub.service';
 @Injectable()
 export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
   constructor(
-    @Inject(InjectionToken.USER_REPOSITORY)
-    private readonly userRepository: UserRepositoryInterface,
     @Inject(InjectionToken.USER_READER_USE_CASE)
     private readonly userReaderUseCase: UserReaderUseCaseInterface,
     private readonly pubSubService: PubSubService,
