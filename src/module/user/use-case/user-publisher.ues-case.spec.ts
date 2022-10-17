@@ -4,9 +4,9 @@ import { GameAttenders } from '../domain/model/game-attenders.model';
 import { User } from '../domain/model/user.model';
 import { MockedUserRepository } from '../repository/mocked-user.repository';
 import { UserPublisherUseCase } from './user-publisher.ues-case';
+import { UserReaderUseCase } from './user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { PubSubService } from '@/infra/pubsub/pubsub.service';
-import { MockedCharacterStatusRepository } from '~/character-status/repository/mocked-character-status.repository';
 
 describe('UserPublisherUseCase', () => {
   let userPublisherUseCase: UserPublisherUseCase;
@@ -16,7 +16,7 @@ describe('UserPublisherUseCase', () => {
       providers: [
         PubSubService,
         { provide: InjectionToken.USER_REPOSITORY, useClass: MockedUserRepository },
-        { provide: InjectionToken.CHARACTER_STATUS_REPOSITORY, useClass: MockedCharacterStatusRepository },
+        { provide: InjectionToken.USER_READER_USE_CASE, useClass: UserReaderUseCase },
         UserPublisherUseCase,
       ],
     }).compile();
