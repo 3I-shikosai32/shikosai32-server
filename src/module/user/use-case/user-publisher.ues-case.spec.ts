@@ -8,6 +8,7 @@ import { UserReaderUseCase } from './user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
 import { PubSubService } from '@/infra/pubsub/pubsub.service';
 import { MockedCharacterStatusRepository } from '~/character-status/repository/mocked-character-status.repository';
+import { MockedItemRepository } from '~/item/repository/mocked-item.repository';
 
 describe('UserPublisherUseCase', () => {
   let userPublisherUseCase: UserPublisherUseCase;
@@ -18,6 +19,7 @@ describe('UserPublisherUseCase', () => {
         PubSubService,
         { provide: InjectionToken.USER_REPOSITORY, useClass: MockedUserRepository },
         { provide: InjectionToken.CHARACTER_STATUS_REPOSITORY, useClass: MockedCharacterStatusRepository },
+        { provide: InjectionToken.ITEM_REPOSITORY, useClass: MockedItemRepository },
         { provide: InjectionToken.USER_READER_USE_CASE, useClass: UserReaderUseCase },
         UserPublisherUseCase,
       ],
