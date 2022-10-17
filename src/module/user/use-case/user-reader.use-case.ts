@@ -151,7 +151,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
       },
     });
 
-    const updatedGameAttenders = {
+    const foundGameAttenders = {
       xeno: gameAttenders.filter((user) => user.participateGame === Game.XENO),
       coin_dropping: gameAttenders.filter((user) => user.participateGame === Game.COIN_DROPPING),
       ice_raze: gameAttenders.filter((user) => user.participateGame === Game.ICE_RAZE),
@@ -160,6 +160,6 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
       we_didnt_playtest: gameAttenders.filter((user) => user.participateGame === Game.WE_DIDNT_PLAYTEST),
     };
 
-    return new GameAttenders(updatedGameAttenders);
+    return new GameAttenders(foundGameAttenders);
   }
 }

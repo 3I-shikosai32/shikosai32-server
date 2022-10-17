@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Game } from '@prisma/client';
 import { Date } from '../controller/dto/enum/date.enum';
 import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
 import { GameAttenders } from '../domain/model/game-attenders.model';
@@ -30,20 +29,7 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
   }
 
   async publishUpdatedGameAttenders() {
-    const gameAttenders = await this.userRepository.findMany({
-      where: {
-        participateGame: { not: Game.NONE },
-      },
-    });
-
-    const updatedGameAttenders = {
-      xeno: gameAttenders.filter((user) => user.participateGame === Game.XENO),
-      coin_dropping: gameAttenders.filter((user) => user.participateGame === Game.COIN_DROPPING),
-      ice_raze: gameAttenders.filter((user) => user.participateGame === Game.ICE_RAZE),
-      president: gameAttenders.filter((user) => user.participateGame === Game.PRESIDENT),
-      poker: gameAttenders.filter((user) => user.participateGame === Game.POKER),
-      we_didnt_playtest: gameAttenders.filter((user) => user.participateGame === Game.WE_DIDNT_PLAYTEST),
-    };
+    const updatedGameAttenders = await this.userReaderUseCase.getGameAttenders();
 
     await this.pubSubService.publish(PubSubTrigger.UPDATED_GAME_ATTENDERS, { updatedGameAttenders });
 
