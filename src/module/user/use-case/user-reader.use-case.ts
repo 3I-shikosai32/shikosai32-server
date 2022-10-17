@@ -70,7 +70,21 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
     return obtainmentStatuses.map((obtainmentStatus) => new ObtainmentStatus(obtainmentStatus));
   }
 
-  async getRanking(rankingTarget: RankingTarget, date: Date) {
+  async getRankingPosition(userId: string, date: Date) {
+    const foundUser = await this.userRepository.findUnique({
+      where: { id: userId },
+    });
+    if (!foundUser) {
+      throw new Error('User not found');
+    }
+
+    const foundRanking = await this.getRanking(RankingTarget.TOTAL, date);
+    const foundRankingPosition = foundRanking.findIndex((user) => user.id === userId) + 1;
+
+    return foundRankingPosition;
+  }
+
+  async getRanking(rankingTarget: RankingTarget, date: Date, take?: number) {
     let foundRanking: User[];
     switch (rankingTarget) {
       case RankingTarget.TOTAL:
@@ -81,6 +95,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
                 totalPointDay1: 'desc',
               },
             ],
+            take,
           });
         } else {
           foundRanking = await this.userRepository.findMany({
@@ -89,6 +104,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
                 totalPointDay2: 'desc',
               },
             ],
+            take,
           });
         }
         break;
@@ -104,6 +120,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
                   characterPointDay1: 'desc',
                 },
               ],
+              take,
             })
           ).map(([, user]) => user);
         } else {
@@ -117,6 +134,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
                   characterPointDay2: 'desc',
                 },
               ],
+              take,
             })
           ).map(([, user]) => user);
         }
@@ -133,7 +151,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
       },
     });
 
-    const updatedGameAttenders = {
+    const foundGameAttenders = {
       xeno: gameAttenders.filter((user) => user.participateGame === Game.XENO),
       coinDropping: gameAttenders.filter((user) => user.participateGame === Game.COIN_DROPPING),
       iceRaze: gameAttenders.filter((user) => user.participateGame === Game.ICE_RAZE),
@@ -142,6 +160,6 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
       weDidntPlaytest: gameAttenders.filter((user) => user.participateGame === Game.WE_DIDNT_PLAYTEST),
     };
 
-    return new GameAttenders(updatedGameAttenders);
+    return new GameAttenders(foundGameAttenders);
   }
 }
