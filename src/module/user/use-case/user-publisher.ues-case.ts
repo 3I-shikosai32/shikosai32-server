@@ -32,6 +32,7 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
                 totalPointDay1: 'desc',
               },
             ],
+            take: 30,
           });
         } else {
           updatedRanking = await this.userRepository.findMany({
@@ -40,6 +41,7 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
                 totalPointDay2: 'desc',
               },
             ],
+            take: 30,
           });
         }
         break;
@@ -55,6 +57,7 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
                   characterPointDay1: 'desc',
                 },
               ],
+              take: 30,
             })
           ).map(([, user]) => user);
         } else {
@@ -68,6 +71,7 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
                   characterPointDay2: 'desc',
                 },
               ],
+              take: 30,
             })
           ).map(([, user]) => user);
         }

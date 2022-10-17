@@ -70,7 +70,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
     return obtainmentStatuses.map((obtainmentStatus) => new ObtainmentStatus(obtainmentStatus));
   }
 
-  async getRanking(rankingTarget: RankingTarget, date: Date) {
+  async getRanking(rankingTarget: RankingTarget, date: Date, take?: number) {
     let foundRanking: User[];
     switch (rankingTarget) {
       case RankingTarget.TOTAL:
@@ -81,6 +81,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
                 totalPointDay1: 'desc',
               },
             ],
+            take,
           });
         } else {
           foundRanking = await this.userRepository.findMany({
@@ -89,6 +90,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
                 totalPointDay2: 'desc',
               },
             ],
+            take,
           });
         }
         break;
@@ -104,6 +106,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
                   characterPointDay1: 'desc',
                 },
               ],
+              take,
             })
           ).map(([, user]) => user);
         } else {
@@ -117,6 +120,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
                   characterPointDay2: 'desc',
                 },
               ],
+              take,
             })
           ).map(([, user]) => user);
         }

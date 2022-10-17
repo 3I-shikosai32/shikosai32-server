@@ -67,7 +67,7 @@ export class UserQuery {
     this.logger.log('getRanking called');
     this.logger.log(args);
 
-    const foundRanking = await this.userReaderUseCase.getRanking(args.rankingTarget, args.date);
+    const foundRanking = await this.userReaderUseCase.getRanking(args.rankingTarget, args.date, 30);
 
     return foundRanking;
   }
