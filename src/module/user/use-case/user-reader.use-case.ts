@@ -153,11 +153,11 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
 
     const foundGameAttenders = {
       xeno: gameAttenders.filter((user) => user.participateGame === Game.XENO),
-      coin_dropping: gameAttenders.filter((user) => user.participateGame === Game.COIN_DROPPING),
-      ice_raze: gameAttenders.filter((user) => user.participateGame === Game.ICE_RAZE),
+      coinDropping: gameAttenders.filter((user) => user.participateGame === Game.COIN_DROPPING),
+      iceRaze: gameAttenders.filter((user) => user.participateGame === Game.ICE_RAZE),
       president: gameAttenders.filter((user) => user.participateGame === Game.PRESIDENT),
       poker: gameAttenders.filter((user) => user.participateGame === Game.POKER),
-      we_didnt_playtest: gameAttenders.filter((user) => user.participateGame === Game.WE_DIDNT_PLAYTEST),
+      weDidntPlaytest: gameAttenders.filter((user) => user.participateGame === Game.WE_DIDNT_PLAYTEST),
     };
 
     return new GameAttenders(foundGameAttenders);
