@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Date } from '../controller/dto/enum/date.enum';
 import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
 import { GameAttenders } from '../domain/model/game-attenders.model';
-import { User } from '../domain/model/user.model';
 import { UserPublisherUseCaseInterface } from '../domain/service/use-case/user-publisher.ues-case';
 import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
@@ -17,7 +16,7 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
     private readonly pubSubService: PubSubService,
   ) {}
 
-  async publishRanking(rankingTarget: RankingTarget, isBeforeDay2: boolean): Promise<User[]> {
+  async publishRanking(rankingTarget: RankingTarget, isBeforeDay2: boolean) {
     const updatedRanking = await this.userReaderUseCase.getRanking(rankingTarget, isBeforeDay2 ? Date.DAY1 : Date.DAY2, 30);
 
     await this.pubSubService.publish(generateUpdatedRankingTrigger(rankingTarget, isBeforeDay2 ? Date.DAY1 : Date.DAY2), { updatedRanking });
