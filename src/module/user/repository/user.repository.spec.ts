@@ -15,7 +15,7 @@ jest.setTimeout(15000);
 export const createUser = async (prismaService: PrismaService) => {
   const createdUser = await prismaService.user.create({
     data: {
-      id: uuid(),
+      id: uuid().replace(/-/g, ''),
       name: 'test user',
       email: 'test@example.com',
     },
