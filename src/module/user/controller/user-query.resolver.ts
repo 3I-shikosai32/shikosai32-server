@@ -3,6 +3,7 @@ import { Args, Int, Query, Resolver } from '@nestjs/graphql';
 import { UserDataLoader } from '../dataloader/user.dataloader';
 import { GameAttenders as GameAttendersModel } from '../domain/model/game-attenders.model';
 import { ObtainmentStatus as ObtainmentStatusModel } from '../domain/model/obtainment-status.model';
+import { Ranking as RankingModel } from '../domain/model/ranking.model';
 import { User as UserModel } from '../domain/model/user.model';
 import { UserReaderUseCaseInterface } from '../domain/service/use-case/user-reader.use-case';
 import { FindUserArgs } from './dto/args/find-user.args';
@@ -13,6 +14,7 @@ import { UpdatedRankingArgs } from './dto/args/updated-ranking.args';
 import { Date } from './dto/enum/date.enum';
 import { GameAttenders } from './dto/object/game-attenders.object';
 import { ObtainmentStatus } from './dto/object/obtainment-status.object';
+import { Ranking } from './dto/object/ranking.object';
 import { User } from './dto/object/user.object';
 import { DataLoaderCacheService } from '@/cache/dataloader-cache.service';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
@@ -78,8 +80,8 @@ export class UserQuery {
     return rankingPosition;
   }
 
-  @Query(() => [User])
-  async getRanking(@Args() args: UpdatedRankingArgs): Promise<UserModel[]> {
+  @Query(() => [Ranking])
+  async getRanking(@Args() args: UpdatedRankingArgs): Promise<RankingModel[]> {
     this.logger.log('getRanking called');
     this.logger.log(args);
 

@@ -3,7 +3,7 @@ import { Date } from '../controller/dto/enum/date.enum';
 import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
 import { GameAttenders } from '../domain/model/game-attenders.model';
 import { ObtainmentStatus } from '../domain/model/obtainment-status.model';
-import { User } from '../domain/model/user.model';
+import { Ranking } from '../domain/model/ranking.model';
 import { MockedUserRepository } from '../repository/mocked-user.repository';
 import { UserReaderUseCase } from './user-reader.use-case';
 import { InjectionToken } from '@/common/constant/injection-token.constant';
@@ -61,7 +61,7 @@ describe('UserReaderUseCase', () => {
   test('getRanking', async () => {
     const rankedUsers = await userReaderUseCase.getRanking(RankingTarget.CAT, Date.DAY1);
 
-    expect(rankedUsers).toEqual(expect.any(Array<User>));
+    expect(rankedUsers).toEqual(expect.any(Array<Ranking>));
   });
 
   test('getGameAttenders', async () => {

@@ -1,9 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Game } from '@prisma/client';
+import { CharacterStatus } from '../../character-status/domain/model/character-status.model';
 import { Date } from '../controller/dto/enum/date.enum';
 import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
 import { GameAttenders } from '../domain/model/game-attenders.model';
 import { ObtainmentStatus } from '../domain/model/obtainment-status.model';
+import { Ranking } from '../domain/model/ranking.model';
 import { User } from '../domain/model/user.model';
 import { UserRepositoryInterface } from '../domain/service/repository/user.repository';
 import { UserCursor, UserOrderBy, UserWhere } from '../domain/service/use-case/port/user-reader.input';
@@ -79,17 +81,19 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
     }
 
     const foundRanking = await this.getRanking(RankingTarget.TOTAL, date);
-    const foundRankingPosition = foundRanking.findIndex((user) => user.id === userId) + 1;
+    const foundRankingPosition = foundRanking.findIndex((ranking) => ranking.user.id === userId) + 1;
 
     return foundRankingPosition;
   }
 
   async getRanking(rankingTarget: RankingTarget, date: Date, take?: number) {
-    let foundRanking: User[];
+    let foundUsers: User[];
+    let foundCharacterStatusWithUserList: [CharacterStatus, User][];
+    let foundRanking: Ranking[];
     switch (rankingTarget) {
       case RankingTarget.TOTAL:
         if (date === Date.DAY1) {
-          foundRanking = await this.userRepository.findMany({
+          foundUsers = await this.userRepository.findMany({
             orderBy: [
               {
                 totalPointDay1: 'desc',
@@ -98,7 +102,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
             take,
           });
         } else {
-          foundRanking = await this.userRepository.findMany({
+          foundUsers = await this.userRepository.findMany({
             orderBy: [
               {
                 totalPointDay2: 'desc',
@@ -107,37 +111,53 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
             take,
           });
         }
+
+        foundRanking = foundUsers.map((user) => {
+          const ranking = new Ranking({
+            user,
+            point: date === Date.DAY1 ? user.totalPointDay1 : user.totalPointDay2,
+          });
+
+          return ranking;
+        });
+
         break;
       default:
         if (date === Date.DAY1) {
-          foundRanking = (
-            await this.characterStatusRepository.findManyWithUser({
-              where: {
-                character: rankingTarget,
+          foundCharacterStatusWithUserList = await this.characterStatusRepository.findManyWithUser({
+            where: {
+              character: rankingTarget,
+            },
+            orderBy: [
+              {
+                characterPointDay1: 'desc',
               },
-              orderBy: [
-                {
-                  characterPointDay1: 'desc',
-                },
-              ],
-              take,
-            })
-          ).map(([, user]) => user);
+            ],
+            take,
+          });
         } else {
-          foundRanking = (
-            await this.characterStatusRepository.findManyWithUser({
-              where: {
-                character: rankingTarget,
+          foundCharacterStatusWithUserList = await this.characterStatusRepository.findManyWithUser({
+            where: {
+              character: rankingTarget,
+            },
+            orderBy: [
+              {
+                characterPointDay2: 'desc',
               },
-              orderBy: [
-                {
-                  characterPointDay2: 'desc',
-                },
-              ],
-              take,
-            })
-          ).map(([, user]) => user);
+            ],
+            take,
+          });
         }
+
+        foundRanking = foundCharacterStatusWithUserList.map(([characterStatus, user]) => {
+          const ranking = new Ranking({
+            user,
+            point: date === Date.DAY1 ? characterStatus.characterPointDay1 : characterStatus.characterPointDay2,
+          });
+
+          return ranking;
+        });
+
         break;
     }
 
