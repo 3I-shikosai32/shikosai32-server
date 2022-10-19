@@ -31,7 +31,7 @@ const GraphQLConfigDevelopment = () =>
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       debug: true,
-      validationRules: [createComplexityLimitRule(1500)],
+      validationRules: [createComplexityLimitRule(5000)],
     }),
   });
 
@@ -51,7 +51,7 @@ export const GraphQLConfigProduction = () =>
       sortSchema: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
-      validationRules: [createComplexityLimitRule(1500)],
+      validationRules: [createComplexityLimitRule(5000)],
     }),
   });
 
@@ -66,7 +66,7 @@ const GraphQLConfigTest = () =>
       cache: 'bounded',
       autoSchemaFile: join(process.cwd(), './schema.gql'),
       playground: false,
-      validationRules: [createComplexityLimitRule(1500)],
+      validationRules: [createComplexityLimitRule(5000)],
     }),
   });
 
