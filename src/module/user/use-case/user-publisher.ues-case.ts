@@ -16,10 +16,10 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
     private readonly pubSubService: PubSubService,
   ) {}
 
-  async publishRanking(rankingTarget: RankingTarget, isBeforeDay2: boolean) {
-    const updatedRanking = await this.userReaderUseCase.getRanking(rankingTarget, isBeforeDay2 ? Date.DAY1 : Date.DAY2, 30);
+  async publishRanking(rankingTarget: RankingTarget, date: Date) {
+    const updatedRanking = await this.userReaderUseCase.getRanking(rankingTarget, date, 30);
 
-    await this.pubSubService.publish(generateUpdatedRankingTrigger(rankingTarget, isBeforeDay2 ? Date.DAY1 : Date.DAY2), { updatedRanking });
+    await this.pubSubService.publish(generateUpdatedRankingTrigger(rankingTarget, date), { updatedRanking });
 
     return updatedRanking;
   }
