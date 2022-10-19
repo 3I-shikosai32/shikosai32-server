@@ -8,8 +8,8 @@ import { CharacterStatusCreateNestedManyWithoutUserInput } from '../../character
 @InputType()
 export class UserCreateWithoutGiftHistoriesInput {
 
-    @Field(() => String, {nullable:true})
-    id?: string;
+    @Field(() => String, {nullable:false})
+    id!: string;
 
     @Field(() => String, {nullable:false})
     name!: string;
