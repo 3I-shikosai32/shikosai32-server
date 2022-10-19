@@ -1,5 +1,6 @@
 import { Test } from '@nestjs/testing';
 import dotenv from 'dotenv';
+import { v4 as uuid } from 'uuid';
 import { User } from '../domain/model/user.model';
 import { UserRepository } from './user.repository';
 import { PrismaService } from '@/infra/prisma/prisma.service';
@@ -14,6 +15,7 @@ jest.setTimeout(15000);
 export const createUser = async (prismaService: PrismaService) => {
   const createdUser = await prismaService.user.create({
     data: {
+      id: uuid().replace(/-/g, '').slice(0, 24),
       name: 'test user',
       email: 'test@example.com',
     },
@@ -66,6 +68,7 @@ describe('UserRepository', () => {
   test('create', async () => {
     const createdUser = await userRepository.create({
       data: {
+        id: uuid().replace(/-/g, '').slice(0, 24),
         name: 'test user',
         email: 'test@example.com',
       },

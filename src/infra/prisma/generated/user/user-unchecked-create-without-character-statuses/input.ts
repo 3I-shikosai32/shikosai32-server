@@ -8,8 +8,8 @@ import { GiftHistoryUncheckedCreateNestedManyWithoutUserInput } from '../../gift
 @InputType()
 export class UserUncheckedCreateWithoutCharacterStatusesInput {
 
-    @Field(() => String, {nullable:true})
-    id?: string;
+    @Field(() => String, {nullable:false})
+    id!: string;
 
     @Field(() => String, {nullable:false})
     name!: string;

@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { v4 as uuid } from 'uuid';
 
 export class UserSeeder {
   constructor(private readonly prisma: PrismaClient) {}
@@ -8,6 +9,7 @@ export class UserSeeder {
       Array.from<never, ReturnType<PrismaClient['user']['create']>>({ length: 30 }, (_, index) =>
         this.prisma.user.create({
           data: {
+            id: uuid().replace(/-/g, '').slice(0, 24),
             name: `user-${index < 10 ? `0${index}` : index}`,
             email: `user-${index < 10 ? `0${index}` : index}@example.com`,
           },
