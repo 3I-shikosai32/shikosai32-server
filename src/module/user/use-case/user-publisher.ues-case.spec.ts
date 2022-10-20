@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { Date } from '../controller/dto/enum/date.enum';
+import { RankingPeriod } from '../controller/dto/enum/date.enum';
 import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
 import { GameAttenders } from '../domain/model/game-attenders.model';
 import { User } from '../domain/model/user.model';
@@ -30,7 +30,7 @@ describe('UserPublisherUseCase', () => {
   });
 
   test('publishRanking', async () => {
-    const rankedUsers = await userPublisherUseCase.publishRanking(RankingTarget.CAT, Date.DAY1);
+    const rankedUsers = await userPublisherUseCase.publishRanking(RankingTarget.CAT, RankingPeriod.DAY1);
 
     expect(rankedUsers).toEqual(expect.any(Array<User>));
   });

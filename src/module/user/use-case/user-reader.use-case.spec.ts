@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { Date } from '../controller/dto/enum/date.enum';
+import { RankingPeriod } from '../controller/dto/enum/date.enum';
 import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
 import { GameAttenders } from '../domain/model/game-attenders.model';
 import { ObtainmentStatus } from '../domain/model/obtainment-status.model';
@@ -53,13 +53,13 @@ describe('UserReaderUseCase', () => {
 
   test('getRankingPosition', async () => {
     const foundUser = await mockedUserRepository.findUnique();
-    const rankingPosition = await userReaderUseCase.getRankingPosition(foundUser.id, Date.DAY1);
+    const rankingPosition = await userReaderUseCase.getRankingPosition(foundUser.id, RankingPeriod.DAY1);
 
     expect(rankingPosition).toEqual(expect.any(Number));
   });
 
   test('getRanking', async () => {
-    const rankedUsers = await userReaderUseCase.getRanking(RankingTarget.CAT, Date.DAY1);
+    const rankedUsers = await userReaderUseCase.getRanking(RankingTarget.CAT, RankingPeriod.DAY1);
 
     expect(rankedUsers).toEqual(expect.any(Array<Ranking>));
   });

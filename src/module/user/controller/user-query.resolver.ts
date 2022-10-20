@@ -11,7 +11,7 @@ import { FindUsersArgs } from './dto/args/find-users.args';
 import { GetObtainmentStatusesArgs } from './dto/args/get-obtainment-statuses.args';
 import { GetRankingPositionArgs } from './dto/args/get-ranking-position.args';
 import { UpdatedRankingArgs } from './dto/args/updated-ranking.args';
-import { Date } from './dto/enum/date.enum';
+import { RankingPeriod } from './dto/enum/date.enum';
 import { GameAttenders } from './dto/object/game-attenders.object';
 import { ObtainmentStatus } from './dto/object/obtainment-status.object';
 import { Ranking } from './dto/object/ranking.object';
@@ -75,7 +75,10 @@ export class UserQuery {
 
     const isNowBeforeDay2 = this.dateService.isBeforeDay2(this.dateService.getNow());
 
-    const rankingPosition = await this.userReaderUseCase.getRankingPosition(args.where.authId, isNowBeforeDay2 ? Date.DAY1 : Date.DAY2);
+    const rankingPosition = await this.userReaderUseCase.getRankingPosition(
+      args.where.authId,
+      isNowBeforeDay2 ? RankingPeriod.DAY1 : RankingPeriod.DAY2,
+    );
 
     return rankingPosition;
   }
