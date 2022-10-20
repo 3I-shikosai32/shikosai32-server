@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Date } from '../controller/dto/enum/date.enum';
+import { RankingPeriod } from '../controller/dto/enum/date.enum';
 import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
 import { GameAttenders } from '../domain/model/game-attenders.model';
 import { UserPublisherUseCaseInterface } from '../domain/service/use-case/user-publisher.ues-case';
@@ -16,7 +16,7 @@ export class UserPublisherUseCase implements UserPublisherUseCaseInterface {
     private readonly pubSubService: PubSubService,
   ) {}
 
-  async publishRanking(rankingTarget: RankingTarget, date: Date) {
+  async publishRanking(rankingTarget: RankingTarget, date: RankingPeriod) {
     const updatedRanking = await this.userReaderUseCase.getRanking(rankingTarget, date, 30);
 
     await this.pubSubService.publish(generateUpdatedRankingTrigger(rankingTarget, date), { updatedRanking });

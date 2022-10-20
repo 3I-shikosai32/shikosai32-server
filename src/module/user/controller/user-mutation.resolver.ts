@@ -11,7 +11,7 @@ import { ExitGameArgs } from './dto/args/exit-game.args';
 import { IncrementPointArgs } from './dto/args/increment-point.args';
 import { JoinGameArgs } from './dto/args/join-game.args';
 import { PullGachaArgs } from './dto/args/pull-gacha.args';
-import { Date } from './dto/enum/date.enum';
+import { RankingPeriod } from './dto/enum/date.enum';
 import { RankingTarget } from './dto/enum/ranking-target.enum';
 import { User } from './dto/object/user.object';
 import { DataLoaderCacheService } from '@/cache/dataloader-cache.service';
@@ -77,10 +77,10 @@ export class UserMutation {
 
     await this.userPublisherUseCase.publishUpdatedGameAttenders();
 
-    await this.userPublisherUseCase.publishRanking(RankingTarget.TOTAL, isNowBeforeDay2 ? Date.DAY1 : Date.DAY2);
+    await this.userPublisherUseCase.publishRanking(RankingTarget.TOTAL, isNowBeforeDay2 ? RankingPeriod.DAY1 : RankingPeriod.DAY2);
     const changedCharacters = await this.characterStatusReaderUseCase.findIncludeCharacterFromUserIds(incrementedUsers.map((user) => user.id));
     await Promise.all(
-      changedCharacters.map((character) => this.userPublisherUseCase.publishRanking(character, isNowBeforeDay2 ? Date.DAY1 : Date.DAY2)),
+      changedCharacters.map((character) => this.userPublisherUseCase.publishRanking(character, isNowBeforeDay2 ? RankingPeriod.DAY1 : RankingPeriod.DAY2)),
     );
 
     return incrementedUsers;

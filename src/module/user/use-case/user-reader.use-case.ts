@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Game } from '@prisma/client';
 import { CharacterStatus } from '../../character-status/domain/model/character-status.model';
-import { Date } from '../controller/dto/enum/date.enum';
+import { RankingPeriod } from '../controller/dto/enum/date.enum';
 import { RankingTarget } from '../controller/dto/enum/ranking-target.enum';
 import { GameAttenders } from '../domain/model/game-attenders.model';
 import { ObtainmentStatus } from '../domain/model/obtainment-status.model';
@@ -72,7 +72,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
     return obtainmentStatuses.map((obtainmentStatus) => new ObtainmentStatus(obtainmentStatus));
   }
 
-  async getRankingPosition(userId: string, date: Date) {
+  async getRankingPosition(userId: string, date: RankingPeriod) {
     const foundUser = await this.userRepository.findUnique({
       where: { id: userId },
     });
@@ -86,13 +86,13 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
     return foundRankingPosition;
   }
 
-  async getRanking(rankingTarget: RankingTarget, date: Date, take?: number) {
+  async getRanking(rankingTarget: RankingTarget, date: RankingPeriod, take?: number) {
     let foundUsers: User[];
     let foundCharacterStatusWithUserList: [CharacterStatus, User][];
     let foundRanking: Ranking[];
     switch (rankingTarget) {
       case RankingTarget.TOTAL:
-        if (date === Date.DAY1) {
+        if (date === RankingPeriod.DAY1) {
           foundUsers = await this.userRepository.findMany({
             orderBy: [
               {
@@ -115,7 +115,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
         foundRanking = foundUsers.map((user) => {
           const ranking = new Ranking({
             user,
-            point: date === Date.DAY1 ? user.totalPointDay1 : user.totalPointDay2,
+            point: date === RankingPeriod.DAY1 ? user.totalPointDay1 : user.totalPointDay2,
           });
 
           return ranking;
@@ -123,7 +123,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
 
         break;
       default:
-        if (date === Date.DAY1) {
+        if (date === RankingPeriod.DAY1) {
           foundCharacterStatusWithUserList = await this.characterStatusRepository.findManyWithUser({
             where: {
               character: rankingTarget,
@@ -152,7 +152,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
         foundRanking = foundCharacterStatusWithUserList.map(([characterStatus, user]) => {
           const ranking = new Ranking({
             user,
-            point: date === Date.DAY1 ? characterStatus.characterPointDay1 : characterStatus.characterPointDay2,
+            point: date === RankingPeriod.DAY1 ? characterStatus.characterPointDay1 : characterStatus.characterPointDay2,
           });
 
           return ranking;
