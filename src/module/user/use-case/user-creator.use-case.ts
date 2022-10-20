@@ -28,10 +28,10 @@ export class UserCreatorUseCase implements UserCreatorUseCaseInterface {
 
     const createdUser = await this.userRepository.create({
       data: {
-        id: createUserData.id,
         name: createUserData.name,
         email: createUserData.email,
         role: createUserData.role,
+        authId: createUserData.authId,
         characterStatuses: {
           create: {
             character: createUserData.character,
