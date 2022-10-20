@@ -5,6 +5,7 @@ export enum UserScalarFieldEnum {
     name = "name",
     email = "email",
     role = "role",
+    authId = "authId",
     totalPointDay1 = "totalPointDay1",
     totalPointDay2 = "totalPointDay2",
     consumablePoint = "consumablePoint",

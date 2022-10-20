@@ -9,4 +9,7 @@ export class UserWhereUniqueInput {
 
     @Field(() => String, {nullable:true})
     name?: string;
+
+    @Field(() => String, {nullable:true})
+    authId?: string;
 }

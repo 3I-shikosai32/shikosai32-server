@@ -18,6 +18,9 @@ export class UserCountAggregate {
     role!: number;
 
     @Field(() => Int, {nullable:false})
+    authId!: number;
+
+    @Field(() => Int, {nullable:false})
     totalPointDay1!: number;
 
     @Field(() => Int, {nullable:false})
