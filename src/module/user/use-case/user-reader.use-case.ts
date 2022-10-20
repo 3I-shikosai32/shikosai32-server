@@ -27,7 +27,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
 
   async findUser(userId: string) {
     const foundUser = await this.userRepository.findUnique({
-      where: { id: userId },
+      where: { authId: userId },
     });
 
     return foundUser;
@@ -47,7 +47,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
 
   async getObtainmentStatuses(userId: string) {
     const foundUser = await this.userRepository.findUnique({
-      where: { id: userId },
+      where: { authId: userId },
     });
     if (!foundUser) {
       throw new Error('User not found');
@@ -74,7 +74,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
 
   async getRankingPosition(userId: string, date: RankingPeriod) {
     const foundUser = await this.userRepository.findUnique({
-      where: { id: userId },
+      where: { authId: userId },
     });
     if (!foundUser) {
       throw new Error('User not found');

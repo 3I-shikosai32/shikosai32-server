@@ -19,7 +19,7 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
 
   async pullGacha(userId: string, pullFromItems: (items: Item[]) => Item) {
     const foundUserWithRelations = await this.userRepository.findUniqueWithRelations({
-      where: { id: userId },
+      where: { authId: userId },
     });
     if (!foundUserWithRelations) {
       throw new Error('User not found');

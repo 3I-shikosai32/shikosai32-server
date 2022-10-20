@@ -31,7 +31,7 @@ describe('UserReaderUseCase', () => {
   test('findUser', async () => {
     const expectUser = await mockedUserRepository.findUnique();
 
-    const foundUser = await userReaderUseCase.findUser(expectUser.id);
+    const foundUser = await userReaderUseCase.findUser(expectUser.authId);
 
     expect(foundUser).toEqual(expectUser);
   });
@@ -46,14 +46,14 @@ describe('UserReaderUseCase', () => {
 
   test('getObtainmentStatuses', async () => {
     const foundUser = await mockedUserRepository.findUnique();
-    const obtainmentStatuses = await userReaderUseCase.getObtainmentStatuses(foundUser.id);
+    const obtainmentStatuses = await userReaderUseCase.getObtainmentStatuses(foundUser.authId);
 
     expect(obtainmentStatuses).toEqual(expect.any(Array<ObtainmentStatus>));
   });
 
   test('getRankingPosition', async () => {
     const foundUser = await mockedUserRepository.findUnique();
-    const rankingPosition = await userReaderUseCase.getRankingPosition(foundUser.id, RankingPeriod.DAY1);
+    const rankingPosition = await userReaderUseCase.getRankingPosition(foundUser.authId, RankingPeriod.DAY1);
 
     expect(rankingPosition).toEqual(expect.any(Number));
   });
