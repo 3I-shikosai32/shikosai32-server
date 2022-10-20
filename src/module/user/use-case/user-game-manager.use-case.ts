@@ -75,7 +75,7 @@ export class UserGameManagerUseCase implements UserGameManagerUseCaseInterface {
 
   async joinGame(userId: string, game: Game) {
     const updatedUser = await this.userRepository.update({
-      where: { id: userId },
+      where: { authId: userId },
       data: {
         participateGame: game,
       },

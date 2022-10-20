@@ -33,7 +33,7 @@ describe('UserGameManagerUseCase', () => {
   test('joinGame', async () => {
     const expectUser = await mockedUserRepository.update();
 
-    const joinedUser = await userGameManagerUseCase.joinGame(expectUser.id, Game.COIN_DROPPING);
+    const joinedUser = await userGameManagerUseCase.joinGame(expectUser.authId, Game.COIN_DROPPING);
 
     expect(joinedUser).toEqual(expectUser);
   });
