@@ -42,10 +42,11 @@ enum Game {
 }
 
 model User {
-  id    String @id @map("_id")
-  name  String @unique
-  email String
-  role  Role   @default(USER)
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String @unique
+  email  String
+  role   Role   @default(USER)
+  authId String @unique @map("auth_id")
 
   totalPointDay1  Int @default(0) @map("total_point_day1")
   totalPointDay2  Int @default(0) @map("total_point_day2")

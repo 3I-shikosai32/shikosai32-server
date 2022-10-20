@@ -30,6 +30,9 @@ export class UserWhereInput {
   @Field(() => EnumRoleFilter, { nullable: true })
   role?: EnumRoleFilter;
 
+  @Field(() => StringFilter, { nullable: true })
+  authId?: StringFilter;
+
   @Field(() => IntFilter, { nullable: true })
   totalPointDay1?: IntFilter;
 

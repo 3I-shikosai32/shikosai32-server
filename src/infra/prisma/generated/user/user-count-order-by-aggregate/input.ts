@@ -18,6 +18,9 @@ export class UserCountOrderByAggregateInput {
     role?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    authId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     totalPointDay1?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

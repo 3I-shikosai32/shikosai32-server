@@ -7,8 +7,8 @@ import { Game } from '../../prisma/game/enum';
 @InputType()
 export class UserCreateManyInput {
 
-    @Field(() => String, {nullable:false})
-    id!: string;
+    @Field(() => String, {nullable:true})
+    id?: string;
 
     @Field(() => String, {nullable:false})
     name!: string;
@@ -18,6 +18,9 @@ export class UserCreateManyInput {
 
     @Field(() => Role, {nullable:true})
     role?: keyof typeof Role;
+
+    @Field(() => String, {nullable:false})
+    authId!: string;
 
     @Field(() => Int, {nullable:true})
     totalPointDay1?: number;

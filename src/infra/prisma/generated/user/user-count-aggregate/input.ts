@@ -17,6 +17,9 @@ export class UserCountAggregateInput {
     role?: true;
 
     @Field(() => Boolean, {nullable:true})
+    authId?: true;
+
+    @Field(() => Boolean, {nullable:true})
     totalPointDay1?: true;
 
     @Field(() => Boolean, {nullable:true})

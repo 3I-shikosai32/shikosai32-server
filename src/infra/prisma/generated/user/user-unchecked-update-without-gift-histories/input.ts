@@ -17,6 +17,9 @@ export class UserUncheckedUpdateWithoutGiftHistoriesInput {
     @Field(() => Role, {nullable:true})
     role?: keyof typeof Role;
 
+    @Field(() => String, {nullable:true})
+    authId?: string;
+
     @Field(() => Int, {nullable:true})
     totalPointDay1?: number;
 

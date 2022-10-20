@@ -144,6 +144,7 @@ export class MockedCharacterStatusRepository implements CharacterStatusRepositor
       name: 'fake user',
       email: 'test@example.com',
       role: Role.USER,
+      authId: 'auth-123',
       totalPointDay1: 0,
       totalPointDay2: 0,
       consumablePoint: 10,

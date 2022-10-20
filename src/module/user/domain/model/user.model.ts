@@ -11,6 +11,8 @@ export class User {
 
   readonly role: keyof typeof Role;
 
+  readonly authId: string;
+
   readonly totalPointDay1: number;
 
   readonly totalPointDay2: number;
@@ -28,6 +30,7 @@ export class User {
     name: string;
     email: string;
     role: keyof typeof Role;
+    authId: string;
     totalPointDay1: number;
     totalPointDay2: number;
     consumablePoint: number;
@@ -39,6 +42,7 @@ export class User {
     this.name = args.name;
     this.email = args.email;
     this.role = args.role;
+    this.authId = args.authId;
     this.totalPointDay1 = args.totalPointDay1;
     this.totalPointDay2 = args.totalPointDay2;
     this.consumablePoint = args.consumablePoint;

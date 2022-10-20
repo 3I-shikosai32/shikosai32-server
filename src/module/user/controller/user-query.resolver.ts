@@ -37,7 +37,7 @@ export class UserQuery {
     this.logger.log('findUser called');
     this.logger.log(args);
 
-    const foundUser = await this.userReaderUseCase.findUser(args.where.id);
+    const foundUser = await this.userReaderUseCase.findUser(args.where.authId);
 
     if (foundUser) {
       this.userDataLoaderCacheService.prime(this.userDataLoader, foundUser);
@@ -63,7 +63,7 @@ export class UserQuery {
     this.logger.log('getObtainmentStatuses called');
     this.logger.log(args);
 
-    const obtainmentStatuses = await this.userReaderUseCase.getObtainmentStatuses(args.where.id);
+    const obtainmentStatuses = await this.userReaderUseCase.getObtainmentStatuses(args.where.authId);
 
     return obtainmentStatuses;
   }
@@ -75,7 +75,7 @@ export class UserQuery {
 
     const isNowBeforeDay2 = this.dateService.isBeforeDay2(this.dateService.getNow());
 
-    const rankingPosition = await this.userReaderUseCase.getRankingPosition(args.where.id, isNowBeforeDay2 ? Date.DAY1 : Date.DAY2);
+    const rankingPosition = await this.userReaderUseCase.getRankingPosition(args.where.authId, isNowBeforeDay2 ? Date.DAY1 : Date.DAY2);
 
     return rankingPosition;
   }

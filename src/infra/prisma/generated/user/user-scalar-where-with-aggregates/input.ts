@@ -30,6 +30,9 @@ export class UserScalarWhereWithAggregatesInput {
     @Field(() => EnumRoleWithAggregatesFilter, {nullable:true})
     role?: EnumRoleWithAggregatesFilter;
 
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    authId?: StringWithAggregatesFilter;
+
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     totalPointDay1?: IntWithAggregatesFilter;
 

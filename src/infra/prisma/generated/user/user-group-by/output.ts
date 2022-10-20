@@ -24,6 +24,9 @@ export class UserGroupBy {
     @Field(() => Role, {nullable:false})
     role!: keyof typeof Role;
 
+    @Field(() => String, {nullable:false})
+    authId!: string;
+
     @Field(() => Int, {nullable:false})
     totalPointDay1!: number;
 

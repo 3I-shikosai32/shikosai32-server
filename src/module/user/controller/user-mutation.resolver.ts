@@ -6,13 +6,11 @@ import { UserCreatorUseCaseInterface } from '../domain/service/use-case/user-cre
 import { UserGachaManagerUseCaseInterface } from '../domain/service/use-case/user-gacha-manager.use-case';
 import { UserGameManagerUseCaseInterface } from '../domain/service/use-case/user-game-manager.use-case';
 import { UserPublisherUseCaseInterface } from '../domain/service/use-case/user-publisher.ues-case';
-import { UserUpdaterUseCaseInterface } from '../domain/service/use-case/user-updater.use-case';
 import { CreateUserArgs } from './dto/args/create-user.args';
 import { ExitGameArgs } from './dto/args/exit-game.args';
 import { IncrementPointArgs } from './dto/args/increment-point.args';
 import { JoinGameArgs } from './dto/args/join-game.args';
 import { PullGachaArgs } from './dto/args/pull-gacha.args';
-import { UpdateUserBioArgs } from './dto/args/update-user-bio.args';
 import { Date } from './dto/enum/date.enum';
 import { RankingTarget } from './dto/enum/ranking-target.enum';
 import { User } from './dto/object/user.object';
@@ -35,8 +33,6 @@ export class UserMutation {
   constructor(
     @Inject(InjectionToken.USER_CREATOR_USE_CASE)
     private readonly userCreatorUseCase: UserCreatorUseCaseInterface,
-    @Inject(InjectionToken.USER_UPDATER_USE_CASE)
-    private readonly userUpdaterUseCase: UserUpdaterUseCaseInterface,
     @Inject(InjectionToken.USER_GAME_MANAGER_USE_CASE)
     private readonly userGameManagerUseCase: UserGameManagerUseCaseInterface,
     @Inject(InjectionToken.USER_GACHA_MANAGER_USE_CASE)
@@ -62,23 +58,9 @@ export class UserMutation {
 
     this.dataLoaderCacheService.prime(this.userDataLoader, createdUser);
 
-    await this.firebaseService.adminAuth.updateUser(createdUser.id, { displayName: createdUser.name, email: createdUser.email });
+    await this.firebaseService.adminAuth.updateUser(createdUser.authId, { displayName: createdUser.name, email: createdUser.email });
 
     return createdUser;
-  }
-
-  @Mutation(() => User)
-  async updateUserBio(@Args() args: UpdateUserBioArgs): Promise<UserModel> {
-    this.logger.log('updateUserBio called');
-    this.logger.log(args);
-
-    const updatedUser = await this.userUpdaterUseCase.updateUserBio(args.where.id, args.data);
-
-    this.dataLoaderCacheService.prime(this.userDataLoader, updatedUser);
-
-    await this.firebaseService.adminAuth.updateUser(updatedUser.id, { displayName: updatedUser.name, email: updatedUser.email });
-
-    return updatedUser;
   }
 
   @Mutation(() => [User])
@@ -109,7 +91,7 @@ export class UserMutation {
     this.logger.log('joinGame called');
     this.logger.log(args);
 
-    const joinedUser = await this.userGameManagerUseCase.joinGame(args.where.id, args.game);
+    const joinedUser = await this.userGameManagerUseCase.joinGame(args.where.authId, args.game);
 
     this.dataLoaderCacheService.prime(this.userDataLoader, joinedUser);
 
@@ -137,7 +119,7 @@ export class UserMutation {
     this.logger.log('pullGacha called');
     this.logger.log(args);
 
-    const pulledItem = await this.userGachaManagerUseCase.pullGacha(args.where.id, (items) => items[Math.floor(Math.random() * items.length)]);
+    const pulledItem = await this.userGachaManagerUseCase.pullGacha(args.where.authId, (items) => items[Math.floor(Math.random() * items.length)]);
 
     this.itemDataLoaderCacheService.prime(this.itemDataLoader, pulledItem);
 

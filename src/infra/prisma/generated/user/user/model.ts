@@ -22,6 +22,9 @@ export class User {
     @Field(() => Role, {nullable:false,defaultValue:'USER'})
     role!: keyof typeof Role;
 
+    @Field(() => String, {nullable:false})
+    authId!: string;
+
     @Field(() => Int, {nullable:false,defaultValue:0})
     totalPointDay1!: number;
 
