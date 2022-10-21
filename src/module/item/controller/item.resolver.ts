@@ -12,6 +12,10 @@ export class ItemResolver {
 
   @ResolveField(() => [User])
   async users(@Parent() item: ItemModel): Promise<UserModel[]> {
+    if (item.characterStatusIds.length === 0) {
+      return [];
+    }
+
     const usersOrErrors = await this.userDataLoader.loadMany(item.characterStatusIds);
 
     const users = match(usersOrErrors)

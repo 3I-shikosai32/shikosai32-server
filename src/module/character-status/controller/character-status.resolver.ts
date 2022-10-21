@@ -22,6 +22,10 @@ export class CharacterStatusResolver {
 
   @ResolveField(() => [Item])
   async items(@Parent() characterStatus: CharacterStatusModel): Promise<ItemModel[]> {
+    if (characterStatus.itemIds.length === 0) {
+      return [];
+    }
+
     const itemsOrErrors = await this.itemDataLoader.loadMany(characterStatus.itemIds);
 
     const items = match(itemsOrErrors)
