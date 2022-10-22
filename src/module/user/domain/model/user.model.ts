@@ -52,7 +52,7 @@ export class User {
   }
 
   canPullGacha(characterStatus: CharacterStatus) {
-    const canPullMoreGacha = this.pullableGachaTimes - 1 > 0;
+    const canPullMoreGacha = this.pullableGachaTimes > 0;
     const canObtainMoreItem = !characterStatus.isItemCompleted();
 
     return canPullMoreGacha && canObtainMoreItem;
