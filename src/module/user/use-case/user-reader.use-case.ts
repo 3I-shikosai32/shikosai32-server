@@ -81,7 +81,7 @@ export class UserReaderUseCase implements UserReaderUseCaseInterface {
     }
 
     const foundRanking = await this.getRanking(RankingTarget.TOTAL, date);
-    const foundRankingPosition = foundRanking.findIndex((ranking) => ranking.user.id === userId) + 1;
+    const foundRankingPosition = foundRanking.findIndex((ranking) => ranking.user.authId === userId) + 1;
 
     return foundRankingPosition;
   }
