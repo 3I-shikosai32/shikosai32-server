@@ -23,8 +23,8 @@ export class UserCreatorUseCase implements UserCreatorUseCaseInterface {
       },
     });
 
-    const iconPath = `sys/character/${createUserData.character.toLowerCase()}/icon.svg?alt=media`;
-    const avatarPath = `sys/character/${createUserData.character.toLowerCase()}/base.svg?alt=media`;
+    const iconPath = `${encodeURIComponent(`sys/character/${createUserData.character.toLowerCase()}/`)}icon.svg?alt=media`;
+    const avatarPath = `${encodeURIComponent(`sys/character/${createUserData.character.toLowerCase()}/`)}base.svg?alt=media`;
 
     const createdUser = await this.userRepository.create({
       data: {
@@ -35,8 +35,8 @@ export class UserCreatorUseCase implements UserCreatorUseCaseInterface {
         characterStatuses: {
           create: {
             character: createUserData.character,
-            iconUrl: `${this.envService.FirebaseStorageUrl}${encodeURIComponent(iconPath)}`,
-            avatarUrl: `${this.envService.FirebaseStorageUrl}${encodeURIComponent(avatarPath)}`,
+            iconUrl: `${this.envService.FirebaseStorageUrl}${iconPath}`,
+            avatarUrl: `${this.envService.FirebaseStorageUrl}${avatarPath}}`,
             isActive: true,
             itemIds: foundItems.map((item) => item.id),
             items: {
