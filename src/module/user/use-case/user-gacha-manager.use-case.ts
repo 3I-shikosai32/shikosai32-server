@@ -40,7 +40,7 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
     const pulledItem = pullFromItems(foundItems);
 
     await this.userRepository.update({
-      where: { id: userId },
+      where: { authId: userId },
       data: {
         pullableGachaTimes: foundUser.pullableGachaTimes - 1,
       },
