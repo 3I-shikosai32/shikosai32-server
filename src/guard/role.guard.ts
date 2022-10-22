@@ -23,13 +23,13 @@ export class RoleGuard implements CanActivate {
       }
     });
 
-    const id = await getIdByAuthToken(this.firebaseService, authorization);
-    if (!id) {
+    const authId = await getIdByAuthToken(this.firebaseService, authorization);
+    if (!authId) {
       return false;
     }
 
     const user = await this.userRepository.findUnique({
-      where: { id },
+      where: { authId },
     });
     if (user?.role !== Role.ADMIN) {
       return false;
