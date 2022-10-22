@@ -25,11 +25,7 @@ export class UserSeeder {
   }
 
   async fixImageUrl() {
-    const users = await this.prisma.user.findMany({
-      include: {
-        characterStatuses: true,
-      },
-    });
+    const users = await this.prisma.user.findMany();
 
     const updatedCharacterStatusesList = await Promise.all(
       users.map(async (user) => {
@@ -41,7 +37,7 @@ export class UserSeeder {
 
         const updatedCharacterStatuses = await Promise.all(
           characterStatuses.map(async (characterStatus) => {
-            const character = await this.prisma.characterStatus.update({
+            const updatedCharacterStatus = await this.prisma.characterStatus.update({
               where: {
                 id: characterStatus.id,
               },
@@ -55,7 +51,40 @@ export class UserSeeder {
               },
             });
 
-            return character;
+            return updatedCharacterStatus;
+          }),
+        );
+
+        return updatedCharacterStatuses;
+      }),
+    );
+
+    return updatedCharacterStatusesList;
+  }
+
+  async dangerousSyncTotalPointAndAllCharacterPointsDay1() {
+    const users = await this.prisma.user.findMany();
+
+    const updatedCharacterStatusesList = await Promise.all(
+      users.map(async (user) => {
+        const characterStatuses = await this.prisma.characterStatus.findMany({
+          where: {
+            userId: user.id,
+          },
+        });
+
+        const updatedCharacterStatuses = await Promise.all(
+          characterStatuses.map(async (characterStatus) => {
+            const updatedCharacterStatus = await this.prisma.characterStatus.update({
+              where: {
+                id: characterStatus.id,
+              },
+              data: {
+                characterPointDay1: user.totalPointDay1,
+              },
+            });
+
+            return updatedCharacterStatus;
           }),
         );
 
