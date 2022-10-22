@@ -36,7 +36,7 @@ export class UserCreatorUseCase implements UserCreatorUseCaseInterface {
           create: {
             character: createUserData.character,
             iconUrl: `${this.envService.FirebaseStorageUrl}${iconPath}`,
-            avatarUrl: `${this.envService.FirebaseStorageUrl}${avatarPath}}`,
+            avatarUrl: `${this.envService.FirebaseStorageUrl}${avatarPath}`,
             isActive: true,
             itemIds: foundItems.map((item) => item.id),
             items: {
