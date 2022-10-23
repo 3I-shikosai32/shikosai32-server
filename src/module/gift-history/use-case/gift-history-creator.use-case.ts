@@ -20,7 +20,7 @@ export class GiftHistoryCreatorUseCase implements GiftHistoryCreatorUseCaseInter
   async exchangeGift(createGiftHistoryData: CreateGiftHistoryData, exchangeQuantity: number) {
     const foundUser = await this.userRepository.findUnique({
       where: {
-        id: createGiftHistoryData.userId,
+        authId: createGiftHistoryData.userId,
       },
     });
     if (!foundUser) {
@@ -42,7 +42,7 @@ export class GiftHistoryCreatorUseCase implements GiftHistoryCreatorUseCaseInter
 
     await this.userRepository.update({
       where: {
-        id: createGiftHistoryData.userId,
+        authId: createGiftHistoryData.userId,
       },
       data: {
         consumablePoint: foundUser.consumablePoint - foundGift.price * exchangeQuantity,
@@ -54,7 +54,7 @@ export class GiftHistoryCreatorUseCase implements GiftHistoryCreatorUseCaseInter
         data: {
           ...createGiftHistoryData,
           user: {
-            connect: { id: createGiftHistoryData.userId },
+            connect: { authId: createGiftHistoryData.userId },
           },
           exchangedGift: {
             connect: { id: createGiftHistoryData.giftId },
