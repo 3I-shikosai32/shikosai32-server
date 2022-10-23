@@ -36,6 +36,9 @@ export class UserGachaManagerUseCase implements UserGachaManagerUseCaseInterface
         character: foundCharacterStatus.character,
       },
     });
+    if (foundItems.length === 0) {
+      throw new Error('Items is empty');
+    }
 
     const pulledItem = pullFromItems(foundItems);
 
