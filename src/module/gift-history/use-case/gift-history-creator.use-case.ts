@@ -52,7 +52,8 @@ export class GiftHistoryCreatorUseCase implements GiftHistoryCreatorUseCaseInter
     const createdGiftHistories = await this.giftHistoryRepository.createMany(
       Array.from<never, Create>({ length: exchangeQuantity }, () => ({
         data: {
-          ...createGiftHistoryData,
+          id: createGiftHistoryData.id,
+          isDelivered: createGiftHistoryData.isDelivered,
           user: {
             connect: { authId: createGiftHistoryData.userId },
           },
