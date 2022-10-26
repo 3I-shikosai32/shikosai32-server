@@ -1451,10 +1451,10 @@
     tslib "2.4.0"
     uuid "9.0.0"
 
-"@nestjs/graphql@10.1.4":
-  version "10.1.4"
-  resolved "https://registry.yarnpkg.com/@nestjs/graphql/-/graphql-10.1.4.tgz#7bb1de62d1768a85a233f9788d326668e3580c9e"
-  integrity sha512-KsXaYRyLOMOboJA7x7B29IGob+Apeyq2WmixYAXXgFrOetNFjfKT0Cj0wCCGgVDll7a3IUFl01FB6PdF09Evyg==
+"@nestjs/graphql@10.1.5":
+  version "10.1.5"
+  resolved "https://registry.yarnpkg.com/@nestjs/graphql/-/graphql-10.1.5.tgz#3eb013d50c0fe1ed040f1f9b07c77c3e7161c556"
+  integrity sha512-vdqdmddzLhTODRpw7Xnes0leNptJbVhvHu8/0CjpvMgjaEFcETaZ7Qz81MODXjVt22rbFoPblLwMxcFCZRE+Tw==
   dependencies:
     "@graphql-tools/merge" "8.3.6"
     "@graphql-tools/schema" "9.0.4"
@@ -1903,10 +1903,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.18.tgz#633184f55c322e4fb08612307c274ee6d5ed3154"
   integrity sha512-m+6nTEOadJZuTPkKR/SYK3A2d7FZrgElol9UP1Kae90VVU4a6mxnPuLiIW1m4Cq4gZ/nWb9GrdVXJCoCazDAbg==
 
-"@types/node@18.11.5":
-  version "18.11.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.5.tgz#1bc94cf2f9ab5fe33353bc7c79c797dcc5325bef"
-  integrity sha512-3JRwhbjI+cHLAkUorhf8RnqUbFXajvzX4q6fMn5JwkgtuwfYtRQYI3u4V92vI6NJuTsbBQWWh3RZjFsuevyMGQ==
+"@types/node@18.11.6":
+  version "18.11.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.6.tgz#4f91b0b30d405fdf76e0029b11ef5df6a0da4261"
+  integrity sha512-j3CEDa2vd96K0AXF8Wur7UucACvnjkk8hYyQAHhUNciabZLDl9nfAEVUSwmh245OOZV15bRA3Y590Gi5jUcDJg==
 
 "@types/node@^10.1.0":
   version "10.17.60"
