@@ -53,7 +53,7 @@
     "dotenv": "16.0.3",
     "express": "4.18.2",
     "firebase": "9.14.0",
-    "firebase-admin": "11.2.1",
+    "firebase-admin": "11.3.0",
     "graphql-subscriptions": "2.0.0",
     "graphql-tag": "2.12.6",
     "graphql-validation-complexity": "0.4.2",
@@ -62,14 +62,14 @@
     "uuid": "9.0.0"
   },
   "devDependencies": {
-    "@apollo/rover": "0.9.1",
+    "@apollo/rover": "0.10.0",
     "@nestjs/schematics": "9.0.3",
     "@types/graphql-validation-complexity": "0.4.0",
-    "@types/jest": "29.2.2",
+    "@types/jest": "29.2.3",
     "@types/node": "18.11.9",
     "@types/uuid": "8.3.4",
-    "@typescript-eslint/eslint-plugin": "5.42.1",
-    "@typescript-eslint/parser": "5.42.1",
+    "@typescript-eslint/eslint-plugin": "5.43.0",
+    "@typescript-eslint/parser": "5.43.0",
     "apollo-server-express": "3.11.1",
     "cross-env": "7.0.3",
     "eslint": "8.27.0",
@@ -87,6 +87,6 @@
     "rimraf": "3.0.2",
     "ts-jest": "29.0.3",
     "ts-node": "10.9.1",
-    "typescript": "4.8.4"
+    "typescript": "4.9.3"
   }
 }
