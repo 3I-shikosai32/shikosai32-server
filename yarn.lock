@@ -1579,10 +1579,10 @@
   dependencies:
     "@prisma/engines-version" "4.7.1-1.272861e07ab64f234d3ffc4094e32bd61775599c"
 
-"@prisma/debug@4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@prisma/debug/-/debug-4.3.1.tgz#e10627661352773fe58d513bc3e631df3548e995"
-  integrity sha512-rvDiWvChaKHZO4F9UFX/qG3jqYIYUbkWySAGJG0B9AMhw7k0EtjwYef02p/aLoz7smM3+ZPKJU9E+sqS1nympg==
+"@prisma/debug@4.14.1":
+  version "4.14.1"
+  resolved "https://registry.yarnpkg.com/@prisma/debug/-/debug-4.14.1.tgz#e771ff3eac3c3aac42aafea62907eda6ed92754b"
+  integrity sha512-jZjNZimL7FVlSyL78r/w9pSqu2s1y+5JGyi0Ajvq17cBCdDzMONGM76PDKBWjOusRhbZD4xcTQ5kfr9JqM0I2A==
   dependencies:
     "@types/debug" "4.1.7"
     debug "4.3.4"
@@ -1598,15 +1598,15 @@
   resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-4.7.1.tgz#d657d4d05724158140022fa00614e143643090c2"
   integrity sha512-zWabHosTdLpXXlMefHmnouhXMoTB1+SCbUU3t4FCmdrtIOZcarPKU3Alto7gm/pZ9vHlGOXHCfVZ1G7OIrSbog==
 
-"@prisma/generator-helper@^4.1.0":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@prisma/generator-helper/-/generator-helper-4.3.1.tgz#8b486cd56efb3837843c10da2657371e62327e8d"
-  integrity sha512-tWIfbpXG30nvxYhyp0MZj4RX/3B4dnYWj5i4hanK7yTTXt6oRBm4b1veYbC/nW1KcBbJvbp+zvLN0dDSmSldqQ==
+"@prisma/generator-helper@^4.14.0":
+  version "4.14.1"
+  resolved "https://registry.yarnpkg.com/@prisma/generator-helper/-/generator-helper-4.14.1.tgz#07c14ee9c8cf9239dcc91d124e165d62009979df"
+  integrity sha512-7mxfM6NTLsUgbmx8t+AQTtOdDuUMG+D4K5QtALQP1A3MD7wZy2O+Np4apbvVJwNUn1286PZWk2DTv4cF7XiK3w==
   dependencies:
-    "@prisma/debug" "4.3.1"
+    "@prisma/debug" "4.14.1"
     "@types/cross-spawn" "6.0.2"
-    chalk "4.1.2"
     cross-spawn "7.0.3"
+    kleur "4.1.5"
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
@@ -2858,14 +2858,6 @@ chalk@3.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@4.1.2, chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
-  integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
-  dependencies:
-    ansi-styles "^4.1.0"
-    supports-color "^7.1.0"
-
 chalk@^2.0.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
@@ -2874,6 +2866,14 @@ chalk@^2.0.0:
     ansi-styles "^3.2.1"
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
+
+chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
+  integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
+  dependencies:
+    ansi-styles "^4.1.0"
+    supports-color "^7.1.0"
 
 char-regex@^1.0.2:
   version "1.0.2"
@@ -4292,6 +4292,11 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@^4.2.0, 
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
 
+graceful-fs@^4.2.11:
+  version "4.2.11"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.11.tgz#4183e4e8bf08bb6e05bbb2f7d2e0c8f712ca40e3"
+  integrity sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==
+
 grapheme-splitter@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/grapheme-splitter/-/grapheme-splitter-1.0.4.tgz#9cf3a665c6247479896834af35cf1dbb4400767e"
@@ -5295,6 +5300,11 @@ json5@^2.2.1:
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.1.tgz#655d50ed1e6f95ad1a3caababd2b0efda10b395c"
   integrity sha512-1hqLFMSrGHRHxav9q9gNjJ5EXznIxGVO09xQRrwplcS8qs28pZ8s8hupZAmqDwZUmVZ2Qb2jnyPOWcDH8m8dlA==
 
+json5@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.3.tgz#78cd6f1a19bdc12b73db5ad0c61efd66c1e29283"
+  integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
+
 jsonc-parser@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/jsonc-parser/-/jsonc-parser-3.1.0.tgz#73b8f0e5c940b83d03476bc2e51a20ef0932615d"
@@ -5382,6 +5392,11 @@ klaw@^3.0.0:
   integrity sha512-0Fo5oir+O9jnXu5EefYbVK+mHMBeEVEy2cmctR1O1NECcCkPRreJKrS6Qt/j3KC2C148Dfo9i3pCmCMsdqGr0g==
   dependencies:
     graceful-fs "^4.1.9"
+
+kleur@4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/kleur/-/kleur-4.1.5.tgz#95106101795f7050c6c650f350c683febddb1780"
+  integrity sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==
 
 kleur@^3.0.3:
   version "3.0.3"
@@ -6140,17 +6155,18 @@ pretty-format@^29.3.1:
     ansi-styles "^5.0.0"
     react-is "^18.0.0"
 
-prisma-nestjs-graphql@17.0.2:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/prisma-nestjs-graphql/-/prisma-nestjs-graphql-17.0.2.tgz#ca61c27d9b052557c83b5c2b47ad669915bc8413"
-  integrity sha512-AGRo1KwXdsCaMGBzqAMEIYQtW9iQuROyw8cXMjI8LT+GS2IjOLVSSi4odgcNRUZFdpSlgwuh7OJgBtmQ5fS9Gw==
+prisma-nestjs-graphql@18.0.2:
+  version "18.0.2"
+  resolved "https://registry.yarnpkg.com/prisma-nestjs-graphql/-/prisma-nestjs-graphql-18.0.2.tgz#852b9386d2c26bad0bd82254a5cc2e483a96d5b5"
+  integrity sha512-Gh7DDXyzJQBKWkQwKOpSsXygxNkfUO+Bq7q79HZgoKa+/oUzi84Fh4bjzU1REki9635rmZC8F5MoVNTzKaUrnw==
   dependencies:
-    "@prisma/generator-helper" "^4.1.0"
+    "@prisma/generator-helper" "^4.14.0"
     await-event-emitter "^2.0.2"
     filenamify "4.X"
     flat "^5.0.2"
     get-relative-path "^1.0.2"
-    json5 "^2.2.1"
+    graceful-fs "^4.2.11"
+    json5 "^2.2.3"
     lodash "^4.17.21"
     outmatch "^0.7.0"
     pluralize "^8.0.0"
