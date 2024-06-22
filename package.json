@@ -59,7 +59,7 @@
     "graphql-validation-complexity": "0.4.2",
     "supertest-graphql": "1.1.4",
     "ts-pattern": "4.0.6",
-    "uuid": "9.0.0"
+    "uuid": "10.0.0"
   },
   "devDependencies": {
     "@apollo/rover": "0.10.0",
@@ -67,7 +67,7 @@
     "@types/graphql-validation-complexity": "0.4.0",
     "@types/jest": "29.2.4",
     "@types/node": "18.11.12",
-    "@types/uuid": "8.3.4",
+    "@types/uuid": "10.0.0",
     "@typescript-eslint/eslint-plugin": "5.46.0",
     "@typescript-eslint/parser": "5.46.0",
     "apollo-server-express": "3.11.1",
