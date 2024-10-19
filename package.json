@@ -42,7 +42,7 @@
     "@nestjs/graphql": "10.1.7",
     "@nestjs/platform-express": "9.2.1",
     "@nestjs/testing": "9.2.1",
-    "@prisma/client": "4.7.1",
+    "@prisma/client": "5.21.1",
     "apollo-server-core": "3.10.3",
     "apollo-server-types": "3.7.1",
     "class-transformer": "0.5.1",
