@@ -58,7 +58,7 @@
     "graphql-tag": "2.12.6",
     "graphql-validation-complexity": "0.4.2",
     "supertest-graphql": "1.1.4",
-    "ts-pattern": "4.0.6",
+    "ts-pattern": "5.5.0",
     "uuid": "9.0.0"
   },
   "devDependencies": {
