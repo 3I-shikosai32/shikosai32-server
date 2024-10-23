@@ -39,7 +39,7 @@
     "@nestjs/common": "9.2.1",
     "@nestjs/config": "2.2.0",
     "@nestjs/core": "9.2.1",
-    "@nestjs/graphql": "10.1.7",
+    "@nestjs/graphql": "12.2.1",
     "@nestjs/platform-express": "9.2.1",
     "@nestjs/testing": "9.2.1",
     "@prisma/client": "4.7.1",
