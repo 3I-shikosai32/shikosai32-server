@@ -54,7 +54,7 @@
     "express": "4.18.2",
     "firebase": "9.15.0",
     "firebase-admin": "11.3.0",
-    "graphql-subscriptions": "2.0.0",
+    "graphql-subscriptions": "3.0.0",
     "graphql-tag": "2.12.6",
     "graphql-validation-complexity": "0.4.2",
     "supertest-graphql": "1.1.4",
